@@ -14,7 +14,7 @@ No test suite is configured.
 
 ## Architecture
 
-This is a **Next.js 16 + TypeScript + Tailwind CSS** marketing site for Khmer Tattoo Studio (Phnom Penh, Cambodia).
+This is a **Next.js 16 + TypeScript + Tailwind CSS** marketing site for Khmer Tattoo Studio (Siem Reap, Cambodia).
 
 ### Structure
 

@@ -2,9 +2,15 @@
 
 import ContactForm from "@/components/ContactForm";
 import SectionTitle from "@/components/SectionTitle";
-import { Instagram, Facebook, Mail, Phone } from "lucide-react";
+import { Facebook, Mail, Phone, Send } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/data/translations";
+
+const socialLinks = [
+  { Icon: Send, href: "https://t.me/sokreoun", label: "Telegram" },
+  { Icon: Facebook, href: "https://www.facebook.com/profile.php?id=100023594836736", label: "Facebook" },
+  { Icon: Mail, href: "mailto:khmertattoostudio@gmail.com", label: "Email" },
+];
 
 export default function ContactPage() {
   const { lang } = useLanguage();
@@ -28,12 +34,24 @@ export default function ContactPage() {
             </h2>
             <div className="mt-5 grid gap-3 text-xs leading-5 text-white/70 sm:mt-8 sm:gap-4 sm:text-sm">
               <p>{c.address}</p>
-              <p className="flex items-center gap-2"><Phone className="shrink-0" size={15} /> +855 12 345 678</p>
-              <p className="flex items-center gap-2 break-all"><Mail className="shrink-0" size={15} /> hello@khmertattoostudio.com</p>
+              <p className="flex items-center gap-2">
+                <Phone className="shrink-0" size={15} />
+                <a href="tel:092394843" className="hover:text-white">092394843</a>
+                <span>/</span>
+                <a href="tel:0964637600" className="hover:text-white">0964637600</a>
+              </p>
+              <p className="flex items-center gap-2 break-all"><Mail className="shrink-0" size={15} /> khmertattoostudio@gmail.com</p>
             </div>
             <div className="mt-5 flex gap-2 sm:mt-8 sm:gap-3">
-              {[Instagram, Facebook, Mail].map((Icon, index) => (
-                <a key={index} href="#contact-form" aria-label="Social media link" className="flex h-10 w-10 items-center justify-center border border-white/20 transition hover:border-teal hover:bg-teal sm:h-11 sm:w-11">
+              {socialLinks.map(({ Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="flex h-10 w-10 items-center justify-center border border-white/20 transition hover:border-teal hover:bg-teal sm:h-11 sm:w-11"
+                >
                   <Icon size={17} />
                 </a>
               ))}

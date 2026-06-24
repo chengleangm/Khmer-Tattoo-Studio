@@ -17,7 +17,7 @@ export const t = {
       sendMessage: "Send Message",
     },
     home: {
-      tag1: "Phnom Penh / Cambodia", tag2: "Custom Work / Fine Ink",
+      tag1: "Siem Reap / Cambodia", tag2: "Custom Work / Fine Ink",
       tag3: "Private Studio", tag4: "Book by Appointment",
       heroLine1: "A TOUCH", heroLine2: "OF INK",
       newTitle: "NEW TATTOO DESIGN",
@@ -32,7 +32,7 @@ export const t = {
       pageTitle: "ABOUT KHMER TATTOO STUDIO",
       ourStory: "Our Story",
       heading: "Premium tattoo artistry in Cambodia.",
-      desc: "Khmer Tattoo Studio is a Phnom Penh studio built for intentional work: clean line systems, powerful blackwork, careful realistic shading, and Khmer-inspired patterns adapted for modern skin. We design every tattoo around placement, meaning, and how it will heal over time.",
+      desc: "Khmer Tattoo Studio is a Siem Reap studio built for intentional work: clean line systems, powerful blackwork, careful realistic shading, and Khmer-inspired patterns adapted for modern skin. We design every tattoo around placement, meaning, and how it will heal over time.",
       mission: "Mission",
       missionDesc: "To create tattoos that feel personal, culturally aware, technically disciplined, and built to last.",
       whyChooseUs: "WHY CHOOSE US",
@@ -92,10 +92,10 @@ export const t = {
     },
     contact: {
       pageTitle: "CONTACT US",
-      location: "Phnom Penh, Cambodia",
+      location: "Siem Reap, Cambodia",
       visitStudio: "Visit the Studio",
-      address: "Address: Phnom Penh, Cambodia",
-      form: { name: "Name", email: "Email", message: "Message", send: "Send Message" },
+      address: "Address: Siem Reap, Cambodia",
+      form: { name: "Name", phone: "Phone", email: "Email", message: "Message", send: "Send Message" },
       mapPlaceholder: "MAP PLACEHOLDER",
     },
     aftercare: {
@@ -146,7 +146,7 @@ export const t = {
       sendMessage: "ផ្ញើសារ",
     },
     home: {
-      tag1: "ភ្នំពេញ / កម្ពុជា", tag2: "សាក់តាមតម្រូវការ / ទឹកថ្នាំល្អិតប្រណីត",
+      tag1: "សៀមរាប / កម្ពុជា", tag2: "សាក់តាមតម្រូវការ / ទឹកថ្នាំល្អិតប្រណីត",
       tag3: "ស្ទូឌីយោឯកជន", tag4: "កក់ពេលជាមុន",
       heroLine1: "ស្នាម", heroLine2: "ទឹកថ្នាំ",
       newTitle: "ការរចនាសាក់ថ្មី",
@@ -161,7 +161,7 @@ export const t = {
       pageTitle: "អំពីស្ទូឌីយោសាក់ខ្មែរ",
       ourStory: "រឿងរ៉ាវរបស់យើង",
       heading: "សិល្បៈសាក់កម្រិតខ្ពស់នៅកម្ពុជា",
-      desc: "ស្ទូឌីយោសាក់ខ្មែរ គឺជាស្ទូឌីយោសាក់នៅភ្នំពេញ ដែលបង្កើតឡើងសម្រាប់ស្នាដៃសាក់ដែលមានគោលបំណងច្បាស់លាស់៖ ខ្សែបន្ទាត់ស្អាត សាក់ខ្មៅដិតច្បាស់ ការដាក់ស្រមោលបែបពិតនិយម និងលំនាំខ្មែរដែលសមស្របសម្រាប់ស្បែកទំនើប។ យើងរចនាស្នាមសាក់រាល់មួយ ដោយផ្អែកលើទីតាំងសាក់ អត្ថន័យ និងរបៀបដែលវានឹងជាសះស្អាតតាមពេលវេលា។",
+      desc: "ស្ទូឌីយោសាក់ខ្មែរ គឺជាស្ទូឌីយោសាក់នៅសៀមរាប ដែលបង្កើតឡើងសម្រាប់ស្នាដៃសាក់ដែលមានគោលបំណងច្បាស់លាស់៖ ខ្សែបន្ទាត់ស្អាត សាក់ខ្មៅដិតច្បាស់ ការដាក់ស្រមោលបែបពិតនិយម និងលំនាំខ្មែរដែលសមស្របសម្រាប់ស្បែកទំនើប។ យើងរចនាស្នាមសាក់រាល់មួយ ដោយផ្អែកលើទីតាំងសាក់ អត្ថន័យ និងរបៀបដែលវានឹងជាសះស្អាតតាមពេលវេលា។",
       mission: "បេសកកម្ម",
       missionDesc: "បង្កើតស្នាមសាក់ដែលមានអត្ថន័យផ្ទាល់ខ្លួន គោរពវប្បធម៌ មានជំនាញបច្ចេកទេសខ្ពស់ និងរចនាឡើងឱ្យរក្សាបានយូរ។",
       whyChooseUs: "ហេតុអ្វីត្រូវជ្រើសរើសយើង",
@@ -221,10 +221,10 @@ export const t = {
     },
     contact: {
       pageTitle: "ទំនាក់ទំនងយើង",
-      location: "ភ្នំពេញ, កម្ពុជា",
+      location: "សៀមរាប, កម្ពុជា",
       visitStudio: "ទស្សនាស្ទូឌីយោ",
-      address: "អាសយដ្ឋាន: ភ្នំពេញ, កម្ពុជា",
-      form: { name: "ឈ្មោះ", email: "អ៊ីមែល", message: "សារ", send: "ផ្ញើសារ" },
+      address: "អាសយដ្ឋាន: សៀមរាប, កម្ពុជា",
+      form: { name: "ឈ្មោះ", phone: "លេខទូរស័ព្ទ", email: "អ៊ីមែល", message: "សារ", send: "ផ្ញើសារ" },
       mapPlaceholder: "ផែនទី",
     },
     aftercare: {

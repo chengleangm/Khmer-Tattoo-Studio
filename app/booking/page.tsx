@@ -32,8 +32,8 @@ export default function BookingPage() {
               <p><strong className="font-condensed uppercase tracking-editorial text-white">{b.monFri}</strong> 11:00 AM - 8:00 PM</p>
               <p><strong className="font-condensed uppercase tracking-editorial text-white">{b.saturday}</strong> 12:00 PM - 7:00 PM</p>
               <p><strong className="font-condensed uppercase tracking-editorial text-white">{b.sunday}</strong> {b.consultOnly}</p>
-              <p><strong className="font-condensed uppercase tracking-editorial text-white">{b.phone}</strong> +855 12 345 678</p>
-              <p><strong className="font-condensed uppercase tracking-editorial text-white">{b.email}</strong> hello@khmertattoostudio.com</p>
+              <p><strong className="font-condensed uppercase tracking-editorial text-white">{b.phone}</strong> 092394843 / 0964637600</p>
+              <p><strong className="font-condensed uppercase tracking-editorial text-white">{b.email}</strong> khmertattoostudio@gmail.com</p>
             </div>
           </aside>
         </div>

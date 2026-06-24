@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Facebook, Instagram, Linkedin, Send } from "lucide-react";
+import { Facebook, Linkedin, Mail, Send } from "lucide-react";
 import Button from "@/components/Button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/data/translations";
@@ -14,7 +14,12 @@ function wrapLatinWords(text: string) {
   );
 }
 
-const socialIcons = [Instagram, Facebook, Send, Linkedin];
+const socialLinks = [
+  { Icon: Send, href: "https://t.me/sokreoun", label: "Telegram" },
+  { Icon: Facebook, href: "https://www.facebook.com/profile.php?id=100023594836736", label: "Facebook" },
+  { Icon: Mail, href: "mailto:khmertattoostudio@gmail.com", label: "Email" },
+  { Icon: Linkedin, href: "/contact", label: "LinkedIn" },
+];
 
 export default function Footer() {
   const { lang } = useLanguage();
@@ -60,15 +65,17 @@ export default function Footer() {
               {text.social}
             </p>
             <div className="mt-3 grid max-w-48 grid-cols-4 gap-2 md:mt-4 md:flex md:max-w-none md:gap-3">
-              {socialIcons.map((Icon, index) => (
-                <Link
-                  key={index}
-                  href="/contact"
-                  aria-label="Social link"
+              {socialLinks.map(({ Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
                   className="inline-flex h-10 w-10 items-center justify-center border border-white/20 transition hover:border-teal hover:bg-teal"
                 >
                   <Icon size={17} />
-                </Link>
+                </a>
               ))}
             </div>
           </div>

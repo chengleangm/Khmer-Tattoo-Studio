@@ -30,7 +30,7 @@ const kantumruy = Kantumruy_Pro({
 export const metadata: Metadata = {
   title: "Khmer Tattoo Studio",
   description:
-    "Premium blackwork, Khmer-inspired, fine line, and realistic tattoo artistry in Phnom Penh, Cambodia.",
+    "Premium blackwork, Khmer-inspired, fine line, and realistic tattoo artistry in Siem Reap, Cambodia.",
 };
 
 export default function RootLayout({

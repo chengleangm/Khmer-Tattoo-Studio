@@ -7,6 +7,7 @@ type ButtonProps = {
   variant?: "light" | "dark" | "teal" | "outline";
   className?: string;
   type?: "button" | "submit";
+  disabled?: boolean;
 };
 
 const variants = {
@@ -22,6 +23,7 @@ export default function Button({
   variant = "dark",
   className = "",
   type = "button",
+  disabled = false,
 }: ButtonProps) {
   const classes = `inline-flex items-center justify-center gap-2 border border-current px-5 py-3 font-condensed text-sm uppercase tracking-editorial transition duration-300 ${variants[variant]} ${className}`;
 
@@ -35,7 +37,7 @@ export default function Button({
   }
 
   return (
-    <button type={type} className={classes}>
+    <button type={type} className={classes} disabled={disabled}>
       {children}
       <ArrowRight aria-hidden="true" size={16} strokeWidth={1.8} />
     </button>
