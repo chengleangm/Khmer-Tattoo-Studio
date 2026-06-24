@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --page-bg: #f7f7f3;
+  --ink: #050706;
+  --teal: #c8a24a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--teal);
+  color: white;
+}
+
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+.editorial-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.editorial-section::before {
+  content: attr(data-bg-word);
+  position: absolute;
+  inset-inline-start: -0.06em;
+  top: 50%;
+  z-index: 0;
+  transform: translateY(-50%);
+  color: rgba(5, 7, 6, 0.045);
+  font-family: var(--font-bebas), Impact, sans-serif;
+  font-size: clamp(7rem, 23vw, 21rem);
+  line-height: 0.72;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.editorial-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.vertical-title {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.grain {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
