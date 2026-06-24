@@ -1,6 +1,6 @@
 "use client";
 
-import { Upload } from "lucide-react";
+import { Calendar, Upload } from "lucide-react";
 import { useState } from "react";
 import Button from "@/components/Button";
 import { styles } from "@/data/site";
@@ -18,6 +18,9 @@ export default function BookingForm() {
   const [fileName, setFileName] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
+  const today = new Date();
+  today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+  const minDate = today.toISOString().slice(0, 10);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -70,20 +73,23 @@ export default function BookingForm() {
         </select>
         <input className={fieldClass} name="placement" placeholder={f.placement} aria-label={f.placement} required />
       </div>
-      <input
-        className={fieldClass}
-        name="preferredDate"
-        type="text"
-        placeholder={f.date}
-        aria-label={f.date}
-        required
-        onFocus={(e) => {
-          e.currentTarget.type = "date";
-        }}
-        onBlur={(e) => {
-          if (!e.currentTarget.value) e.currentTarget.type = "text";
-        }}
-      />
+      <label className="block border border-ink/15 bg-white px-3 py-2 transition focus-within:border-teal sm:px-4 sm:py-3">
+        <span className="mb-1 block font-condensed text-[0.65rem] uppercase tracking-editorial text-ink/55 sm:text-xs">
+          {f.date}
+        </span>
+        <span className="flex items-center gap-2">
+          <Calendar className="shrink-0 text-ink/45" size={17} />
+          <input
+            className="min-w-0 flex-1 bg-transparent text-sm outline-none"
+            name="preferredDate"
+            type="date"
+            min={minDate}
+            aria-label={f.date}
+            required
+            onClick={(e) => e.currentTarget.showPicker?.()}
+          />
+        </span>
+      </label>
       <textarea
         className={`${fieldClass} min-h-28 resize-none sm:min-h-40`}
         name="message"

@@ -30,7 +30,7 @@ export default function Footer() {
     <footer className="grain bg-ink px-5 py-8 text-white lg:px-8 lg:py-10">
       <div className="mx-auto max-w-7xl">
         <div className="mb-7 bg-teal p-4 sm:p-5 md:flex md:items-center md:justify-between md:px-6">
-          <p className="max-w-[18rem] break-words font-display text-[2rem] leading-[0.9] sm:max-w-xl sm:text-5xl">
+          <p className="footer-tagline max-w-[18rem] break-words font-display text-[2rem] leading-[0.9] sm:max-w-xl sm:text-5xl">
             {text.tagline}
           </p>
           <Button href="/booking" variant="light" className="mt-5 w-full md:mt-0 md:w-auto">
