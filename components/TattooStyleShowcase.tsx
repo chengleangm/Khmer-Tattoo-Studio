@@ -28,14 +28,14 @@ export default function TattooStyleShowcase() {
           <Image
             key={active.image}
             src={active.image}
-            alt={`${active.name} preview`}
+            alt={`${styleOptions[activeIndex].name} preview`}
             fill
             sizes="(max-width: 768px) 90vw, 42vw"
             className="object-cover grayscale transition duration-500 group-hover:scale-105"
           />
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/75 to-transparent p-4">
             <p className="font-condensed text-xs uppercase tracking-editorial text-white/70">{text.selectedStyle}</p>
-            <p lang="en" className="font-display text-4xl leading-none text-white sm:text-5xl">{active.name}</p>
+            <p lang={lang === "en" ? "en" : undefined} className="font-display text-4xl leading-none text-white sm:text-5xl">{text.styleNames[activeIndex]}</p>
           </div>
         </div>
 
@@ -62,7 +62,7 @@ export default function TattooStyleShowcase() {
                       : "border-ink bg-bone text-ink hover:border-teal"
                   }`}
                 >
-                  <span lang="en" className="max-w-full break-words [overflow-wrap:anywhere]">{style.name}</span>
+                  <span lang={lang === "en" ? "en" : undefined} className="max-w-full break-words [overflow-wrap:anywhere]">{text.styleNames[index]}</span>
                 </button>
               );
             })}

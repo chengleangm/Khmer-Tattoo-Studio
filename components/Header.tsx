@@ -30,6 +30,7 @@ export default function Header() {
         <div className="mx-auto flex h-20 max-w-7xl items-center px-5 lg:px-8">
           <Link
             href="/"
+            lang="en"
             className="logo-brand min-w-0 max-w-[16rem] truncate font-display text-2xl leading-none tracking-[0.04em] sm:max-w-none sm:text-3xl"
             onClick={() => setOpen(false)}
           >

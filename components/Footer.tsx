@@ -38,8 +38,8 @@ export default function Footer() {
             <p lang="en" className="logo-brand max-w-[18rem] font-display text-[clamp(3.1rem,17vw,6rem)] leading-[0.78] text-white md:max-w-none lg:text-[clamp(4.5rem,13vw,12rem)]">
               A TOUCH OF INK
             </p>
-            <p lang="en" className="mt-3 font-condensed text-xs uppercase tracking-editorial text-white/60 md:mt-4 md:text-sm">
-              Khmer Tattoo Studio
+            <p lang={lang === "en" ? "en" : undefined} className="mt-3 font-condensed text-xs uppercase tracking-editorial text-white/60 md:mt-4 md:text-sm">
+              {text.brandName}
             </p>
           </div>
 
