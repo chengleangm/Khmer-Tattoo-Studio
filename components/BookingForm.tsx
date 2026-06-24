@@ -9,6 +9,9 @@ import { t } from "@/data/translations";
 
 const fieldClass =
   "min-w-0 w-full border border-ink/15 bg-white px-3 py-3 text-sm outline-none transition placeholder:text-ink/45 focus:border-teal sm:px-4 sm:py-4";
+const months = Array.from({ length: 12 }, (_, index) => String(index + 1).padStart(2, "0"));
+const days = Array.from({ length: 31 }, (_, index) => String(index + 1).padStart(2, "0"));
+const years = ["2026", "2027", "2028", "2029", "2030"];
 
 export default function BookingForm() {
   const { lang } = useLanguage();
@@ -18,9 +21,7 @@ export default function BookingForm() {
   const [fileName, setFileName] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
-  const today = new Date();
-  today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
-  const minDate = today.toISOString().slice(0, 10);
+  const [dateParts, setDateParts] = useState({ month: "", day: "", year: "" });
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -30,6 +31,27 @@ export default function BookingForm() {
     const form = event.currentTarget;
     const formData = new FormData(form);
     formData.set("language", lang);
+
+    const selectedDate = new Date(
+      Number(dateParts.year),
+      Number(dateParts.month) - 1,
+      Number(dateParts.day),
+    );
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const validDate =
+      selectedDate.getFullYear() === Number(dateParts.year) &&
+      selectedDate.getMonth() === Number(dateParts.month) - 1 &&
+      selectedDate.getDate() === Number(dateParts.day) &&
+      selectedDate >= today;
+
+    if (!validDate) {
+      setStatus("error");
+      setFeedback(lang === "km" ? "សូមជ្រើសរើសថ្ងៃកក់ដែលត្រឹមត្រូវ។" : "Please choose a valid booking date.");
+      return;
+    }
+
+    formData.set("preferredDate", `${dateParts.year}-${dateParts.month}-${dateParts.day}`);
 
     try {
       const response = await fetch("/api/booking", {
@@ -44,6 +66,7 @@ export default function BookingForm() {
 
       form.reset();
       setFileName("");
+      setDateParts({ month: "", day: "", year: "" });
       setStatus("success");
       setFeedback(lang === "km" ? "បានផ្ញើសំណើរបស់អ្នកទៅ Telegram រួចហើយ។" : "Your request was sent to Telegram.");
     } catch (error) {
@@ -58,7 +81,7 @@ export default function BookingForm() {
         <input className={fieldClass} name="fullName" placeholder={f.fullName} aria-label={f.fullName} required />
         <input className={fieldClass} name="phone" placeholder={f.phone} aria-label={f.phone} required />
       </div>
-      <input className={fieldClass} name="email" type="email" placeholder={f.email} aria-label={f.email} required />
+      <input className={fieldClass} name="email" type="email" placeholder={f.email} aria-label={f.email} required suppressHydrationWarning />
       <div className="grid max-w-full grid-cols-2 gap-2 sm:gap-4">
         <select className={fieldClass} name="tattooStyle" aria-label={f.style} defaultValue="" required>
           <option value="" disabled>{f.style}</option>
@@ -77,17 +100,44 @@ export default function BookingForm() {
         <span className="mb-1 block font-condensed text-[0.65rem] uppercase tracking-editorial text-ink/55 sm:text-xs">
           {f.date}
         </span>
-        <span className="flex items-center gap-2">
+        <span className="grid grid-cols-[auto_1fr_1fr_1fr] items-center gap-2">
           <Calendar className="shrink-0 text-ink/45" size={17} />
-          <input
-            className="min-w-0 flex-1 bg-transparent text-sm outline-none"
-            name="preferredDate"
-            type="date"
-            min={minDate}
-            aria-label={f.date}
+          <select
+            className="min-w-0 bg-transparent text-sm outline-none"
+            aria-label={f.month}
+            value={dateParts.month}
+            onChange={(e) => setDateParts((date) => ({ ...date, month: e.target.value }))}
             required
-            onClick={(e) => e.currentTarget.showPicker?.()}
-          />
+          >
+            <option value="" disabled>{f.month}</option>
+            {months.map((month) => (
+              <option key={month} value={month}>{month}</option>
+            ))}
+          </select>
+          <select
+            className="min-w-0 bg-transparent text-sm outline-none"
+            aria-label={f.day}
+            value={dateParts.day}
+            onChange={(e) => setDateParts((date) => ({ ...date, day: e.target.value }))}
+            required
+          >
+            <option value="" disabled>{f.day}</option>
+            {days.map((day) => (
+              <option key={day} value={day}>{day}</option>
+            ))}
+          </select>
+          <select
+            className="min-w-0 bg-transparent text-sm outline-none"
+            aria-label={f.year}
+            value={dateParts.year}
+            onChange={(e) => setDateParts((date) => ({ ...date, year: e.target.value }))}
+            required
+          >
+            <option value="" disabled>{f.year}</option>
+            {years.map((year) => (
+              <option key={year} value={year}>{year}</option>
+            ))}
+          </select>
         </span>
       </label>
       <textarea

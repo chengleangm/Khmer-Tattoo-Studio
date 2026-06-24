@@ -47,7 +47,7 @@ export default function ContactForm() {
     <form className="grid gap-3 bg-bone p-4 sm:gap-4 sm:p-5 md:p-8" onSubmit={handleSubmit}>
       <input className={fieldClass} name="name" placeholder={f.name} aria-label={f.name} required />
       <input className={fieldClass} name="phone" placeholder={f.phone} aria-label={f.phone} required />
-      <input className={fieldClass} name="email" type="email" placeholder={f.email} aria-label={f.email} required />
+      <input className={fieldClass} name="email" type="email" placeholder={f.email} aria-label={f.email} required suppressHydrationWarning />
       <textarea className={`${fieldClass} min-h-28 resize-none sm:min-h-40`} name="message" placeholder={f.message} aria-label={f.message} required />
       {feedback && (
         <p className={`text-sm ${status === "error" ? "text-red-700" : "text-ink/70"}`} role="status">

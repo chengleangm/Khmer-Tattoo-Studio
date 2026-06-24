@@ -82,7 +82,7 @@ export const t = {
       form: {
         fullName: "Full Name", phone: "Phone", email: "Email",
         style: "Tattoo Style", placement: "Placement",
-        date: "Preferred Date",
+        date: "Preferred Date", month: "Month", day: "Day", year: "Year",
         message: "Message / Idea",
         uploadLabel: "Upload Reference", uploadSub: "Optional image",
         chooseImage: "Choose Image",
@@ -211,7 +211,7 @@ export const t = {
       form: {
         fullName: "ឈ្មោះពេញ", phone: "លេខទូរស័ព្ទ", email: "អ៊ីមែល",
         style: "រចនាប័ទ្មសាក់", placement: "ទីតាំងសាក់លើរាងកាយ",
-        date: "ថ្ងៃដែលចង់កក់",
+        date: "ថ្ងៃដែលចង់កក់", month: "ខែ", day: "ថ្ងៃ", year: "ឆ្នាំ",
         message: "សារ / គំនិតសាក់",
         uploadLabel: "បង្ហោះរូបភាពយោង", uploadSub: "រូបភាពជម្រើស",
         chooseImage: "ជ្រើសរើសរូបភាព",
