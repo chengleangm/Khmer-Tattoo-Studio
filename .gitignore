@@ -26,3 +26,5 @@ yarn-error.log*
 # dev artifacts
 qa-screenshots/
 design-qa.md
+
+.vercel
