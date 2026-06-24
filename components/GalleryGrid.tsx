@@ -3,11 +3,20 @@
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { galleryItems } from "@/data/site";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/data/translations";
 
-const filters = ["All", "Blackwork", "Realistic", "Khmer", "Geometric", "Fine Line"];
+const filterKeys = ["All", "Blackwork", "Realistic", "Khmer", "Geometric", "Fine Line"] as const;
 
 export default function GalleryGrid() {
   const [active, setActive] = useState("All");
+  const { lang } = useLanguage();
+  const filterAll = t[lang].gallery.filterAll;
+
+  const filters = filterKeys.map((key) => ({
+    value: key,
+    label: key === "All" ? filterAll : key,
+  }));
 
   const items = useMemo(() => {
     if (active === "All") return galleryItems;
@@ -19,16 +28,17 @@ export default function GalleryGrid() {
       <div className="mb-8 flex flex-wrap justify-center gap-2">
         {filters.map((filter) => (
           <button
-            key={filter}
+            key={filter.value}
             type="button"
-            onClick={() => setActive(filter)}
+            onClick={() => setActive(filter.value)}
+            lang={filter.value !== "All" ? "en" : undefined}
             className={`border px-4 py-2 font-condensed text-sm uppercase tracking-editorial transition ${
-              active === filter
+              active === filter.value
                 ? "border-teal bg-teal text-white"
                 : "border-ink/15 bg-bone text-ink hover:border-ink"
             }`}
           >
-            {filter}
+            {filter.label}
           </button>
         ))}
       </div>

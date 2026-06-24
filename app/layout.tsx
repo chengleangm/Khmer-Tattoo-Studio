@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, Inter, Oswald } from "next/font/google";
+import { Bebas_Neue, Inter, Kantumruy_Pro, Oswald } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const bebas = Bebas_Neue({
   subsets: ["latin"],
@@ -20,6 +21,12 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const kantumruy = Kantumruy_Pro({
+  subsets: ["khmer"],
+  weight: ["300", "400", "700"],
+  variable: "--font-kantumruy",
+});
+
 export const metadata: Metadata = {
   title: "Khmer Tattoo Studio",
   description:
@@ -33,10 +40,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-scroll-behavior="smooth">
-      <body className={`${bebas.variable} ${oswald.variable} ${inter.variable} font-sans antialiased`}>
-        <Header />
-        {children}
-        <Footer />
+      <body className={`${bebas.variable} ${oswald.variable} ${inter.variable} ${kantumruy.variable} font-sans antialiased`}>
+        <LanguageProvider>
+          <Header />
+          {children}
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

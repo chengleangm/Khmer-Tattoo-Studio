@@ -74,6 +74,61 @@ button {
   background-size: 42px 42px;
 }
 
+html[lang="km"] body,
+html[lang="km"] .font-sans {
+  font-family: var(--font-kantumruy), var(--font-inter), Arial, sans-serif;
+  font-weight: 300;
+}
+
+html[lang="km"] .font-condensed {
+  font-family: var(--font-kantumruy), var(--font-oswald), Arial Narrow, sans-serif;
+  font-weight: 400;
+}
+
+html[lang="km"] .font-display:not(.logo-brand) {
+  font-family: var(--font-kantumruy), var(--font-bebas), Impact, sans-serif;
+  font-weight: 700;
+}
+
+html[lang="km"] .logo-brand {
+  font-family: var(--font-bebas), Impact, sans-serif;
+  font-weight: 400;
+}
+
+/* Shrink only title text in Khmer mode — 0.88em is relative to the parent's
+   computed clamp() size so it scales correctly at every breakpoint */
+html[lang="km"] .km-title-text {
+  font-size: 0.80em;
+}
+
+/* Standalone elements marked lang="en" keep their original Latin fonts */
+html[lang="km"] [lang="en"].font-display,
+html[lang="km"] [lang="en"] .font-display {
+  font-family: var(--font-bebas), Impact, sans-serif !important;
+  font-weight: 400 !important;
+}
+html[lang="km"] [lang="en"].font-condensed,
+html[lang="km"] [lang="en"] .font-condensed {
+  font-family: var(--font-oswald), Arial Narrow, sans-serif !important;
+  font-weight: normal !important;
+}
+html[lang="km"] [lang="en"].font-sans,
+html[lang="km"] [lang="en"] .font-sans,
+html[lang="km"] [lang="en"] {
+  font-family: var(--font-inter), Arial, sans-serif !important;
+  font-weight: normal !important;
+}
+
+/* lang="en" spans INSIDE font-class parents (from wrapLatinWords) restore the correct font */
+html[lang="km"] .font-display [lang="en"] {
+  font-family: var(--font-bebas), Impact, sans-serif !important;
+  font-weight: 400 !important;
+}
+html[lang="km"] .font-condensed [lang="en"] {
+  font-family: var(--font-oswald), Arial Narrow, sans-serif !important;
+  font-weight: normal !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -19,6 +19,7 @@ const config: Config = {
         display: ["var(--font-bebas)", "Impact", "sans-serif"],
         condensed: ["var(--font-oswald)", "Arial Narrow", "sans-serif"],
         sans: ["var(--font-inter)", "Arial", "sans-serif"],
+        kantumruy: ["var(--font-kantumruy)", "sans-serif"],
       },
       letterSpacing: {
         editorial: "0.08em",

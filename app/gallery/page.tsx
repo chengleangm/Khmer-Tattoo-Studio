@@ -1,15 +1,21 @@
+"use client";
+
 import GalleryGrid from "@/components/GalleryGrid";
 import SectionTitle from "@/components/SectionTitle";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/data/translations";
 
 export default function GalleryPage() {
+  const { lang } = useLanguage();
+  const tx = t[lang];
+  const g = tx.gallery;
+
   return (
     <main>
       <section className="grain bg-ink px-5 py-20 text-white lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <SectionTitle title="OUR GALLERY" light />
-          <p className="mx-auto mt-6 max-w-2xl text-center text-sm leading-6 text-white/60">
-            A rotating portfolio preview with clear local image filenames under <span className="font-mono">public/images</span>.
-          </p>
+          <SectionTitle title={g.pageTitle} kicker={tx.kicker} light />
+          <p className="mx-auto mt-6 max-w-2xl text-center text-sm leading-6 text-white/60">{g.pageDesc}</p>
         </div>
       </section>
 
