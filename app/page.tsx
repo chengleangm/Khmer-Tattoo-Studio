@@ -32,9 +32,15 @@ export default function Home() {
             <ImageCard src="/images/hero-tattoo-portrait.jpg" alt="Black and white tattoo portrait inspiration" className="h-[315px] sm:h-[430px] lg:h-[520px]" priority />
             <ImageCard src="/images/hero-tattoo-sleeve.jpg" alt="Detailed sleeve tattoo close up" className="h-[315px] sm:h-[430px] lg:mt-10 lg:h-[520px]" priority />
             <div className="pointer-events-none absolute inset-x-0 top-[42%] z-10 translate-y-[-50%] lg:top-[43%]">
-              <h1 className="hero-title text-center font-display text-[clamp(3.2rem,19vw,5rem)] leading-[0.78] text-white mix-blend-screen md:text-[clamp(6rem,18vw,14rem)]">
-                <span className="block">{h.heroLine1}</span>
-                <span className="block md:mt-1">{h.heroLine2}</span>
+              <h1 className="flex justify-center">
+                <Image
+                  src="/logo/logobamboo.png"
+                  alt={`${h.heroLine1} ${h.heroLine2}`}
+                  width={406}
+                  height={1080}
+                  priority
+                  className="h-[270px] w-auto [filter:drop-shadow(0_18px_28px_rgba(0,0,0,0.8))_drop-shadow(0_0_14px_rgba(255,255,255,0.2))] sm:h-[380px] lg:h-[520px]"
+                />
               </h1>
             </div>
             <div className="z-20 col-span-2 mt-1 justify-self-center lg:absolute lg:bottom-10 lg:left-1/2 lg:mt-0 lg:-translate-x-1/2">

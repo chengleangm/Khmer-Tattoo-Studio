@@ -14,7 +14,7 @@ function wrapLatinWords(text: string) {
 }
 
 export default function SectionTitle({
-  kicker = "Stories on Skin",
+  kicker = "Sacred Lines",
   title,
   align = "center",
   light = false,

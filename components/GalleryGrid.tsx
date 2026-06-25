@@ -6,14 +6,14 @@ import { galleryItems } from "@/data/site";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/data/translations";
 
-const filterKeys = ["All", "Blackwork", "Realistic", "Khmer", "Geometric", "Fine Line"] as const;
+const filterKeys = ["All", "Sak Yant Khmer", "Abstract Khmer", "Khmer Script Flow", "Protective Yantra", "Japanese Inspired"] as const;
 
 const kmFilterLabels: Record<string, string> = {
-  Blackwork: "សាក់ខ្មៅ",
-  Realistic: "សាក់បែបពិតនិយម",
-  Khmer: "សាក់បែបខ្មែរ",
-  Geometric: "សាក់ធរណីមាត្រ",
-  "Fine Line": "សាក់បន្ទាត់ស្តើង",
+  "Sak Yant Khmer": "សាក់យ័ន្តខ្មែរ",
+  "Abstract Khmer": "អាប់ស្ត្រាក់ខ្មែរ",
+  "Khmer Script Flow": "លំហូរអក្សរខ្មែរ",
+  "Protective Yantra": "យ័ន្តការពារ",
+  "Japanese Inspired": "ឥទ្ធិពលជប៉ុន",
 };
 
 function getStyleLabel(style: string, lang: "en" | "km") {

@@ -62,7 +62,7 @@ export default function ContactPage() {
             <ContactForm />
             <div className="min-h-64 overflow-hidden border border-ink/10 bg-white sm:min-h-80">
               <iframe
-                title="Khmer Tattoo Studio location map"
+                title="Khmer Bamboo Sakyant location map"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4604.827883633229!2d103.85196903702585!3d13.349878938472871!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311017004fae8c41%3A0xe7fdb3c4b2a06112!2sKhmer%20Tattoo%20studio!5e1!3m2!1sen!2skh!4v1782291823091!5m2!1sen!2skh"
                 className="h-64 w-full sm:h-80"
                 style={{ border: 0 }}

@@ -28,9 +28,9 @@ const kantumruy = Kantumruy_Pro({
 });
 
 export const metadata: Metadata = {
-  title: "Khmer Tattoo Studio",
+  title: "Khmer Bamboo Sakyant",
   description:
-    "Premium blackwork, Khmer-inspired, fine line, and realistic tattoo artistry in Siem Reap, Cambodia.",
+    "Khmer Sakyant, Abstract Khmer, and selected Japanese-inspired tattoo work in Siem Reap, Cambodia.",
 };
 
 export default function RootLayout({

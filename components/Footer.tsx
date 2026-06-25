@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { Facebook, Linkedin, Mail, Send } from "lucide-react";
 import Button from "@/components/Button";
@@ -41,7 +42,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-6 border-t border-white/10 pt-7 md:grid-cols-[1.2fr_0.8fr_0.8fr] md:gap-8 md:pt-8">
           <div className="col-span-2 md:col-span-1">
             <p lang="en" className="logo-brand max-w-[18rem] font-display text-[clamp(3.1rem,17vw,6rem)] leading-[0.78] text-white md:max-w-none lg:text-[clamp(4.5rem,13vw,12rem)]">
-              A TOUCH OF INK
+              KHMER SAKYANT
             </p>
             <p lang={lang === "en" ? "en" : undefined} className="mt-3 font-condensed text-xs uppercase tracking-editorial text-white/60 md:mt-4 md:text-sm">
               {text.brandName}
@@ -81,7 +82,17 @@ export default function Footer() {
           </div>
         </div>
 
-        <p className="mt-7 border-t border-white/10 pt-5 font-condensed text-[0.68rem] uppercase tracking-editorial text-white/45 md:mt-8 md:text-xs">
+        <div className="mt-7 flex justify-end md:mt-8">
+          <Image
+            src="/logo/logobamboocircle.png"
+            alt="Khmer Bamboo Sakyant logo"
+            width={1080}
+            height={1080}
+            className="h-16 w-16 shrink-0 object-contain drop-shadow-[0_10px_24px_rgba(0,0,0,0.45)] sm:h-20 sm:w-20"
+          />
+        </div>
+
+        <p className="mt-5 border-t border-white/10 pt-5 font-condensed text-[0.68rem] uppercase tracking-editorial text-white/45 md:text-xs">
           {wrapLatinWords(text.copyright)}
         </p>
       </div>

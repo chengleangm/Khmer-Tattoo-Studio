@@ -21,7 +21,7 @@ export default function AboutPage() {
 
       <section className="editorial-section px-4 py-12 sm:px-5 sm:py-16 lg:px-8 lg:py-28" data-bg-word="KHMER">
         <div className="mx-auto grid max-w-7xl gap-6 sm:gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-          <ImageCard src="/images/about-studio-work.jpg" alt="Premium tattoo artistry in Cambodia" className="h-[300px] sm:h-[460px] lg:h-[620px]" />
+          <ImageCard src="/images/about-studio-work.jpg" alt="Khmer Sakyant tattoo artistry in Cambodia" className="h-[300px] sm:h-[460px] lg:h-[620px]" />
           <div>
             <p className="font-condensed text-xs uppercase tracking-editorial text-teal sm:text-sm">{a.ourStory}</p>
             <h2 className="mt-3 max-w-[21rem] font-display text-[clamp(2.8rem,12vw,4.25rem)] leading-[0.82] sm:mt-4 sm:max-w-none sm:text-[clamp(4rem,9vw,8rem)]">

@@ -6,12 +6,12 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/data/translations";
 
 const styleOptions = [
-  { name: "Japanese Tattoo", image: "/images/about-studio-work.jpg" },
-  { name: "Geometric Tattoo", image: "/images/gallery-7.jpg" },
-  { name: "Blackwork Tattoo", image: "/images/studio-tattoo-arm.jpg" },
-  { name: "Dotwork Tattoo", image: "/images/eternal-tattoo-closeup.jpg" },
-  { name: "Realistic Tattoo", image: "/images/gallery-2.jpg" },
-  { name: "Khmer Inspired Tattoo", image: "/images/gallery-3.jpg" },
+  { name: "Sak Yant Khmer", image: "/images/gallery-3.jpg" },
+  { name: "Abstract Khmer", image: "/images/studio-tattoo-arm.jpg" },
+  { name: "Khmer Script Flow", image: "/images/eternal-tattoo-closeup.jpg" },
+  { name: "Protective Yantra", image: "/images/gallery-7.jpg" },
+  { name: "Japanese Inspired", image: "/images/about-studio-work.jpg" },
+  { name: "Custom Sacred Piece", image: "/images/gallery-5.jpg" },
 ];
 
 export default function TattooStyleShowcase() {

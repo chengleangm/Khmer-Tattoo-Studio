@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -31,10 +32,18 @@ export default function Header() {
           <Link
             href="/"
             lang="en"
-            className="logo-brand min-w-0 max-w-[16rem] truncate font-display text-2xl leading-none tracking-[0.04em] sm:max-w-none sm:text-3xl"
+            className="flex min-w-0 shrink-0 items-center"
             onClick={() => setOpen(false)}
+            aria-label="Khmer Bamboo Sakyant home"
           >
-            Khmer Tattoo Studio
+            <Image
+              src="/logo/logobamboohz.png"
+              alt="Khmer Bamboo Sakyant"
+              width={1080}
+              height={398}
+              priority
+              className="h-12 w-auto sm:h-14"
+            />
           </Link>
 
           {/* Desktop nav — ml-auto pushes it right of the logo */}

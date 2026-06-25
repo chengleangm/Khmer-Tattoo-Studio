@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useSyncExternalStore } from "react";
 
 export type Lang = "en" | "km";
 
@@ -9,20 +9,40 @@ const LanguageContext = createContext<{ lang: Lang; toggle: () => void }>({
   toggle: () => {},
 });
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLang] = useState<Lang>("en");
+const listeners = new Set<() => void>();
 
-  useEffect(() => {
-    const saved = localStorage.getItem("lang") as Lang | null;
-    if (saved === "km") setLang("km");
-  }, []);
+function getStoredLang(): Lang {
+  if (typeof window === "undefined") return "en";
+  return localStorage.getItem("lang") === "km" ? "km" : "en";
+}
+
+function getServerLang(): Lang {
+  return "en";
+}
+
+function subscribe(listener: () => void) {
+  listeners.add(listener);
+  window.addEventListener("storage", listener);
+
+  return () => {
+    listeners.delete(listener);
+    window.removeEventListener("storage", listener);
+  };
+}
+
+function setStoredLang(lang: Lang) {
+  localStorage.setItem("lang", lang);
+  listeners.forEach((listener) => listener());
+}
+
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const lang = useSyncExternalStore(subscribe, getStoredLang, getServerLang);
 
   useEffect(() => {
     document.documentElement.lang = lang;
-    localStorage.setItem("lang", lang);
   }, [lang]);
 
-  const toggle = () => setLang((l) => (l === "en" ? "km" : "en"));
+  const toggle = () => setStoredLang(lang === "en" ? "km" : "en");
 
   return (
     <LanguageContext.Provider value={{ lang, toggle }}>
