@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "Artists",
   description:
     "Meet the artists at Khmer Bamboo Sakyant — Siem Reap's traditional Khmer tattoo studio specialising in bamboo Sakyant and sacred Sak Yant Cambodia work.",
-  alternates: { canonical: "/artists" },
+  alternates: { canonical: "https://www.khmerbamboosakyant.com/artists" },
 };
 
 export default function ArtistsLayout({ children }: { children: React.ReactNode }) {

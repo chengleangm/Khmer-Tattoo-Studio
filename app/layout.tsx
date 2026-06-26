@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     "Abstract Khmer tattoo",
   ],
   alternates: {
-    canonical: "/",
+    canonical: "https://www.khmerbamboosakyant.com",
   },
   icons: {
     icon: [
