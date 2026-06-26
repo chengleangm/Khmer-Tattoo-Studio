@@ -54,18 +54,25 @@ function GalleryItem({
     return () => observer.disconnect();
   }, [filterKey]);
 
-  const cls =
+  const yDir = state === "below" ? 1 : -1;
+  const flyTransform =
     state === "visible"
-      ? "opacity-100 translate-y-0"
-      : state === "above"
-      ? "opacity-0 -translate-y-10"
-      : "opacity-0 translate-y-10";
+      ? "translate(0px, 0px) scale(1)"
+      : col === 0
+      ? `translate(-180px, ${25 * yDir}px) scale(0.88)`
+      : col === 2
+      ? `translate(180px, ${25 * yDir}px) scale(0.88)`
+      : `translate(0px, ${110 * yDir}px) scale(0.88)`;
 
   return (
     <div
       ref={ref}
-      className={`transition-[opacity,transform] duration-700 ease-out ${cls}`}
-      style={{ transitionDelay: `${col * 80}ms` }}
+      style={{
+        transform: flyTransform,
+        opacity: state === "visible" ? 1 : 0,
+        transition: "transform 750ms cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 600ms ease-out",
+        transitionDelay: `${col * 70}ms`,
+      }}
     >
       <div className="group relative aspect-square overflow-hidden bg-charcoal">
         <Image
