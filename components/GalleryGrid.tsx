@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { galleryItems } from "@/data/site";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/data/translations";
@@ -188,9 +189,9 @@ export default function GalleryGrid() {
       </div>
       </div>
 
-      {selectedItem && (
+      {typeof document !== "undefined" && selectedItem ? createPortal((
         <div
-          className="fixed inset-0 z-[80] bg-ink/95 p-3 text-white sm:p-5"
+          className="fixed inset-0 z-[2147483000] bg-ink/95 p-3 text-white sm:p-5"
           role="dialog"
           aria-modal="true"
           aria-label={lang === "km" ? "មើលរូបភាពធំ" : "Gallery image preview"}
@@ -202,7 +203,7 @@ export default function GalleryGrid() {
               event.stopPropagation();
               setSelectedIndex(null);
             }}
-            className="fixed right-4 top-4 z-[9999] flex h-14 w-14 items-center justify-center rounded-full border-2 border-white bg-teal text-white shadow-[0_14px_36px_rgba(0,0,0,0.55)] transition hover:bg-ink sm:right-6 sm:top-6 sm:h-14 sm:w-14"
+            className="fixed right-3 top-3 z-[2147483647] flex h-14 w-14 items-center justify-center rounded-full border-2 border-teal bg-white text-ink shadow-[0_14px_36px_rgba(0,0,0,0.55)] transition hover:bg-teal hover:text-white sm:right-6 sm:top-6 sm:h-14 sm:w-14"
             aria-label={lang === "km" ? "បិទ" : "Close image preview"}
           >
             <X className="h-7 w-7" strokeWidth={2.4} />
@@ -250,7 +251,7 @@ export default function GalleryGrid() {
             </p>
           </div>
         </div>
-      )}
+      ), document.body) : null}
     </div>
   );
 }
