@@ -54,18 +54,11 @@ function GalleryItem({
     return () => observer.disconnect();
   }, [filterKey]);
 
-  // "below"  → first entry: subtle nudge up (stays inside overflow-hidden container)
-  // "above"  → exited at top: fly out directionally (left / up / right per column)
-  // "visible" → no transform
   const flyTransform =
     state === "visible"
       ? "translate(0px, 0px) scale(1)"
       : state === "above"
-      ? col === 0
-        ? "translate(-160px, -15px) scale(0.88)"
-        : col === 2
-        ? "translate(160px, -15px) scale(0.88)"
-        : "translate(0px, -80px) scale(0.88)"
+      ? "translate(0px, -80px) scale(0.9)"
       : "translate(0px, 48px) scale(0.92)";
 
   return (
@@ -121,14 +114,14 @@ export default function GalleryGrid() {
 
   return (
     <div>
-      <div className="mb-8 flex flex-wrap justify-center gap-2">
+      <div className="mb-6 flex flex-wrap justify-center gap-1.5 sm:mb-8 sm:gap-2">
         {filters.map((filter) => (
           <button
             key={filter.value}
             type="button"
             onClick={() => setActive(filter.value)}
             lang={filter.value !== "All" && lang === "en" ? "en" : undefined}
-            className={`border px-4 py-2 font-condensed text-sm uppercase tracking-editorial transition ${
+            className={`max-w-[calc(50%-0.25rem)] border px-2.5 py-1.5 font-condensed text-[clamp(0.6rem,2.8vw,0.72rem)] uppercase leading-tight tracking-[0.12em] transition sm:max-w-none sm:px-4 sm:py-2 sm:text-sm sm:tracking-editorial ${
               active === filter.value
                 ? "border-teal bg-teal text-white"
                 : "border-ink/15 bg-bone text-ink hover:border-ink"
