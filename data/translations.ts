@@ -74,6 +74,10 @@ export const t = {
       pageTitle: "OUR GALLERY",
       pageDesc: "A focused portfolio of Khmer Sakyant, Abstract Khmer, yantra structure, script-inspired flow, and selected Japanese-influenced tattoo work.",
       filterAll: "All",
+      ctaTitle: "READY TO WEAR YOUR OWN?",
+      ctaDesc: "Every piece in this gallery started with a conversation. Book a free consultation and we'll build something around your meaning, placement, and body.",
+      ctaBook: "Book an Appointment",
+      ctaContact: "Contact Us",
     },
     services: {
       pageTitle: "SAKYANT SERVICES",
@@ -226,6 +230,10 @@ export const t = {
       pageTitle: "បណ្តុំស្នាដៃសាក់របស់យើង",
       pageDesc: "បណ្តុំស្នាដៃសាក់យ័ន្តខ្មែរ អាប់ស្ត្រាក់ខ្មែរ រចនាសម្ព័ន្ធយ័ន្ត លំហូរបែបអក្សរខ្មែរ និងស្នាដៃខ្លះៗដែលមានឥទ្ធិពលជប៉ុន។",
       filterAll: "មើលទាំងអស់",
+      ctaTitle: "ត្រៀមខ្លួនដើម្បីមានស្នាដៃផ្ទាល់ខ្លួន?",
+      ctaDesc: "រាល់ស្នាដៃក្នុងបណ្តុំនេះចាប់ផ្តើមពីការពិភាក្សា។ កក់ពេលពិគ្រោះឥតគិតថ្លៃ ហើយយើងនឹងបង្កើតស្នាដៃសមស្របនឹងអត្ថន័យ ទីតាំង និងរាងកាយរបស់អ្នក។",
+      ctaBook: "កក់ពេលសាក់",
+      ctaContact: "ទំនាក់ទំនងយើង",
     },
     services: {
       pageTitle: "សេវាកម្មសាក់យ័ន្ត",
