@@ -70,8 +70,10 @@ function GalleryItem({
       style={{
         transform: flyTransform,
         opacity: state === "visible" ? 1 : 0,
-        transition: "transform 750ms cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 600ms ease-out",
-        transitionDelay: `${col * 70}ms`,
+        transitionProperty: "transform, opacity",
+        transitionDuration: "750ms, 600ms",
+        transitionTimingFunction: "cubic-bezier(0.25, 0.46, 0.45, 0.94), ease-out",
+        transitionDelay: `${col * 70}ms, ${col * 70}ms`,
       }}
     >
       <div className="group relative aspect-square overflow-hidden bg-charcoal">
