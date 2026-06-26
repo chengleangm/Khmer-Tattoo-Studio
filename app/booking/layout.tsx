@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Book an Appointment",
+  title: "Book a Sak Yant Tattoo — Siem Reap Cambodia",
   description:
     "Book your Sak Yant Cambodia tattoo appointment or bamboo Sakyant Siem Reap consultation at Khmer Bamboo Sakyant. Free consultations available.",
   alternates: { canonical: "https://www.khmerbamboosakyant.com/booking" },

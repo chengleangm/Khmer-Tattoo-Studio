@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: "Contact — Khmer Bamboo Sakyant Siem Reap",
   description:
     "Get in touch with Khmer Bamboo Sakyant — your Khmer tattoo Siem Reap studio. Reach us via WhatsApp, Telegram, or the contact form.",
   alternates: { canonical: "https://www.khmerbamboosakyant.com/contact" },

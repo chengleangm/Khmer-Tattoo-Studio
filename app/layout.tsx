@@ -38,16 +38,35 @@ export const metadata: Metadata = {
     "The Sak Yant tattoo has deep roots in Khmer culture and spiritual meaning. Khmer Bamboo Sakyant creates sacred Khmer, Sak Yant, and custom tattoo work in Siem Reap, Cambodia.",
   keywords: [
     "Khmer tattoo",
+    "Khmer tattoo Siem Reap",
+    "Khmer tattoo artist",
+    "Khmer tattoo studio",
     "Sak Yant",
+    "Sak Yant tattoo",
     "Sak Yant Cambodia",
     "Sak Yant Siem Reap",
+    "Sakyant Cambodia",
+    "Sakyant Siem Reap",
     "Khmer Sakyant",
+    "Khmer Sakyant tattoo",
     "Khmer Bamboo Sakyant",
+    "bamboo tattoo",
+    "bamboo tattoo Cambodia",
+    "bamboo tattoo Siem Reap",
+    "Bamboo Sakyant Siem Reap",
     "Cambodia tattoo studio",
+    "Cambodia tattoo",
+    "tattoo Cambodia",
+    "tattoo Siem Reap",
     "Siem Reap tattoo",
-    "yantra tattoo",
+    "Siem Reap tattoo studio",
+    "tattoo studio Siem Reap",
+    "sacred tattoo Cambodia",
+    "Buddhist tattoo Cambodia",
     "traditional Khmer tattoo",
-    "Abstract Khmer tattoo",
+    "abstract Khmer tattoo",
+    "yantra tattoo",
+    "Yant tattoo",
   ],
   alternates: {
     canonical: "https://www.khmerbamboosakyant.com",
@@ -173,12 +192,63 @@ export default function RootLayout({
     ],
   };
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What is Sak Yant tattooing?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Sak Yant (also written Sakyant) is a form of sacred tattooing rooted in Buddhist and animist traditions across Southeast Asia. Each design — called a Yant — carries a specific spiritual meaning or blessing. Bamboo Sak Yant uses a sharpened bamboo rod instead of a machine, creating a softer, more traditional look.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Where can I get a Sak Yant tattoo in Siem Reap, Cambodia?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Khmer Bamboo Sakyant is a traditional Sak Yant and Khmer tattoo studio in Siem Reap, Cambodia. We specialise in authentic bamboo Sakyant, Khmer script tattoos, and abstract Khmer blackwork. Contact us via WhatsApp or Telegram to book a free consultation.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Is bamboo tattooing safe?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. At Khmer Bamboo Sakyant we use single-use sterile needles for every session. Our studio follows strict hygiene standards to ensure your safety throughout the process.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How much does a Sak Yant tattoo cost in Cambodia?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Pricing depends on the size, complexity, and placement of the design. We offer a free consultation so you can discuss your design and receive an accurate quote before committing. Contact us to book your free Sakyant consultation in Siem Reap.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Do you do custom Khmer tattoo designs?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. Alongside traditional Sak Yant, we create fully custom Khmer tattoo designs — including abstract Khmer script blackwork and sacred geometry inspired by Khmer visual heritage. Every piece is drawn around your body's shape and your personal meaning.",
+        },
+      },
+    ],
+  };
+
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       </head>
       <body className={`${bebas.variable} ${oswald.variable} ${inter.variable} ${kantumruy.variable} font-sans antialiased`}>
