@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/data/translations";
 
@@ -21,17 +20,26 @@ export default function TattooStyleShowcase() {
 
   const active = styleOptions[activeIndex];
 
+  useEffect(() => {
+    styleOptions.forEach((style) => {
+      const image = new window.Image();
+      image.decoding = "async";
+      image.src = style.image;
+    });
+  }, []);
+
   return (
     <section className="editorial-section bg-white px-5 py-14 lg:px-8 lg:py-28" data-bg-word="STUDIO">
       <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10 lg:items-center">
         <div className="group relative h-[250px] overflow-hidden bg-charcoal sm:h-[320px] lg:h-[520px]">
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element -- Direct public images keep style switching instant after preload. */}
+          <img
             key={active.image}
             src={active.image}
             alt={`${styleOptions[activeIndex].name} preview`}
-            fill
-            sizes="(max-width: 768px) 90vw, 42vw"
-            className="object-cover grayscale transition duration-500 group-hover:scale-105"
+            className="h-full w-full object-cover grayscale transition duration-500 group-hover:scale-105"
+            decoding="async"
+            fetchPriority={activeIndex === 2 ? "high" : "auto"}
           />
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/75 to-transparent p-4">
             <p className="font-condensed text-xs uppercase tracking-editorial text-white/70">{text.selectedStyle}</p>
