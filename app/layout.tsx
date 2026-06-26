@@ -110,7 +110,8 @@ export default function RootLayout({
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.khmerbamboosakyant.com";
   const localBusinessJsonLd = {
     "@context": "https://schema.org",
-    "@type": "TattooParlor",
+    "@type": ["LocalBusiness", "TattooParlor"],
+    "@id": `${siteUrl}/#localbusiness`,
     name: "Khmer Bamboo Sakyant",
     alternateName: ["Khmer Tattoo Studio", "Khmer Sakyant", "Bamboo Sakyant"],
     url: siteUrl,
@@ -125,7 +126,24 @@ export default function RootLayout({
       addressLocality: "Siem Reap",
       addressCountry: "KH",
     },
+    location: {
+      "@type": "Place",
+      name: "Khmer Bamboo Sakyant",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Siem Reap",
+        addressCountry: "KH",
+      },
+    },
     areaServed: ["Siem Reap", "Cambodia"],
+    knowsAbout: [
+      "Khmer tattoo Siem Reap",
+      "Sak Yant Cambodia",
+      "Khmer Sakyant tattoo",
+      "Bamboo Sakyant Siem Reap",
+      "Abstract Khmer tattoo",
+      "Yantra tattoo",
+    ],
     priceRange: "$$",
     sameAs: [
       contactDetails.facebookHref,

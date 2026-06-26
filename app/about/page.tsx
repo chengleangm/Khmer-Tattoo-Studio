@@ -46,6 +46,11 @@ export default function AboutPage() {
               <span className="km-title-text">{a.heading}</span>
             </h2>
             <p className="mt-4 text-sm leading-6 text-ink/70 sm:mt-6 sm:text-base sm:leading-7">{a.desc}</p>
+            <p className="mt-4 text-sm leading-6 text-ink/70 sm:text-base sm:leading-7">
+              People searching for Khmer tattoo Siem Reap, Sak Yant Cambodia, Khmer Sakyant tattoo,
+              or Bamboo Sakyant Siem Reap come to us for work that respects Khmer visual heritage
+              while fitting the body with clean, long-lasting linework.
+            </p>
             <div className="mt-5 border-l-[3px] border-teal pl-4 sm:mt-8 sm:border-l-4 sm:pl-5">
               <h3 className="font-display text-4xl leading-none sm:text-5xl">{a.mission}</h3>
               <p className="mt-2 text-xs leading-5 text-ink/65 sm:mt-3 sm:text-sm sm:leading-6">{a.missionDesc}</p>

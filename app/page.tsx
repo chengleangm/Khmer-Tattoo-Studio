@@ -57,6 +57,16 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="bg-bone px-5 py-8 lg:px-8 lg:py-10">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="text-sm leading-6 text-ink/70 sm:text-base sm:leading-7">
+            Khmer Bamboo Sakyant is a Khmer tattoo Siem Reap studio for Sak Yant Cambodia work,
+            Khmer Sakyant tattoo design, Bamboo Sakyant Siem Reap consultation, and custom sacred
+            tattoo pieces shaped around meaning, placement, and body flow.
+          </p>
+        </div>
+      </section>
+
       <section className="editorial-section px-5 py-14 lg:px-8 lg:py-28" data-bg-word="TATTOO">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-3 lg:grid-cols-[0.75fr_1.25fr] lg:gap-8 lg:items-center">
           <div className="order-2 col-span-2 lg:order-1 lg:col-span-1">

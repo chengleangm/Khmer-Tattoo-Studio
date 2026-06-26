@@ -21,6 +21,11 @@ export default function ServicesPage() {
           <p className="mx-auto mt-6 hidden max-w-2xl text-center text-sm leading-6 text-white/60 sm:block">
             {s.pageDesc}
           </p>
+          <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-6 text-white/65 sm:text-base sm:leading-7">
+            Our services cover Khmer tattoo Siem Reap appointments, Sak Yant Cambodia designs,
+            Khmer Sakyant tattoo planning, Bamboo Sakyant Siem Reap consultations, abstract Khmer
+            blackwork, cover-up strategy, and custom sacred placement.
+          </p>
         </div>
       </section>
 
