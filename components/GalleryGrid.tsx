@@ -65,18 +65,17 @@ function GalleryItem({
       : `translate(0px, ${110 * yDir}px) scale(0.88)`;
 
   return (
-    <div className="overflow-hidden">
-      <div
-        ref={ref}
-        style={{
-          transform: flyTransform,
-          opacity: state === "visible" ? 1 : 0,
-          transitionProperty: "transform, opacity",
-          transitionDuration: "750ms, 600ms",
-          transitionTimingFunction: "cubic-bezier(0.25, 0.46, 0.45, 0.94), ease-out",
-          transitionDelay: `${col * 70}ms, ${col * 70}ms`,
-        }}
-      >
+    <div
+      ref={ref}
+      style={{
+        transform: flyTransform,
+        opacity: state === "visible" ? 1 : 0,
+        transitionProperty: "transform, opacity",
+        transitionDuration: "750ms, 600ms",
+        transitionTimingFunction: "cubic-bezier(0.25, 0.46, 0.45, 0.94), ease-out",
+        transitionDelay: `${col * 70}ms, ${col * 70}ms`,
+      }}
+    >
       <div className="group relative aspect-square overflow-hidden bg-charcoal">
         <Image
           src={item.src}
@@ -90,9 +89,7 @@ function GalleryItem({
             {getStyleLabel(item.style, lang)}
           </p>
         </div>
-        {/* Gold border on hover */}
         <div className="absolute inset-0 border-2 border-teal/0 transition-all duration-500 group-hover:border-teal/70" />
-      </div>
       </div>
     </div>
   );
@@ -138,7 +135,8 @@ export default function GalleryGrid() {
         ))}
       </div>
 
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:gap-4">
+      <div className="overflow-hidden">
+      <div className="grid grid-cols-3 gap-2 sm:gap-4">
         {items.map((item, index) => (
           <GalleryItem
             key={`${item.src}-${active}`}
@@ -148,6 +146,7 @@ export default function GalleryGrid() {
             filterKey={active}
           />
         ))}
+      </div>
       </div>
     </div>
   );
