@@ -4,9 +4,13 @@ import { useState } from "react";
 import Button from "@/components/Button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/data/translations";
+import { Mail, MessageSquareText, Phone, User } from "lucide-react";
 
 const fieldClass =
-  "w-full border border-ink/15 bg-white px-3 py-3 text-sm outline-none transition placeholder:text-ink/45 focus:border-teal sm:px-4 sm:py-4";
+  "w-full border border-ink/15 bg-white py-3 pl-11 pr-3 text-sm outline-none transition placeholder:text-ink/45 focus:border-teal sm:py-4 sm:pl-12 sm:pr-4";
+
+const iconClass = "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink/40";
+const textareaIconClass = "pointer-events-none absolute left-4 top-4 text-ink/40 sm:top-5";
 
 export default function ContactForm() {
   const { lang } = useLanguage();
@@ -45,10 +49,22 @@ export default function ContactForm() {
 
   return (
     <form className="grid gap-3 bg-bone p-4 sm:gap-4 sm:p-5 md:p-8" onSubmit={handleSubmit}>
-      <input className={fieldClass} name="name" placeholder={f.name} aria-label={f.name} required />
-      <input className={fieldClass} name="phone" placeholder={f.phone} aria-label={f.phone} required />
-      <input className={fieldClass} name="email" type="email" placeholder={f.email} aria-label={f.email} required suppressHydrationWarning />
-      <textarea className={`${fieldClass} min-h-28 resize-none sm:min-h-40`} name="message" placeholder={f.message} aria-label={f.message} required />
+      <label className="relative block">
+        <User className={iconClass} size={18} />
+        <input className={fieldClass} name="name" placeholder={f.name} aria-label={f.name} required />
+      </label>
+      <label className="relative block">
+        <Phone className={iconClass} size={18} />
+        <input className={fieldClass} name="phone" placeholder={f.phone} aria-label={f.phone} required />
+      </label>
+      <label className="relative block">
+        <Mail className={iconClass} size={18} />
+        <input className={fieldClass} name="email" type="email" placeholder={f.email} aria-label={f.email} required suppressHydrationWarning />
+      </label>
+      <label className="relative block">
+        <MessageSquareText className={textareaIconClass} size={18} />
+        <textarea className={`${fieldClass} min-h-28 resize-none sm:min-h-40`} name="message" placeholder={f.message} aria-label={f.message} required />
+      </label>
       {feedback && (
         <p className={`text-sm ${status === "error" ? "text-red-700" : "text-ink/70"}`} role="status">
           {feedback}

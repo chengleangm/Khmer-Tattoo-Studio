@@ -156,7 +156,7 @@ export const services = [
   {
     title: "Sakyant Consultation",
     description: "A focused session to discuss meaning, placement, scale, cultural reference, timeline, and aftercare.",
-    price: "From $25",
+    price: "Free",
   },
 ];
 

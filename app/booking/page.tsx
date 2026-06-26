@@ -6,6 +6,7 @@ import WhatsAppIcon from "@/components/WhatsAppIcon";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { contactDetails } from "@/data/site";
 import { t } from "@/data/translations";
+import { CalendarDays, Clock, Mail, Phone } from "lucide-react";
 
 export default function BookingPage() {
   const { lang } = useLanguage();
@@ -27,21 +28,35 @@ export default function BookingPage() {
           </div>
           <aside className="w-full max-w-full overflow-hidden bg-ink p-4 text-white sm:p-6 md:p-8">
             <p className="font-condensed text-xs uppercase tracking-editorial text-teal sm:text-sm">{b.studioInfo}</p>
-            <h2 className="mt-3 max-w-sm font-display text-[clamp(3rem,14vw,4.75rem)] leading-[0.85] lg:text-7xl">
+            <h2 className="booking-hours-title mt-3 max-w-sm font-display text-[clamp(3rem,14vw,4.75rem)] leading-[0.85] lg:text-7xl">
               {b.studioHours}
             </h2>
             <div className="mt-5 grid gap-3 text-xs leading-5 text-white/70 sm:mt-8 sm:gap-5 sm:text-sm sm:leading-6">
-              <p><strong className="font-condensed uppercase tracking-editorial text-white">{b.monFri}</strong> 11:00 AM - 8:00 PM</p>
-              <p><strong className="font-condensed uppercase tracking-editorial text-white">{b.saturday}</strong> 12:00 PM - 7:00 PM</p>
-              <p><strong className="font-condensed uppercase tracking-editorial text-white">{b.sunday}</strong> {b.consultOnly}</p>
-              <p>
-                <strong className="font-condensed uppercase tracking-editorial text-white">{b.phone}</strong>{" "}
-                <a href={`tel:${contactDetails.phonePrimary}`} className="hover:text-white">{contactDetails.phonePrimary}</a>
-                {" / "}
-                <a href={`tel:${contactDetails.phoneSecondary}`} className="hover:text-white">{contactDetails.phoneSecondary}</a>
+              <p className="flex items-start gap-3">
+                <Clock className="mt-0.5 shrink-0 text-teal" size={17} />
+                <span><strong className="font-condensed uppercase tracking-editorial text-white">{b.monFri}</strong> 11:00 AM - 8:00 PM</span>
               </p>
-              <p className="flex items-center gap-2">
-                <WhatsAppIcon size={15} />
+              <p className="flex items-start gap-3">
+                <CalendarDays className="mt-0.5 shrink-0 text-teal" size={17} />
+                <span><strong className="font-condensed uppercase tracking-editorial text-white">{b.saturday}</strong> 12:00 PM - 7:00 PM</span>
+              </p>
+              <p className="flex items-start gap-3">
+                <CalendarDays className="mt-0.5 shrink-0 text-teal" size={17} />
+                <span><strong className="font-condensed uppercase tracking-editorial text-white">{b.sunday}</strong> {b.consultOnly}</span>
+              </p>
+              <p className="flex items-start gap-3">
+                <Phone className="mt-0.5 shrink-0 text-teal" size={17} />
+                <span>
+                  <strong className="font-condensed uppercase tracking-editorial text-white">{b.phone}</strong>{" "}
+                  <a href={`tel:${contactDetails.phonePrimary}`} className="hover:text-white">{contactDetails.phonePrimary}</a>
+                  {" / "}
+                  <a href={`tel:${contactDetails.phoneSecondary}`} className="hover:text-white">{contactDetails.phoneSecondary}</a>
+                </span>
+              </p>
+              <p className="flex items-start gap-3">
+                <span className="mt-0.5 shrink-0 text-teal">
+                  <WhatsAppIcon size={17} />
+                </span>
                 <a
                   href={contactDetails.whatsappHref}
                   target="_blank"
@@ -51,7 +66,10 @@ export default function BookingPage() {
                   WhatsApp {contactDetails.phonePrimaryDisplay}
                 </a>
               </p>
-              <p><strong className="font-condensed uppercase tracking-editorial text-white">{b.email}</strong> {contactDetails.email}</p>
+              <p className="flex items-start gap-3">
+                <Mail className="mt-0.5 shrink-0 text-teal" size={17} />
+                <span><strong className="font-condensed uppercase tracking-editorial text-white">{b.email}</strong> {contactDetails.email}</span>
+              </p>
             </div>
           </aside>
         </div>

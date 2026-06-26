@@ -43,7 +43,7 @@ export default function ArtistsPage() {
       </section>
 
       <section className="editorial-section px-5 py-14 lg:px-8 lg:py-28" data-bg-word="ARTISTS">
-        <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:gap-10">
+        <div className="relative mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:gap-10">
           <div className="relative aspect-square overflow-hidden bg-charcoal">
             <Image
               src={featuredArtist.image}
@@ -51,6 +51,15 @@ export default function ArtistsPage() {
               fill
               sizes="(max-width: 1024px) 90vw, 50vw"
               className="object-cover grayscale transition duration-700 hover:scale-105 hover:grayscale-0"
+            />
+          </div>
+          <div className="pointer-events-none z-20 -my-7 flex justify-center lg:absolute lg:left-[52.5%] lg:top-8 lg:my-0 lg:-translate-x-1/2">
+            <Image
+              src="/logo/logobamboo.png"
+              alt="Khmer Bamboo Sakyant logo"
+              width={406}
+              height={1080}
+              className="h-32 w-auto drop-shadow-[0_18px_26px_rgba(0,0,0,0.38)] sm:h-40 lg:h-52"
             />
           </div>
           <article className="border-t-[3px] border-ink pt-5 lg:border-t-4 lg:pt-8">

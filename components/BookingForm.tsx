@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, Upload } from "lucide-react";
+import { Calendar, Mail, MapPin, MessageSquareText, Palette, Phone, Upload, User } from "lucide-react";
 import { useState } from "react";
 import Button from "@/components/Button";
 import { styles } from "@/data/site";
@@ -8,7 +8,9 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/data/translations";
 
 const fieldClass =
-  "min-w-0 w-full border border-ink/15 bg-white px-3 py-3 text-sm outline-none transition placeholder:text-ink/45 focus:border-teal sm:px-4 sm:py-4";
+  "min-w-0 w-full border border-ink/15 bg-white py-3 pl-11 pr-3 text-sm outline-none transition placeholder:text-ink/45 focus:border-teal sm:py-4 sm:pl-12 sm:pr-4";
+const iconClass = "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink/40";
+const textareaIconClass = "pointer-events-none absolute left-4 top-4 text-ink/40 sm:top-5";
 const months = Array.from({ length: 12 }, (_, index) => String(index + 1).padStart(2, "0"));
 const days = Array.from({ length: 31 }, (_, index) => String(index + 1).padStart(2, "0"));
 const years = ["2026", "2027", "2028", "2029", "2030"];
@@ -78,30 +80,45 @@ export default function BookingForm() {
   return (
     <form className="grid gap-3 sm:gap-4" onSubmit={handleSubmit}>
       <div className="grid max-w-full grid-cols-2 gap-2 sm:gap-4">
-        <input className={fieldClass} name="fullName" placeholder={f.fullName} aria-label={f.fullName} required />
-        <input className={fieldClass} name="phone" placeholder={f.phone} aria-label={f.phone} required />
+        <label className="relative block min-w-0">
+          <User className={iconClass} size={18} />
+          <input className={fieldClass} name="fullName" placeholder={f.fullName} aria-label={f.fullName} required />
+        </label>
+        <label className="relative block min-w-0">
+          <Phone className={iconClass} size={18} />
+          <input className={fieldClass} name="phone" placeholder={f.phone} aria-label={f.phone} required />
+        </label>
       </div>
-      <input className={fieldClass} name="email" type="email" placeholder={f.email} aria-label={f.email} required suppressHydrationWarning />
+      <label className="relative block">
+        <Mail className={iconClass} size={18} />
+        <input className={fieldClass} name="email" type="email" placeholder={f.email} aria-label={f.email} required suppressHydrationWarning />
+      </label>
       <div className="grid max-w-full grid-cols-2 gap-2 sm:gap-4">
-        <select className={fieldClass} name="tattooStyle" aria-label={f.style} defaultValue="" required>
-          <option value="" disabled>{f.style}</option>
-          {styles.map((style, index) => {
-            const label = lang === "km" ? styleLabels[index] ?? style : style;
-            return (
-            <option key={style} value={label}>
-              {label}
-            </option>
-            );
-          })}
-        </select>
-        <input className={fieldClass} name="placement" placeholder={f.placement} aria-label={f.placement} required />
+        <label className="relative block min-w-0">
+          <Palette className={iconClass} size={18} />
+          <select className={fieldClass} name="tattooStyle" aria-label={f.style} defaultValue="" required>
+            <option value="" disabled>{f.style}</option>
+            {styles.map((style, index) => {
+              const label = lang === "km" ? styleLabels[index] ?? style : style;
+              return (
+              <option key={style} value={label}>
+                {label}
+              </option>
+              );
+            })}
+          </select>
+        </label>
+        <label className="relative block min-w-0">
+          <MapPin className={iconClass} size={18} />
+          <input className={fieldClass} name="placement" placeholder={f.placement} aria-label={f.placement} required />
+        </label>
       </div>
       <label className="block border border-ink/15 bg-white px-3 py-2 transition focus-within:border-teal sm:px-4 sm:py-3">
         <span className="mb-1 block font-condensed text-[0.65rem] uppercase tracking-editorial text-ink/55 sm:text-xs">
           {f.date}
         </span>
         <span className="grid grid-cols-[auto_1fr_1fr_1fr] items-center gap-2">
-          <Calendar className="shrink-0 text-ink/45" size={17} />
+          <Calendar className="shrink-0 text-ink/40" size={17} />
           <select
             className="min-w-0 bg-transparent text-sm outline-none"
             aria-label={f.month}
@@ -140,13 +157,16 @@ export default function BookingForm() {
           </select>
         </span>
       </label>
-      <textarea
-        className={`${fieldClass} min-h-28 resize-none sm:min-h-40`}
-        name="message"
-        placeholder={f.message}
-        aria-label={f.message}
-        required
-      />
+      <label className="relative block">
+        <MessageSquareText className={textareaIconClass} size={18} />
+        <textarea
+          className={`${fieldClass} min-h-28 resize-none sm:min-h-40`}
+          name="message"
+          placeholder={f.message}
+          aria-label={f.message}
+          required
+        />
+      </label>
       <label className="flex cursor-pointer items-center justify-between gap-3 border border-dashed border-ink/30 bg-white px-3 py-3 transition hover:border-teal sm:px-4 sm:py-5">
         <span className="min-w-0">
           <span className="block font-condensed text-xs uppercase tracking-editorial sm:text-sm">{f.uploadLabel}</span>

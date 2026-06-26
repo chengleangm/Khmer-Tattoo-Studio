@@ -4,6 +4,9 @@ import SectionTitle from "@/components/SectionTitle";
 import ServiceCard from "@/components/ServiceCard";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/data/translations";
+import { Brush, Compass, Flower2, Layers, Shield, Sparkles } from "lucide-react";
+
+const serviceIcons = [Shield, Sparkles, Flower2, Compass, Layers, Brush];
 
 export default function ServicesPage() {
   const { lang } = useLanguage();
@@ -23,8 +26,14 @@ export default function ServicesPage() {
 
       <section className="editorial-section px-5 py-14 lg:px-8 lg:py-28" data-bg-word="SERVICE">
         <div className="grid w-full grid-cols-2 gap-3 md:mx-auto md:max-w-7xl md:gap-5 lg:grid-cols-3">
-          {s.list.map((service) => (
-            <ServiceCard key={service.title} {...service} />
+          {s.list.map((service, index) => (
+            <ServiceCard
+              key={service.title}
+              {...service}
+              Icon={serviceIcons[index] ?? Brush}
+              index={index}
+              featured={index === s.list.length - 1}
+            />
           ))}
         </div>
       </section>

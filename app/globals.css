@@ -74,6 +74,51 @@ button {
   background-size: 42px 42px;
 }
 
+.gallery-slide-from-left {
+  animation: gallerySlideFromLeft 820ms ease backwards;
+}
+
+.gallery-slide-from-up {
+  animation: gallerySlideFromUp 820ms ease backwards;
+}
+
+.gallery-slide-from-right {
+  animation: gallerySlideFromRight 820ms ease backwards;
+}
+
+@keyframes gallerySlideFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-18%) scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes gallerySlideFromUp {
+  from {
+    opacity: 0;
+    transform: translateY(-18%) scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes gallerySlideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(18%) scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
 html[lang="km"] body,
 html[lang="km"] .font-sans {
   font-family: var(--font-kantumruy), var(--font-inter), Arial, sans-serif;
@@ -123,9 +168,31 @@ html[lang="km"] .footer-tagline {
   line-height: 1.34;
 }
 
+html[lang="km"] .booking-hours-title {
+  font-size: clamp(2.25rem, 10vw, 3.5rem);
+  line-height: 1.05;
+}
+
+html[lang="km"] .aftercare-page-title h1,
+html[lang="km"] .aftercare-page-title h2 {
+  font-size: clamp(2.5rem, 11vw, 4.25rem);
+  line-height: 1.08;
+}
+
 @media (min-width: 640px) {
   html[lang="km"] .footer-tagline {
     line-height: 1.2;
+  }
+}
+
+@media (min-width: 1024px) {
+  html[lang="km"] .booking-hours-title {
+    font-size: 3.75rem;
+  }
+
+  html[lang="km"] .aftercare-page-title h1,
+  html[lang="km"] .aftercare-page-title h2 {
+    font-size: 5rem;
   }
 }
 

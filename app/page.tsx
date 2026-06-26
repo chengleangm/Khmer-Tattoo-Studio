@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/components/Button";
+import GalleryPreviewStrip from "@/components/GalleryPreviewStrip";
 import ImageCard from "@/components/ImageCard";
 import SectionTitle from "@/components/SectionTitle";
 import TattooStyleShowcase from "@/components/TattooStyleShowcase";
@@ -77,13 +78,7 @@ export default function Home() {
 
       <section className="editorial-section px-5 py-14 lg:px-8 lg:py-28" data-bg-word="GALLERY">
         <div className="mx-auto max-w-7xl">
-          <div className="grid grid-cols-3 gap-2 md:gap-4">
-            {galleryItems.slice(0, 3).map((item) => (
-              <div key={item.src} className="relative h-[180px] overflow-hidden bg-charcoal sm:h-[240px] md:h-[420px]">
-                <Image src={item.src} alt={`${item.style} tattoo gallery preview`} fill sizes="(max-width: 768px) 33vw, 30vw" className="object-cover grayscale transition duration-700 hover:scale-105 hover:grayscale-0" />
-              </div>
-            ))}
-          </div>
+          <GalleryPreviewStrip items={galleryItems} />
           <div className="mt-6 grid gap-4 lg:mt-8 lg:grid-cols-[1.2fr_0.8fr] lg:gap-6 lg:items-end">
             <h2 className="font-display text-[clamp(3.5rem,14vw,12rem)] leading-[0.76]"><span className="km-title-text">{h.galleryTitle}</span></h2>
             <div>
@@ -101,8 +96,8 @@ export default function Home() {
           </h2>
           <div className="lg:order-first">
             <div className="grid grid-cols-2 gap-2 lg:block">
-              <ImageCard src="/images/eternal-tattoo-closeup.jpg" alt="Detailed black tattoo close up" className="h-[240px] lg:h-[420px]" />
-              <ImageCard src="/images/hero-tattoo-sleeve.jpg" alt="Sleeve tattoo detail" className="h-[240px] lg:hidden" />
+              <ImageCard src="/gallery/photo_2026-06-26_11-12-44.jpg" alt="Khmer script sacred tattoo close up" className="h-[240px] lg:h-[420px]" />
+              <ImageCard src="/gallery/photo_2026-06-26_11-16-00.jpg" alt="Full back Sak Yant Khmer tattoo" className="h-[240px] lg:hidden" />
             </div>
             <p className="mt-6 max-w-md text-sm leading-6 text-ink/65">{h.eternalDesc}</p>
             <Button href="/artists" variant="dark" className="mt-5">{tx.common.chooseArtist}</Button>
@@ -112,7 +107,7 @@ export default function Home() {
               {h.yearsExp}
             </p>
             <Button href="/booking" variant="dark" className="px-4 py-3 text-xs sm:text-sm">{tx.common.bookNow}</Button>
-            <ImageCard src="/images/hero-tattoo-sleeve.jpg" alt="Sleeve tattoo detail" className="mt-12 hidden h-[420px] lg:block" />
+            <ImageCard src="/gallery/photo_2026-06-26_11-16-00.jpg" alt="Full back Sak Yant Khmer tattoo" className="mt-12 hidden h-[420px] lg:block" />
           </div>
         </div>
       </section>
