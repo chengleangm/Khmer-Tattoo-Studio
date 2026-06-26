@@ -80,20 +80,20 @@ export default function AboutPage() {
                 <span className="km-title-text">{a.valuesTitle}</span>
               </h2>
             </div>
-            <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+            <div className="grid grid-cols-2 gap-2 sm:gap-4">
               {a.values.map((value, index) => {
                 const Icon = valueIcons[index] ?? BadgeCheck;
                 return (
-                  <article key={value.title} className="border border-white/15 p-4 transition hover:border-teal sm:p-5">
-                    <div className="flex items-center gap-3">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-teal text-teal">
-                        <Icon size={21} strokeWidth={1.8} />
+                  <article key={value.title} className="border border-white/15 p-3 transition hover:border-teal sm:p-5">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center border border-teal text-teal sm:h-10 sm:w-10">
+                        <Icon className="h-4 w-4 sm:h-[21px] sm:w-[21px]" strokeWidth={1.8} />
                       </span>
-                      <h3 className="font-display text-3xl leading-none sm:text-4xl">
+                      <h3 className="break-words font-display text-[1.15rem] leading-none [overflow-wrap:anywhere] sm:text-4xl">
                         <span className="km-title-text">{value.title}</span>
                       </h3>
                     </div>
-                    <p className="mt-4 text-xs leading-5 text-white/65 sm:text-sm sm:leading-6">{value.text}</p>
+                    <p className="mt-3 text-[0.68rem] leading-4 text-white/65 sm:mt-4 sm:text-sm sm:leading-6">{value.text}</p>
                   </article>
                 );
               })}
@@ -112,21 +112,21 @@ export default function AboutPage() {
               </h2>
               <p className="mt-5 text-sm leading-6 text-ink/70 sm:text-base sm:leading-7">{a.traditionIntro}</p>
             </div>
-            <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+            <div className="grid grid-cols-2 gap-2 sm:gap-4">
               {a.traditionPoints.map((point, index) => {
                 const Icon = traditionIcons[index] ?? BadgeCheck;
                 return (
-                  <article key={point.title} className="border border-ink/10 bg-bone p-4 transition hover:border-teal hover:bg-white sm:p-5">
+                  <article key={point.title} className="border border-ink/10 bg-bone p-3 transition hover:border-teal hover:bg-white sm:p-5">
                     <div className="flex items-start justify-between gap-3">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-teal text-teal">
-                        <Icon size={21} strokeWidth={1.8} />
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center border border-teal text-teal sm:h-10 sm:w-10">
+                        <Icon className="h-4 w-4 sm:h-[21px] sm:w-[21px]" strokeWidth={1.8} />
                       </span>
-                      <span className="font-display text-3xl leading-none text-ink/10 sm:text-5xl">{String(index + 1).padStart(2, "0")}</span>
+                      <span className="font-display text-2xl leading-none text-ink/10 sm:text-5xl">{String(index + 1).padStart(2, "0")}</span>
                     </div>
-                    <h3 className="mt-4 font-display text-3xl leading-none sm:text-4xl">
+                    <h3 className="mt-3 break-words font-display text-[1.2rem] leading-none [overflow-wrap:anywhere] sm:mt-4 sm:text-4xl">
                       <span className="km-title-text">{point.title}</span>
                     </h3>
-                    <p className="mt-3 text-xs leading-5 text-ink/65 sm:text-sm sm:leading-6">{point.text}</p>
+                    <p className="mt-2 text-[0.68rem] leading-4 text-ink/65 sm:mt-3 sm:text-sm sm:leading-6">{point.text}</p>
                   </article>
                 );
               })}
@@ -138,19 +138,19 @@ export default function AboutPage() {
       <section className="px-4 py-14 sm:px-5 sm:py-20 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionTitle title={a.craftTitle} kicker={tx.kicker} />
-          <div className="mt-8 grid gap-3 sm:mt-10 sm:gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-8 grid grid-cols-2 gap-2 sm:mt-10 sm:gap-5 lg:grid-cols-4">
             {a.craftSteps.map((step, index) => {
               const Icon = craftIcons[index] ?? PenTool;
               return (
-                <article key={step.title} className="border-t-[3px] border-ink bg-bone p-4 sm:border-t-4 sm:p-5">
-                  <div className="flex items-start justify-between gap-4">
-                    <p className="font-display text-5xl leading-none text-teal sm:text-7xl">{String(index + 1).padStart(2, "0")}</p>
-                    <Icon className="mt-1 text-ink" size={26} strokeWidth={1.7} />
+                <article key={step.title} className="border-t-[3px] border-ink bg-bone p-3 sm:border-t-4 sm:p-5">
+                  <div className="flex items-start justify-between gap-3 sm:gap-4">
+                    <p className="font-display text-3xl leading-none text-teal sm:text-7xl">{String(index + 1).padStart(2, "0")}</p>
+                    <Icon className="mt-1 h-5 w-5 text-ink sm:h-[26px] sm:w-[26px]" strokeWidth={1.7} />
                   </div>
-                  <h3 className="mt-4 font-display text-4xl leading-none sm:text-5xl">
+                  <h3 className="mt-3 font-display text-[1.35rem] leading-none sm:mt-4 sm:text-5xl">
                     <span className="km-title-text">{step.title}</span>
                   </h3>
-                  <p className="mt-3 text-xs leading-5 text-ink/65 sm:text-sm sm:leading-6">{step.text}</p>
+                  <p className="mt-2 text-[0.68rem] leading-4 text-ink/65 sm:mt-3 sm:text-sm sm:leading-6">{step.text}</p>
                 </article>
               );
             })}
@@ -160,21 +160,23 @@ export default function AboutPage() {
 
       <section className="bg-white px-4 py-14 sm:px-5 sm:py-20 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <SectionTitle title={a.whyChooseUs} kicker={tx.kicker} />
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-10 md:grid-cols-5">
+          <div className="why-choose-title">
+            <SectionTitle title={a.whyChooseUs} kicker={tx.kicker} />
+          </div>
+          <div className="mt-6 grid grid-cols-5 gap-1.5 sm:mt-10 sm:gap-3">
             {a.reasons.map((reason, index) => {
               const Icon = reasonIcons[index] ?? BadgeCheck;
               const reasonTextClass =
                 lang === "en"
-                  ? "flex min-h-14 max-w-full items-center justify-center font-display text-[clamp(1.15rem,1.8vw,1.65rem)] leading-none"
-                  : "flex min-h-14 max-w-full items-center justify-center font-display text-[1.15rem] leading-tight sm:text-2xl lg:text-[1.65rem]";
+                  ? "flex min-h-8 max-w-full items-center justify-center font-display text-[clamp(0.55rem,2.5vw,0.72rem)] leading-[0.95] sm:min-h-14 sm:text-[clamp(1.15rem,1.8vw,1.65rem)] sm:leading-none"
+                  : "flex min-h-8 max-w-full items-center justify-center font-display text-[0.58rem] leading-tight sm:min-h-14 sm:text-2xl lg:text-[1.65rem]";
               return (
               <div
                 key={reason}
-                className="flex min-h-28 flex-col items-center justify-start gap-4 border border-ink bg-bone px-3 py-4 text-center transition hover:bg-teal hover:text-white sm:min-h-36 sm:px-4 sm:py-5"
+                className="flex min-h-20 flex-col items-center justify-start gap-1.5 border border-ink bg-bone px-1 py-2 text-center transition hover:bg-teal hover:text-white sm:min-h-36 sm:gap-4 sm:px-4 sm:py-5"
               >
-                <span className="flex h-8 shrink-0 items-start justify-center sm:h-10">
-                  <Icon size={26} strokeWidth={1.7} />
+                <span className="flex h-5 shrink-0 items-start justify-center sm:h-10">
+                  <Icon className="h-4 w-4 sm:h-[26px] sm:w-[26px]" strokeWidth={1.7} />
                 </span>
                 <span className={reasonTextClass}>{reason}</span>
               </div>

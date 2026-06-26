@@ -179,9 +179,19 @@ html[lang="km"] .aftercare-page-title h2 {
   line-height: 1.08;
 }
 
+.why-choose-title h1,
+.why-choose-title h2 {
+  font-size: clamp(2.25rem, 12vw, 4rem);
+}
+
 @media (min-width: 640px) {
   html[lang="km"] .footer-tagline {
     line-height: 1.2;
+  }
+
+  .why-choose-title h1,
+  .why-choose-title h2 {
+    font-size: clamp(2.3rem, 8vw, 5.5rem);
   }
 }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { galleryItems } from "@/data/site";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -25,11 +26,13 @@ function GalleryItem({
   col,
   lang,
   filterKey,
+  onOpen,
 }: {
   item: { src: string; style: string };
   col: number;
   lang: "en" | "km";
   filterKey: string;
+  onOpen: () => void;
 }) {
   const [state, setState] = useState<RevealState>("below");
   const ref = useRef<HTMLDivElement>(null);
@@ -73,7 +76,12 @@ function GalleryItem({
         transitionDelay: `${col * 70}ms, ${col * 70}ms`,
       }}
     >
-      <div className="group relative aspect-square overflow-hidden bg-charcoal">
+      <button
+        type="button"
+        onClick={onOpen}
+        className="group relative block aspect-square w-full overflow-hidden bg-charcoal text-left"
+        aria-label={lang === "km" ? "មើលរូបភាពធំ" : `Open ${item.style} image larger`}
+      >
         <Image
           src={item.src}
           alt={lang === "km" ? `ស្នាដៃ${getStyleLabel(item.style, lang)}` : `${item.style} tattoo portfolio piece`}
@@ -87,13 +95,14 @@ function GalleryItem({
           </p>
         </div>
         <div className="absolute inset-0 border-2 border-teal/0 transition-all duration-500 group-hover:border-teal/70" />
-      </div>
+      </button>
     </div>
   );
 }
 
 export default function GalleryGrid() {
   const [active, setActive] = useState("All");
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const { lang } = useLanguage();
   const filterAll = t[lang].gallery.filterAll;
 
@@ -112,6 +121,35 @@ export default function GalleryGrid() {
     return galleryItems.filter((item) => item.style === active);
   }, [active]);
 
+  const selectedItem = selectedIndex === null ? null : items[selectedIndex];
+
+  useEffect(() => {
+    if (selectedIndex === null) return;
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setSelectedIndex(null);
+      }
+      if (event.key === "ArrowLeft") {
+        setSelectedIndex((current) => current === null ? current : (current - 1 + items.length) % items.length);
+      }
+      if (event.key === "ArrowRight") {
+        setSelectedIndex((current) => current === null ? current : (current + 1) % items.length);
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [items.length, selectedIndex]);
+
+  function showPrevious() {
+    setSelectedIndex((current) => current === null ? current : (current - 1 + items.length) % items.length);
+  }
+
+  function showNext() {
+    setSelectedIndex((current) => current === null ? current : (current + 1) % items.length);
+  }
+
   return (
     <div>
       <div className="mb-6 flex flex-wrap justify-center gap-1.5 sm:mb-8 sm:gap-2">
@@ -119,7 +157,10 @@ export default function GalleryGrid() {
           <button
             key={filter.value}
             type="button"
-            onClick={() => setActive(filter.value)}
+            onClick={() => {
+              setActive(filter.value);
+              setSelectedIndex(null);
+            }}
             lang={filter.value !== "All" && lang === "en" ? "en" : undefined}
             className={`max-w-[calc(50%-0.25rem)] border px-2.5 py-1.5 font-condensed text-[clamp(0.6rem,2.8vw,0.72rem)] uppercase leading-tight tracking-[0.12em] transition sm:max-w-none sm:px-4 sm:py-2 sm:text-sm sm:tracking-editorial ${
               active === filter.value
@@ -141,10 +182,75 @@ export default function GalleryGrid() {
             col={index % 3}
             lang={lang}
             filterKey={active}
+            onOpen={() => setSelectedIndex(index)}
           />
         ))}
       </div>
       </div>
+
+      {selectedItem && (
+        <div
+          className="fixed inset-0 z-[80] bg-ink/95 p-3 text-white sm:p-5"
+          role="dialog"
+          aria-modal="true"
+          aria-label={lang === "km" ? "មើលរូបភាពធំ" : "Gallery image preview"}
+          onClick={() => setSelectedIndex(null)}
+        >
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              setSelectedIndex(null);
+            }}
+            className="fixed right-4 top-4 z-[9999] flex h-14 w-14 items-center justify-center rounded-full border-2 border-white bg-teal text-white shadow-[0_14px_36px_rgba(0,0,0,0.55)] transition hover:bg-ink sm:right-6 sm:top-6 sm:h-14 sm:w-14"
+            aria-label={lang === "km" ? "បិទ" : "Close image preview"}
+          >
+            <X className="h-7 w-7" strokeWidth={2.4} />
+          </button>
+
+          {items.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  showPrevious();
+                }}
+                className="absolute left-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/30 transition hover:border-teal hover:bg-teal sm:left-5"
+                aria-label={lang === "km" ? "រូបមុន" : "Previous image"}
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </button>
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  showNext();
+                }}
+                className="absolute right-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/30 transition hover:border-teal hover:bg-teal sm:right-5"
+                aria-label={lang === "km" ? "រូបបន្ទាប់" : "Next image"}
+              >
+                <ChevronRight className="h-6 w-6" />
+              </button>
+            </>
+          )}
+
+          <div className="flex h-full flex-col items-center justify-center gap-3">
+            <div className="relative h-[82vh] w-full max-w-6xl" onClick={(event) => event.stopPropagation()}>
+              <Image
+                src={selectedItem.src}
+                alt={lang === "km" ? `ážŸáŸ’áž“áž¶ážŠáŸƒ${getStyleLabel(selectedItem.style, lang)}` : `${selectedItem.style} tattoo portfolio large preview`}
+                fill
+                sizes="96vw"
+                className="object-contain"
+              />
+            </div>
+            <p className="font-condensed text-xs uppercase tracking-editorial text-white/70 sm:text-sm">
+              {getStyleLabel(selectedItem.style, lang)}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

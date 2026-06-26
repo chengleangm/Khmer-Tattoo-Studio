@@ -22,16 +22,16 @@ export default function BookingPage() {
       </section>
 
       <section className="editorial-section overflow-x-hidden px-4 py-12 sm:px-5 sm:py-16 lg:px-8 lg:py-28" data-bg-word="BOOK">
-        <div className="mx-auto grid w-full max-w-7xl gap-4 sm:gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-8">
-          <div className="w-full max-w-full overflow-hidden bg-bone p-3 sm:p-5 md:p-8">
+        <div className="mx-auto grid w-full max-w-7xl gap-4 sm:gap-6 min-[700px]:grid-cols-[1.15fr_0.85fr] min-[700px]:gap-4 lg:grid-cols-[1.2fr_0.8fr] lg:gap-8">
+          <div className="w-full max-w-full overflow-hidden bg-bone p-3 sm:p-5 min-[700px]:p-4 lg:p-8">
             <BookingForm />
           </div>
-          <aside className="w-full max-w-full overflow-hidden bg-ink p-4 text-white sm:p-6 md:p-8">
+          <aside className="w-full max-w-full overflow-hidden bg-ink p-4 text-white sm:p-6 min-[700px]:p-4 lg:p-8">
             <p className="font-condensed text-xs uppercase tracking-editorial text-teal sm:text-sm">{b.studioInfo}</p>
-            <h2 className="booking-hours-title mt-3 max-w-sm font-display text-[clamp(3rem,14vw,4.75rem)] leading-[0.85] lg:text-7xl">
+            <h2 className="booking-hours-title mt-3 max-w-sm font-display text-[clamp(3rem,14vw,4.75rem)] leading-[0.85] min-[700px]:text-[clamp(2.4rem,5.2vw,3.25rem)] lg:text-7xl">
               {b.studioHours}
             </h2>
-            <div className="mt-5 grid gap-3 text-xs leading-5 text-white/70 sm:mt-8 sm:gap-5 sm:text-sm sm:leading-6">
+            <div className="mt-5 grid gap-3 text-xs leading-5 text-white/70 sm:mt-8 sm:gap-5 sm:text-sm sm:leading-6 min-[700px]:mt-5 min-[700px]:gap-3 min-[700px]:text-xs min-[700px]:leading-5 lg:mt-8 lg:gap-5 lg:text-sm lg:leading-6">
               <p className="flex items-start gap-3">
                 <Clock className="mt-0.5 shrink-0 text-teal" size={17} />
                 <span><strong className="font-condensed uppercase tracking-editorial text-white">{b.monFri}</strong> 11:00 AM - 8:00 PM</span>
@@ -57,14 +57,17 @@ export default function BookingPage() {
                 <span className="mt-0.5 shrink-0 text-teal">
                   <WhatsAppIcon size={17} />
                 </span>
-                <a
-                  href={contactDetails.whatsappHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white"
-                >
-                  WhatsApp {contactDetails.phonePrimaryDisplay}
-                </a>
+                <span>
+                  <strong className="font-condensed uppercase tracking-editorial text-white">WhatsApp:</strong>{" "}
+                  <a
+                    href={contactDetails.whatsappHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white"
+                  >
+                    {contactDetails.phonePrimaryDisplay}
+                  </a>
+                </span>
               </p>
               <p className="flex items-start gap-3">
                 <Mail className="mt-0.5 shrink-0 text-teal" size={17} />

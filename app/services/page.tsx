@@ -30,8 +30,8 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="editorial-section px-5 py-14 lg:px-8 lg:py-28" data-bg-word="SERVICE">
-        <div className="grid w-full grid-cols-2 gap-3 md:mx-auto md:max-w-7xl md:gap-5 lg:grid-cols-3">
+      <section className="editorial-section px-4 py-10 sm:px-5 sm:py-14 lg:px-8 lg:py-28" data-bg-word="SERVICE">
+        <div className="grid w-full grid-cols-2 gap-2 sm:gap-3 md:mx-auto md:max-w-7xl md:gap-5 lg:grid-cols-3">
           {s.list.map((service, index) => (
             <ServiceCard
               key={service.title}
@@ -47,19 +47,24 @@ export default function ServicesPage() {
       <section className="bg-white px-4 py-14 sm:px-5 sm:py-20 lg:px-8 lg:py-28">
         <div className="mx-auto max-w-7xl">
           <SectionTitle title={s.processTitle} kicker={tx.kicker} />
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-4 lg:grid-cols-5">
+          <div className="mt-6 grid auto-rows-fr gap-2.5 sm:mt-12 sm:gap-4 min-[700px]:grid-cols-5 min-[700px]:gap-2 lg:gap-4">
             {s.steps.map((step, index) => {
               const Icon = stepIcons[index] ?? Brush;
               return (
-                <article key={step.number} className="min-w-0 border-t-[3px] border-ink bg-bone p-3 sm:border-t-4 sm:p-5">
-                  <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-ink sm:mb-4 sm:h-16 sm:w-16">
-                    <Icon size={28} className="text-teal" strokeWidth={1.4} />
+                <article
+                  key={step.number}
+                  className="grid h-full min-w-0 grid-cols-[2.75rem_1fr] gap-3 overflow-hidden border-t-2 border-ink bg-bone p-3 sm:border-t-4 sm:p-5 min-[700px]:block min-[700px]:p-3 lg:p-5"
+                >
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink min-[700px]:mb-4 min-[700px]:h-11 min-[700px]:w-11 min-[700px]:rounded-2xl lg:h-16 lg:w-16">
+                    <Icon className="h-5 w-5 text-teal min-[700px]:h-5 min-[700px]:w-5 lg:h-7 lg:w-7" strokeWidth={1.5} />
                   </div>
-                  <p className="font-display text-3xl leading-none text-teal sm:text-5xl">{step.number}</p>
-                  <h3 className="mt-2 break-words font-display text-[1.35rem] leading-[0.95] [overflow-wrap:anywhere] sm:mt-3 sm:text-4xl sm:leading-none">
-                    {step.title}
-                  </h3>
-                  <p className="mt-3 text-[0.68rem] leading-5 text-ink/65 sm:mt-4 sm:text-sm sm:leading-6">{step.text}</p>
+                  <div className="min-w-0">
+                    <p className="font-display text-2xl leading-none text-teal min-[700px]:text-3xl lg:text-5xl">{step.number}</p>
+                    <h3 className="mt-1 break-words font-display text-[1.2rem] leading-none [overflow-wrap:anywhere] min-[700px]:mt-3 min-[700px]:text-[1.25rem] lg:text-4xl">
+                      {step.title}
+                    </h3>
+                    <p className="mt-2 text-[0.72rem] leading-5 text-ink/65 min-[700px]:mt-4 min-[700px]:text-[0.68rem] min-[700px]:leading-5 lg:text-sm lg:leading-6">{step.text}</p>
+                  </div>
                 </article>
               );
             })}

@@ -64,9 +64,9 @@ export default function ContactPage() {
                   aria-label={label}
                   target={href.startsWith("http") ? "_blank" : undefined}
                   rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="flex h-10 w-10 items-center justify-center border border-white/20 transition hover:border-teal hover:bg-teal sm:h-11 sm:w-11"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition hover:border-teal hover:bg-teal sm:h-11 sm:w-11"
                 >
-                  <Icon size={17} />
+                  <Icon className="h-4 w-4 sm:h-[17px] sm:w-[17px]" />
                 </a>
               ))}
             </div>
