@@ -46,7 +46,7 @@ export default function ServicesPage() {
       <section className="bg-white px-4 py-14 sm:px-5 sm:py-20 lg:px-8 lg:py-28">
         <div className="mx-auto max-w-7xl">
           <SectionTitle title={s.processTitle} kicker={tx.kicker} />
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-5 lg:grid-cols-4">
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-5 lg:grid-cols-5">
             {s.steps.map((step) => (
               <article key={step.number} className="min-w-0 border-t-[3px] border-ink bg-bone p-3 sm:border-t-4 sm:p-5">
                 <p className="font-display text-4xl leading-none text-teal sm:text-7xl">{step.number}</p>

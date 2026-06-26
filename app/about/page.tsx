@@ -9,6 +9,7 @@ import {
   BadgeCheck,
   BookOpenText,
   CircleDot,
+  Flame,
   HandCoins,
   HeartHandshake,
   MapPin,
@@ -21,8 +22,8 @@ import {
 
 const reasonIcons = [PenTool, Sparkles, BadgeCheck, ShieldCheck, MapPin];
 const valueIcons = [HeartHandshake, ScrollText, Ruler, ShieldCheck];
-const craftIcons = [BookOpenText, PenTool, Sparkles];
-const traditionIcons = [CircleDot, HeartHandshake, PenTool, HandCoins];
+const craftIcons = [BookOpenText, PenTool, Sparkles, Flame];
+const traditionIcons = [CircleDot, Flame, PenTool, HandCoins];
 
 export default function AboutPage() {
   const { lang } = useLanguage();
@@ -137,7 +138,7 @@ export default function AboutPage() {
       <section className="px-4 py-14 sm:px-5 sm:py-20 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionTitle title={a.craftTitle} kicker={tx.kicker} />
-          <div className="mt-8 grid gap-3 sm:mt-10 sm:gap-5 md:grid-cols-3">
+          <div className="mt-8 grid gap-3 sm:mt-10 sm:gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {a.craftSteps.map((step, index) => {
               const Icon = craftIcons[index] ?? PenTool;
               return (

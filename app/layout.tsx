@@ -236,6 +236,14 @@ export default function RootLayout({
           text: "Yes. Alongside traditional Sak Yant, we create fully custom Khmer tattoo designs — including abstract Khmer script blackwork and sacred geometry inspired by Khmer visual heritage. Every piece is drawn around your body's shape and your personal meaning.",
         },
       },
+      {
+        "@type": "Question",
+        name: "Do you get a monk blessing after a Sak Yant tattoo?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. After every Sak Yant tattoo session at Khmer Bamboo Sakyant, a monk performs a traditional Buddhist blessing ceremony — known as the Wai Kru — to activate the protective power of the Yant. This sacred ritual connects the tattoo to Khmer spiritual tradition through prayer, offerings, and intention, and is included as part of the full Sakyant experience.",
+        },
+      },
     ],
   };
 
