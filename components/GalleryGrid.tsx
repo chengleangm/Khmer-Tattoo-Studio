@@ -104,6 +104,7 @@ function GalleryItem({
 export default function GalleryGrid() {
   const [active, setActive] = useState("All");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const preloadedLightboxImages = useRef<Set<string>>(new Set());
   const { lang } = useLanguage();
   const filterAll = t[lang].gallery.filterAll;
 
@@ -142,6 +143,26 @@ export default function GalleryGrid() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [items.length, selectedIndex]);
+
+  useEffect(() => {
+    if (selectedIndex === null || items.length === 0) return;
+
+    const nearbyIndexes = [
+      selectedIndex,
+      (selectedIndex - 1 + items.length) % items.length,
+      (selectedIndex + 1) % items.length,
+    ];
+
+    nearbyIndexes.forEach((index) => {
+      const src = items[index]?.src;
+      if (!src || preloadedLightboxImages.current.has(src)) return;
+
+      preloadedLightboxImages.current.add(src);
+      const image = new window.Image();
+      image.decoding = "async";
+      image.src = src;
+    });
+  }, [items, selectedIndex]);
 
   function showPrevious() {
     setSelectedIndex((current) => current === null ? current : (current - 1 + items.length) % items.length);
@@ -238,12 +259,13 @@ export default function GalleryGrid() {
 
           <div className="flex h-full flex-col items-center justify-center gap-3">
             <div className="relative h-[82vh] w-full max-w-6xl" onClick={(event) => event.stopPropagation()}>
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element -- Direct public image paths make lightbox prev/next switching immediate. */}
+              <img
                 src={selectedItem.src}
                 alt={lang === "km" ? `ážŸáŸ’áž“áž¶ážŠáŸƒ${getStyleLabel(selectedItem.style, lang)}` : `${selectedItem.style} tattoo portfolio large preview`}
-                fill
-                sizes="96vw"
-                className="object-contain"
+                className="h-full w-full object-contain"
+                decoding="async"
+                fetchPriority="high"
               />
             </div>
             <p className="font-condensed text-xs uppercase tracking-editorial text-white/70 sm:text-sm">
