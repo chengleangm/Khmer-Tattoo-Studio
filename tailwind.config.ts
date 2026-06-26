@@ -13,7 +13,7 @@ const config: Config = {
         charcoal: "#111312",
         ash: "#ededeb",
         bone: "#f7f7f3",
-        teal: "#c8a24a",
+        teal: "#D4AF37",
       },
       fontFamily: {
         display: ["var(--font-bebas)", "Impact", "sans-serif"],
