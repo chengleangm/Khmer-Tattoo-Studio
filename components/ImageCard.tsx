@@ -1,7 +1,7 @@
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 
 type ImageCardProps = {
-  src: string;
+  src: string | StaticImageData;
   alt: string;
   className?: string;
   priority?: boolean;

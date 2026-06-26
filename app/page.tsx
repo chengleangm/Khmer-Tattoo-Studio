@@ -8,6 +8,10 @@ import { galleryItems } from "@/data/site";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/data/translations";
 import Image from "next/image";
+import heroArtwork1 from "../public/hero img/hero1.jpg";
+import heroArtwork2 from "../public/hero img/hero2.jpg";
+import sakyantArtwork1 from "../public/Sakyant/sakyant1.jpg";
+import sakyantArtwork2 from "../public/Sakyant/sakyant2.jpg";
 
 export default function Home() {
   const { lang } = useLanguage();
@@ -29,8 +33,8 @@ export default function Home() {
             {tx.kicker}
           </p>
           <div className="relative mt-5 grid grid-cols-2 gap-2 sm:mt-8 sm:gap-3 lg:min-h-[620px] lg:grid-cols-[1fr_1fr] lg:gap-6 lg:items-start">
-            <ImageCard src="/images/hero-tattoo-portrait.jpg" alt="Black and white tattoo portrait inspiration" className="h-[315px] sm:h-[430px] lg:h-[520px]" priority />
-            <ImageCard src="/images/hero-tattoo-sleeve.jpg" alt="Detailed sleeve tattoo close up" className="h-[315px] sm:h-[430px] lg:mt-10 lg:h-[520px]" priority />
+            <ImageCard src={heroArtwork1} alt="Khmer Tattoo Studio hero artwork" className="h-[315px] sm:h-[430px] lg:h-[520px]" priority />
+            <ImageCard src={heroArtwork2} alt="Khmer Tattoo Studio tattoo artwork" className="h-[315px] sm:h-[430px] lg:mt-10 lg:h-[520px]" priority />
             <div className="pointer-events-none absolute inset-x-0 top-[42%] z-10 translate-y-[-50%] lg:top-[43%]">
               <h1 className="flex justify-center">
                 <Image
@@ -56,15 +60,15 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-3 lg:grid-cols-[0.75fr_1.25fr] lg:gap-8 lg:items-center">
           <div className="order-2 col-span-2 lg:order-1 lg:col-span-1">
             <div className="grid grid-cols-2 gap-3 lg:block">
-              <ImageCard src="/images/new-tattoo-session.jpg" alt="New custom tattoo session" className="h-[240px] lg:h-[520px]" />
-              <ImageCard src="/images/studio-tattoo-arm.jpg" alt="Large tattoo image block" className="h-[240px] lg:hidden" />
+              <ImageCard src={sakyantArtwork1} alt="Khmer Sakyant tattoo artwork" className="h-[240px] lg:h-[520px]" />
+              <ImageCard src={sakyantArtwork2} alt="Khmer Sakyant tattoo detail" className="h-[240px] lg:hidden" />
             </div>
             <p className="mt-6 max-w-md text-sm leading-6 text-ink/65">{h.newDesc}</p>
             <Button href="/gallery" variant="dark" className="mt-5">{tx.common.viewMoreTattoo}</Button>
           </div>
           <div className="order-1 col-span-2 text-center lg:order-2 lg:col-span-1">
             <SectionTitle title={h.newTitle} kicker={tx.kicker} />
-            <ImageCard src="/images/studio-tattoo-arm.jpg" alt="Large tattoo image block" className="mx-auto mt-8 hidden h-[460px] max-w-xl lg:block" />
+            <ImageCard src={sakyantArtwork2} alt="Khmer Sakyant tattoo detail" className="mx-auto mt-8 hidden h-[460px] max-w-xl lg:block" />
           </div>
         </div>
       </section>

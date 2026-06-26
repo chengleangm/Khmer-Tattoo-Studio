@@ -6,11 +6,11 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/data/translations";
 
 const styleOptions = [
-  { name: "Sak Yant Khmer", image: "/images/gallery-3.jpg" },
-  { name: "Abstract Khmer", image: "/images/studio-tattoo-arm.jpg" },
-  { name: "Khmer Script Flow", image: "/images/eternal-tattoo-closeup.jpg" },
-  { name: "Protective Yantra", image: "/images/gallery-7.jpg" },
-  { name: "Japanese Inspired", image: "/images/about-studio-work.jpg" },
+  { name: "Sak Yant Khmer", image: "/tattoo-img-categgory/sakyant-khmer.jpg" },
+  { name: "Abstract Khmer", image: "/tattoo-img-categgory/abstract-khmer.jpg" },
+  { name: "Khmer Script Flow", image: "/tattoo-img-categgory/khmer-script-flow.jpg" },
+  { name: "Protective Yantra", image: "/tattoo-img-categgory/protective-yantra.jpg" },
+  { name: "Japanese Inspired", image: "/tattoo-img-categgory/japanese-inspired.jpg" },
   { name: "Custom Sacred Piece", image: "/images/gallery-5.jpg" },
 ];
 
