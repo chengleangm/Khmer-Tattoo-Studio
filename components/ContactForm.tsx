@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Button from "@/components/Button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { cambodiaPhonePattern, cambodiaPhoneTitle, sanitizeCambodiaPhoneInput } from "@/data/phone";
 import { t } from "@/data/translations";
 import { Mail, MessageSquareText, Phone, User } from "lucide-react";
 
@@ -55,7 +56,21 @@ export default function ContactForm() {
       </label>
       <label className="relative block">
         <Phone className={iconClass} size={18} />
-        <input className={fieldClass} name="phone" placeholder={f.phone} aria-label={f.phone} required />
+        <input
+          className={fieldClass}
+          name="phone"
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          pattern={cambodiaPhonePattern}
+          title={cambodiaPhoneTitle}
+          onInput={(event) => {
+            event.currentTarget.value = sanitizeCambodiaPhoneInput(event.currentTarget.value);
+          }}
+          placeholder={f.phone}
+          aria-label={f.phone}
+          required
+        />
       </label>
       <label className="relative block">
         <Mail className={iconClass} size={18} />

@@ -1,3 +1,5 @@
+import { cambodiaPhoneTitle, isCambodiaPhoneNumber } from "@/data/phone";
+
 export const runtime = "nodejs";
 
 function getValue(formData: FormData, key: string) {
@@ -49,6 +51,10 @@ export async function POST(request: Request) {
   }
 
   const formData = await request.formData();
+  if (!isCambodiaPhoneNumber(getValue(formData, "phone"))) {
+    return Response.json({ error: cambodiaPhoneTitle }, { status: 400 });
+  }
+
   const telegramForm = new URLSearchParams();
   telegramForm.set("chat_id", chatId);
   telegramForm.set("text", formatTelegramMessage(formData));

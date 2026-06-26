@@ -5,6 +5,7 @@ import { useState } from "react";
 import Button from "@/components/Button";
 import { styles } from "@/data/site";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { cambodiaPhonePattern, cambodiaPhoneTitle, sanitizeCambodiaPhoneInput } from "@/data/phone";
 import { t } from "@/data/translations";
 
 const fieldClass =
@@ -86,7 +87,21 @@ export default function BookingForm() {
         </label>
         <label className="relative block min-w-0">
           <Phone className={iconClass} size={18} />
-          <input className={fieldClass} name="phone" placeholder={f.phone} aria-label={f.phone} required />
+          <input
+            className={fieldClass}
+            name="phone"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            pattern={cambodiaPhonePattern}
+            title={cambodiaPhoneTitle}
+            onInput={(event) => {
+              event.currentTarget.value = sanitizeCambodiaPhoneInput(event.currentTarget.value);
+            }}
+            placeholder={f.phone}
+            aria-label={f.phone}
+            required
+          />
         </label>
       </div>
       <label className="relative block">
