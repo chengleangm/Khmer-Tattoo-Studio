@@ -11,7 +11,7 @@ const styleOptions = [
   { name: "Khmer Script Flow", image: "/tattoo-img-categgory/khmer-script-flow.jpg" },
   { name: "Protective Yantra", image: "/tattoo-img-categgory/protective-yantra.jpg" },
   { name: "Japanese Inspired", image: "/tattoo-img-categgory/japanese-inspired.jpg" },
-  { name: "Custom Sacred Piece", image: "/images/gallery-5.jpg" },
+  { name: "Custom Sacred Piece", image: "/tattoo-img-categgory/custom-sacred-piece.jpg" },
 ];
 
 export default function TattooStyleShowcase() {

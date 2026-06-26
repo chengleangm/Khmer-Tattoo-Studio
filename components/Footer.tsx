@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Facebook, Linkedin, Mail, Send } from "lucide-react";
+import { Facebook, Instagram, Mail, Send } from "lucide-react";
 import Button from "@/components/Button";
+import WhatsAppIcon from "@/components/WhatsAppIcon";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { contactDetails } from "@/data/site";
 import { t } from "@/data/translations";
 
 function wrapLatinWords(text: string) {
@@ -16,10 +18,11 @@ function wrapLatinWords(text: string) {
 }
 
 const socialLinks = [
-  { Icon: Send, href: "https://t.me/sokreoun", label: "Telegram" },
-  { Icon: Facebook, href: "https://www.facebook.com/profile.php?id=100023594836736", label: "Facebook" },
-  { Icon: Mail, href: "mailto:khmertattoostudio@gmail.com", label: "Email" },
-  { Icon: Linkedin, href: "/contact", label: "LinkedIn" },
+  { Icon: WhatsAppIcon, href: contactDetails.whatsappHref, label: "WhatsApp" },
+  { Icon: Send, href: contactDetails.telegramHref, label: "Telegram" },
+  { Icon: Facebook, href: contactDetails.facebookHref, label: "Facebook" },
+  { Icon: Instagram, href: contactDetails.instagramHref, label: "Instagram" },
+  { Icon: Mail, href: `mailto:${contactDetails.email}`, label: "Email" },
 ];
 
 export default function Footer() {
@@ -65,7 +68,7 @@ export default function Footer() {
             <p className="font-condensed text-xs uppercase tracking-editorial text-teal md:text-sm">
               {text.social}
             </p>
-            <div className="mt-3 grid max-w-48 grid-cols-4 gap-2 md:mt-4 md:flex md:max-w-none md:gap-3">
+            <div className="mt-3 grid max-w-52 grid-cols-5 gap-2 md:mt-4 md:flex md:max-w-none md:gap-3">
               {socialLinks.map(({ Icon, href, label }) => (
                 <a
                   key={label}

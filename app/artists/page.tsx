@@ -1,11 +1,21 @@
 "use client";
 
 import Image from "next/image";
+import { Facebook, Instagram, Send } from "lucide-react";
 import Button from "@/components/Button";
 import SectionTitle from "@/components/SectionTitle";
+import WhatsAppIcon from "@/components/WhatsAppIcon";
 import { artists } from "@/data/site";
+import { contactDetails } from "@/data/site";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/data/translations";
+
+const socialLinks = [
+  { Icon: WhatsAppIcon, href: contactDetails.whatsappHref, label: "WhatsApp" },
+  { Icon: Send, href: contactDetails.telegramHref, label: "Telegram" },
+  { Icon: Facebook, href: contactDetails.facebookHref, label: "Facebook" },
+  { Icon: Instagram, href: contactDetails.instagramHref, label: "Instagram" },
+];
 
 export default function ArtistsPage() {
   const { lang } = useLanguage();
@@ -65,6 +75,20 @@ export default function ArtistsPage() {
             <Button href="/gallery" variant="dark" className="mt-6">
               {tx.common.viewWorks}
             </Button>
+            <div className="mt-5 flex flex-wrap gap-2 sm:gap-3">
+              {socialLinks.map(({ Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-11 w-11 items-center justify-center border border-ink/20 bg-bone text-ink transition hover:border-teal hover:bg-teal hover:text-white"
+                >
+                  <Icon size={18} />
+                </a>
+              ))}
+            </div>
           </article>
         </div>
       </section>

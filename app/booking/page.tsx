@@ -2,7 +2,9 @@
 
 import BookingForm from "@/components/BookingForm";
 import SectionTitle from "@/components/SectionTitle";
+import WhatsAppIcon from "@/components/WhatsAppIcon";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { contactDetails } from "@/data/site";
 import { t } from "@/data/translations";
 
 export default function BookingPage() {
@@ -32,8 +34,24 @@ export default function BookingPage() {
               <p><strong className="font-condensed uppercase tracking-editorial text-white">{b.monFri}</strong> 11:00 AM - 8:00 PM</p>
               <p><strong className="font-condensed uppercase tracking-editorial text-white">{b.saturday}</strong> 12:00 PM - 7:00 PM</p>
               <p><strong className="font-condensed uppercase tracking-editorial text-white">{b.sunday}</strong> {b.consultOnly}</p>
-              <p><strong className="font-condensed uppercase tracking-editorial text-white">{b.phone}</strong> 092394843 / 0964637600</p>
-              <p><strong className="font-condensed uppercase tracking-editorial text-white">{b.email}</strong> khmertattoostudio@gmail.com</p>
+              <p>
+                <strong className="font-condensed uppercase tracking-editorial text-white">{b.phone}</strong>{" "}
+                <a href={`tel:${contactDetails.phonePrimary}`} className="hover:text-white">{contactDetails.phonePrimary}</a>
+                {" / "}
+                <a href={`tel:${contactDetails.phoneSecondary}`} className="hover:text-white">{contactDetails.phoneSecondary}</a>
+              </p>
+              <p className="flex items-center gap-2">
+                <WhatsAppIcon size={15} />
+                <a
+                  href={contactDetails.whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white"
+                >
+                  WhatsApp {contactDetails.phonePrimaryDisplay}
+                </a>
+              </p>
+              <p><strong className="font-condensed uppercase tracking-editorial text-white">{b.email}</strong> {contactDetails.email}</p>
             </div>
           </aside>
         </div>

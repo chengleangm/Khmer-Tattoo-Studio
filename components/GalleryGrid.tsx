@@ -6,8 +6,6 @@ import { galleryItems } from "@/data/site";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/data/translations";
 
-const filterKeys = ["All", "Sak Yant Khmer", "Abstract Khmer", "Khmer Script Flow", "Protective Yantra", "Japanese Inspired"] as const;
-
 const kmFilterLabels: Record<string, string> = {
   "Sak Yant Khmer": "សាក់យ័ន្តខ្មែរ",
   "Abstract Khmer": "អាប់ស្ត្រាក់ខ្មែរ",
@@ -24,6 +22,10 @@ export default function GalleryGrid() {
   const [active, setActive] = useState("All");
   const { lang } = useLanguage();
   const filterAll = t[lang].gallery.filterAll;
+  const filterKeys = useMemo(
+    () => ["All", ...Array.from(new Set(galleryItems.map((item) => item.style)))],
+    []
+  );
 
   const filters = filterKeys.map((key) => ({
     value: key,

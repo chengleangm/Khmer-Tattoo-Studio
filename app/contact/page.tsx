@@ -2,14 +2,17 @@
 
 import ContactForm from "@/components/ContactForm";
 import SectionTitle from "@/components/SectionTitle";
+import WhatsAppIcon from "@/components/WhatsAppIcon";
 import { Facebook, Mail, Phone, Send } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { contactDetails } from "@/data/site";
 import { t } from "@/data/translations";
 
 const socialLinks = [
-  { Icon: Send, href: "https://t.me/sokreoun", label: "Telegram" },
-  { Icon: Facebook, href: "https://www.facebook.com/profile.php?id=100023594836736", label: "Facebook" },
-  { Icon: Mail, href: "mailto:khmertattoostudio@gmail.com", label: "Email" },
+  { Icon: WhatsAppIcon, href: contactDetails.whatsappHref, label: "WhatsApp" },
+  { Icon: Send, href: contactDetails.telegramHref, label: "Telegram" },
+  { Icon: Facebook, href: contactDetails.facebookHref, label: "Facebook" },
+  { Icon: Mail, href: `mailto:${contactDetails.email}`, label: "Email" },
 ];
 
 export default function ContactPage() {
@@ -36,11 +39,22 @@ export default function ContactPage() {
               <p>{c.address}</p>
               <p className="flex items-center gap-2">
                 <Phone className="shrink-0" size={15} />
-                <a href="tel:092394843" className="hover:text-white">092394843</a>
+                <a href={`tel:${contactDetails.phonePrimary}`} className="hover:text-white">{contactDetails.phonePrimary}</a>
                 <span>/</span>
-                <a href="tel:0964637600" className="hover:text-white">0964637600</a>
+                <a href={`tel:${contactDetails.phoneSecondary}`} className="hover:text-white">{contactDetails.phoneSecondary}</a>
               </p>
-              <p className="flex items-center gap-2 break-all"><Mail className="shrink-0" size={15} /> khmertattoostudio@gmail.com</p>
+              <p className="flex items-center gap-2">
+                <WhatsAppIcon size={15} />
+                <a
+                  href={contactDetails.whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white"
+                >
+                  WhatsApp {contactDetails.phonePrimaryDisplay}
+                </a>
+              </p>
+              <p className="flex items-center gap-2 break-all"><Mail className="shrink-0" size={15} /> {contactDetails.email}</p>
             </div>
             <div className="mt-5 flex gap-2 sm:mt-8 sm:gap-3">
               {socialLinks.map(({ Icon, href, label }) => (
