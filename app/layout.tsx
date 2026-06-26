@@ -31,11 +31,11 @@ const kantumruy = Kantumruy_Pro({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.khmerbamboosakyant.com"),
   title: {
-    default: "Khmer Bamboo Sakyant | Khmer Tattoo & Sak Yant Studio in Siem Reap",
+    default: "Khmer Bamboo Sakyant: Siem Reap/Cambodia",
     template: "%s | Khmer Bamboo Sakyant",
   },
   description:
-    "Khmer Bamboo Sakyant is a Siem Reap tattoo studio for Khmer Sakyant, Sak Yant, Abstract Khmer tattoo design, sacred yantra work, and custom meaningful tattoos in Cambodia.",
+    "The Sak Yant tattoo has deep roots in Khmer culture and spiritual meaning. Khmer Bamboo Sakyant creates sacred Khmer, Sak Yant, and custom tattoo work in Siem Reap, Cambodia.",
   keywords: [
     "Khmer tattoo",
     "Sak Yant",
@@ -66,9 +66,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Khmer Bamboo Sakyant",
-    title: "Khmer Bamboo Sakyant | Khmer Tattoo & Sak Yant Studio in Siem Reap",
+    title: "Khmer Bamboo Sakyant: Siem Reap/Cambodia",
     description:
-      "Khmer Sakyant, Sak Yant, Abstract Khmer tattoo design, sacred yantra work, and custom meaningful tattoos in Siem Reap, Cambodia.",
+      "Sacred Khmer, Sak Yant, Abstract Khmer tattoo design, and custom meaningful tattoo work in Siem Reap, Cambodia.",
     url: "/",
     images: [
       {
@@ -81,9 +81,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Khmer Bamboo Sakyant | Khmer Tattoo & Sak Yant Studio in Siem Reap",
+    title: "Khmer Bamboo Sakyant: Siem Reap/Cambodia",
     description:
-      "Khmer Sakyant, Sak Yant, Abstract Khmer tattoo design, sacred yantra work, and custom meaningful tattoos in Cambodia.",
+      "Sacred Khmer, Sak Yant, Abstract Khmer tattoo design, and custom meaningful tattoo work in Siem Reap, Cambodia.",
     images: ["/gallery/photo_2026-06-26_11-16-00.jpg"],
   },
   robots: {
@@ -96,6 +96,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
       "max-video-preview": -1,
     },
+  },
+  verification: {
+    google: "xzPsh0EKH6180EaHF53n_kLR0S5OyJaNL6W7uW4dr-M",
   },
 };
 
@@ -114,7 +117,7 @@ export default function RootLayout({
     image: `${siteUrl}/gallery/photo_2026-06-26_11-16-00.jpg`,
     logo: `${siteUrl}/logo/logobamboo.png`,
     description:
-      "Khmer Bamboo Sakyant is a tattoo studio in Siem Reap, Cambodia, focused on Khmer Sakyant, Sak Yant, Abstract Khmer tattoo design, sacred yantra work, and custom meaningful tattoos.",
+      "The Sak Yant tattoo has deep roots in Khmer culture and spiritual meaning. Khmer Bamboo Sakyant creates sacred Khmer, Sak Yant, Abstract Khmer, and custom tattoo work in Siem Reap, Cambodia.",
     telephone: `+855${contactDetails.phonePrimary.slice(1)}`,
     email: contactDetails.email,
     address: {
