@@ -9,8 +9,8 @@ import { t } from "@/data/translations";
 
 const fieldClass =
   "min-w-0 w-full border border-ink/15 bg-white py-3 pl-11 pr-3 text-sm outline-none transition placeholder:text-ink/45 focus:border-teal sm:py-4 sm:pl-12 sm:pr-4";
-const iconClass = "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink/40";
-const textareaIconClass = "pointer-events-none absolute left-4 top-4 text-ink/40 sm:top-5";
+const iconClass = "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-teal";
+const textareaIconClass = "pointer-events-none absolute left-4 top-4 text-teal sm:top-5";
 const months = Array.from({ length: 12 }, (_, index) => String(index + 1).padStart(2, "0"));
 const days = Array.from({ length: 31 }, (_, index) => String(index + 1).padStart(2, "0"));
 const years = ["2026", "2027", "2028", "2029", "2030"];

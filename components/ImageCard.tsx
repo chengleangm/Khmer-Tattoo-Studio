@@ -14,14 +14,23 @@ export default function ImageCard({ src, alt, className = "", priority = false }
   const [loaded, setLoaded] = useState(false);
   const [visible, setVisible] = useState(priority);
   const ref = useRef<HTMLDivElement>(null);
+  const mountedRef = useRef(false);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (priority) return;
+    let mounted = true;
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (mounted && entry.isIntersecting) {
           setVisible(true);
           observer.disconnect();
         }
@@ -29,7 +38,10 @@ export default function ImageCard({ src, alt, className = "", priority = false }
       { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
     );
     observer.observe(el);
-    return () => observer.disconnect();
+    return () => {
+      mounted = false;
+      observer.disconnect();
+    };
   }, [priority]);
 
   return (
@@ -58,7 +70,9 @@ export default function ImageCard({ src, alt, className = "", priority = false }
         fill
         priority={priority}
         sizes="(max-width: 768px) 90vw, 42vw"
-        onLoad={() => setLoaded(true)}
+        onLoad={() => {
+          if (mountedRef.current) setLoaded(true);
+        }}
         className={`object-cover grayscale transition-[opacity,transform,filter] duration-700 group-hover:scale-105 group-hover:grayscale-0 ${
           loaded ? "opacity-100" : "opacity-0"
         }`}

@@ -6,12 +6,13 @@ import WhatsAppIcon from "@/components/WhatsAppIcon";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { contactDetails } from "@/data/site";
 import { t } from "@/data/translations";
-import { CalendarDays, Clock, Mail, Phone } from "lucide-react";
+import { Clock, Mail, Phone } from "lucide-react";
 
 export default function BookingPage() {
   const { lang } = useLanguage();
   const tx = t[lang];
   const b = tx.booking;
+  const infoIconClass = "mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-teal text-teal";
 
   return (
     <main>
@@ -33,19 +34,15 @@ export default function BookingPage() {
             </h2>
             <div className="mt-5 grid gap-3 text-xs leading-5 text-white/70 sm:mt-8 sm:gap-5 sm:text-sm sm:leading-6 min-[700px]:mt-5 min-[700px]:gap-3 min-[700px]:text-xs min-[700px]:leading-5 lg:mt-8 lg:gap-5 lg:text-sm lg:leading-6">
               <p className="flex items-start gap-3">
-                <Clock className="mt-0.5 shrink-0 text-teal" size={17} />
-                <span><strong className="font-condensed uppercase tracking-editorial text-white">{b.monFri}</strong> 11:00 AM - 8:00 PM</span>
+                <span className={infoIconClass}>
+                  <Clock size={16} />
+                </span>
+                <span><strong className="font-condensed uppercase tracking-editorial text-white">{b.everyDay}</strong> 11:00 AM - 8:00 PM</span>
               </p>
               <p className="flex items-start gap-3">
-                <CalendarDays className="mt-0.5 shrink-0 text-teal" size={17} />
-                <span><strong className="font-condensed uppercase tracking-editorial text-white">{b.saturday}</strong> 12:00 PM - 7:00 PM</span>
-              </p>
-              <p className="flex items-start gap-3">
-                <CalendarDays className="mt-0.5 shrink-0 text-teal" size={17} />
-                <span><strong className="font-condensed uppercase tracking-editorial text-white">{b.sunday}</strong> {b.consultOnly}</span>
-              </p>
-              <p className="flex items-start gap-3">
-                <Phone className="mt-0.5 shrink-0 text-teal" size={17} />
+                <span className={infoIconClass}>
+                  <Phone size={16} />
+                </span>
                 <span>
                   <strong className="font-condensed uppercase tracking-editorial text-white">{b.phone}</strong>{" "}
                   <a href={`tel:${contactDetails.phonePrimary}`} className="hover:text-white">{contactDetails.phonePrimary}</a>
@@ -54,8 +51,8 @@ export default function BookingPage() {
                 </span>
               </p>
               <p className="flex items-start gap-3">
-                <span className="mt-0.5 shrink-0 text-teal">
-                  <WhatsAppIcon size={17} />
+                <span className={infoIconClass}>
+                  <WhatsAppIcon size={16} />
                 </span>
                 <span>
                   <strong className="font-condensed uppercase tracking-editorial text-white">WhatsApp:</strong>{" "}
@@ -70,7 +67,9 @@ export default function BookingPage() {
                 </span>
               </p>
               <p className="flex items-start gap-3">
-                <Mail className="mt-0.5 shrink-0 text-teal" size={17} />
+                <span className={infoIconClass}>
+                  <Mail size={16} />
+                </span>
                 <span><strong className="font-condensed uppercase tracking-editorial text-white">{b.email}</strong> {contactDetails.email}</span>
               </p>
             </div>

@@ -39,11 +39,13 @@ function GalleryItem({
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let mounted = true;
     const el = ref.current;
     if (!el) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        if (!mounted) return;
         if (entry.isIntersecting) {
           setState("visible");
         } else {
@@ -55,7 +57,10 @@ function GalleryItem({
     );
 
     observer.observe(el);
-    return () => observer.disconnect();
+    return () => {
+      mounted = false;
+      observer.disconnect();
+    };
   }, [filterKey]);
 
   const flyTransform =

@@ -3,7 +3,7 @@
 import ContactForm from "@/components/ContactForm";
 import SectionTitle from "@/components/SectionTitle";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
-import { Facebook, Mail, Phone, Send } from "lucide-react";
+import { Facebook, Instagram, Mail, Phone, Send } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { contactDetails } from "@/data/site";
 import { t } from "@/data/translations";
@@ -12,6 +12,7 @@ const socialLinks = [
   { Icon: WhatsAppIcon, href: contactDetails.whatsappHref, label: "WhatsApp" },
   { Icon: Send, href: contactDetails.telegramHref, label: "Telegram" },
   { Icon: Facebook, href: contactDetails.facebookHref, label: "Facebook" },
+  { Icon: Instagram, href: contactDetails.instagramHref, label: "Instagram" },
   { Icon: Mail, href: `mailto:${contactDetails.email}`, label: "Email" },
 ];
 
@@ -19,6 +20,7 @@ export default function ContactPage() {
   const { lang } = useLanguage();
   const tx = t[lang];
   const c = tx.contact;
+  const infoIconClass = "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-teal text-teal";
 
   return (
     <main>
@@ -37,14 +39,20 @@ export default function ContactPage() {
             </h2>
             <div className="mt-5 grid gap-3 text-xs leading-5 text-white/70 sm:mt-8 sm:gap-4 sm:text-sm">
               <p>{c.address}</p>
-              <p className="flex items-center gap-2">
-                <Phone className="shrink-0" size={15} />
-                <a href={`tel:${contactDetails.phonePrimary}`} className="hover:text-white">{contactDetails.phonePrimary}</a>
-                <span>/</span>
-                <a href={`tel:${contactDetails.phoneSecondary}`} className="hover:text-white">{contactDetails.phoneSecondary}</a>
+              <p className="flex items-center gap-3">
+                <span className={infoIconClass}>
+                  <Phone size={15} />
+                </span>
+                <span>
+                  <a href={`tel:${contactDetails.phonePrimary}`} className="hover:text-white">{contactDetails.phonePrimary}</a>
+                  <span> / </span>
+                  <a href={`tel:${contactDetails.phoneSecondary}`} className="hover:text-white">{contactDetails.phoneSecondary}</a>
+                </span>
               </p>
-              <p className="flex items-center gap-2">
-                <WhatsAppIcon size={15} />
+              <p className="flex items-center gap-3">
+                <span className={infoIconClass}>
+                  <WhatsAppIcon size={15} />
+                </span>
                 <a
                   href={contactDetails.whatsappHref}
                   target="_blank"
@@ -54,7 +62,12 @@ export default function ContactPage() {
                   WhatsApp {contactDetails.phonePrimaryDisplay}
                 </a>
               </p>
-              <p className="flex items-center gap-2 break-all"><Mail className="shrink-0" size={15} /> {contactDetails.email}</p>
+              <p className="flex items-center gap-3 break-all">
+                <span className={infoIconClass}>
+                  <Mail size={15} />
+                </span>
+                {contactDetails.email}
+              </p>
             </div>
             <div className="mt-5 flex gap-2 sm:mt-8 sm:gap-3">
               {socialLinks.map(({ Icon, href, label }) => (

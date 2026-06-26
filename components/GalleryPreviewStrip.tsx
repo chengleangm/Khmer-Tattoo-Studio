@@ -29,15 +29,19 @@ function GalleryPreviewTile({
   const item = items[(startIndex + position * tileSettings.length) % items.length];
 
   useEffect(() => {
+    let mounted = true;
     let intervalId: ReturnType<typeof setInterval> | undefined;
     const timeoutId = setTimeout(() => {
+      if (!mounted) return;
       setPosition((current) => current + 1);
       intervalId = setInterval(() => {
+        if (!mounted) return;
         setPosition((current) => current + 1);
       }, 5000);
     }, 5000 + offsetMs);
 
     return () => {
+      mounted = false;
       clearTimeout(timeoutId);
       if (intervalId) clearInterval(intervalId);
     };

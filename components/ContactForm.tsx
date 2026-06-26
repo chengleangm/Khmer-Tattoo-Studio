@@ -9,8 +9,8 @@ import { Mail, MessageSquareText, Phone, User } from "lucide-react";
 const fieldClass =
   "w-full border border-ink/15 bg-white py-3 pl-11 pr-3 text-sm outline-none transition placeholder:text-ink/45 focus:border-teal sm:py-4 sm:pl-12 sm:pr-4";
 
-const iconClass = "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink/40";
-const textareaIconClass = "pointer-events-none absolute left-4 top-4 text-ink/40 sm:top-5";
+const iconClass = "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-teal";
+const textareaIconClass = "pointer-events-none absolute left-4 top-4 text-teal sm:top-5";
 
 export default function ContactForm() {
   const { lang } = useLanguage();
