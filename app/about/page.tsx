@@ -8,6 +8,8 @@ import { t } from "@/data/translations";
 import {
   BadgeCheck,
   BookOpenText,
+  CircleDot,
+  HandCoins,
   HeartHandshake,
   MapPin,
   PenTool,
@@ -20,6 +22,7 @@ import {
 const reasonIcons = [PenTool, Sparkles, BadgeCheck, ShieldCheck, MapPin];
 const valueIcons = [HeartHandshake, ScrollText, Ruler, ShieldCheck];
 const craftIcons = [BookOpenText, PenTool, Sparkles];
+const traditionIcons = [CircleDot, HeartHandshake, PenTool, HandCoins];
 
 export default function AboutPage() {
   const { lang } = useLanguage();
@@ -54,6 +57,14 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <section className="px-4 pb-14 sm:px-5 sm:pb-20 lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-3 gap-2 sm:gap-4">
+          <ImageCard src="/gallery/photo_2026-06-26_11-12-44.jpg" alt="Khmer script sacred tattoo detail" className="h-[170px] sm:h-[260px] lg:h-[420px]" />
+          <ImageCard src="/gallery/photo_2026-06-26_11-16-00.jpg" alt="Full back Sak Yant Khmer tattoo" className="h-[170px] sm:h-[260px] lg:h-[420px]" />
+          <ImageCard src="/gallery/photo_2026-06-26_11-21-28.jpg" alt="Khmer Sakyant tattoo session in studio" className="h-[170px] sm:h-[260px] lg:h-[420px]" />
+        </div>
+      </section>
+
       <section className="bg-ink px-4 py-14 text-white sm:px-5 sm:py-20 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-start lg:gap-10">
@@ -77,6 +88,39 @@ export default function AboutPage() {
                       </h3>
                     </div>
                     <p className="mt-4 text-xs leading-5 text-white/65 sm:text-sm sm:leading-6">{value.text}</p>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="editorial-section px-4 py-14 sm:px-5 sm:py-20 lg:px-8 lg:py-28" data-bg-word="YANT">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr] lg:items-start lg:gap-10">
+            <div>
+              <p className="font-condensed text-xs uppercase tracking-editorial text-teal sm:text-sm">{tx.kicker}</p>
+              <h2 className="mt-3 max-w-2xl font-display text-[clamp(3rem,13vw,7rem)] leading-[0.82]">
+                <span className="km-title-text">{a.traditionTitle}</span>
+              </h2>
+              <p className="mt-5 text-sm leading-6 text-ink/70 sm:text-base sm:leading-7">{a.traditionIntro}</p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+              {a.traditionPoints.map((point, index) => {
+                const Icon = traditionIcons[index] ?? BadgeCheck;
+                return (
+                  <article key={point.title} className="border border-ink/10 bg-bone p-4 transition hover:border-teal hover:bg-white sm:p-5">
+                    <div className="flex items-start justify-between gap-3">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-teal text-teal">
+                        <Icon size={21} strokeWidth={1.8} />
+                      </span>
+                      <span className="font-display text-3xl leading-none text-ink/10 sm:text-5xl">{String(index + 1).padStart(2, "0")}</span>
+                    </div>
+                    <h3 className="mt-4 font-display text-3xl leading-none sm:text-4xl">
+                      <span className="km-title-text">{point.title}</span>
+                    </h3>
+                    <p className="mt-3 text-xs leading-5 text-ink/65 sm:text-sm sm:leading-6">{point.text}</p>
                   </article>
                 );
               })}
