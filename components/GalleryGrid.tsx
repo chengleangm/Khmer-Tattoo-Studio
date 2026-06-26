@@ -54,15 +54,19 @@ function GalleryItem({
     return () => observer.disconnect();
   }, [filterKey]);
 
-  const yDir = state === "below" ? 1 : -1;
+  // "below"  → first entry: subtle nudge up (stays inside overflow-hidden container)
+  // "above"  → exited at top: fly out directionally (left / up / right per column)
+  // "visible" → no transform
   const flyTransform =
     state === "visible"
       ? "translate(0px, 0px) scale(1)"
-      : col === 0
-      ? `translate(-180px, ${25 * yDir}px) scale(0.88)`
-      : col === 2
-      ? `translate(180px, ${25 * yDir}px) scale(0.88)`
-      : `translate(0px, ${110 * yDir}px) scale(0.88)`;
+      : state === "above"
+      ? col === 0
+        ? "translate(-160px, -15px) scale(0.88)"
+        : col === 2
+        ? "translate(160px, -15px) scale(0.88)"
+        : "translate(0px, -80px) scale(0.88)"
+      : "translate(0px, 48px) scale(0.92)";
 
   return (
     <div
