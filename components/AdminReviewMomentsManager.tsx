@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ImagePlus, LogOut, RefreshCcw, Trash2, UploadCloud } from "lucide-react";
+import { Check, ImagePlus, LogOut, Pencil, RefreshCcw, Trash2, UploadCloud, X } from "lucide-react";
 
 type AdminMoment = {
   src: string;
@@ -32,6 +32,7 @@ export default function AdminReviewMomentsManager() {
   const [moments, setMoments] = useState<AdminMoment[]>([]);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [editingLabel, setEditingLabel] = useState<{ url: string; value: string } | null>(null);
 
   async function loadMoments(currentToken = token) {
     setLoading(true);
@@ -54,6 +55,11 @@ export default function AdminReviewMomentsManager() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (token) loadMoments(token);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
 
   function logout() {
     window.sessionStorage.removeItem(TOKEN_STORAGE_KEY);
@@ -96,7 +102,32 @@ export default function AdminReviewMomentsManager() {
     }
   }
 
+  async function saveLabel(url: string, newLabel: string) {
+    setLoading(true);
+    setMessage("");
+    try {
+      const response = await fetch("/api/admin/review-moments", {
+        method: "PATCH",
+        headers: { "content-type": "application/json", "x-admin-token": token },
+        body: JSON.stringify({ url, label: newLabel }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "Update failed.");
+      setMoments((items) =>
+        items.map((m) => (m.url === url ? { ...m, label: newLabel } : m))
+      );
+      setEditingLabel(null);
+      setMessage("Label updated.");
+      notifyReviewMomentsChanged();
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Update failed.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   async function deleteMoment(moment: AdminMoment) {
+    if (!confirm("Delete this image?")) return;
     setLoading(true);
     setMessage("");
 
@@ -237,19 +268,69 @@ export default function AdminReviewMomentsManager() {
                 />
               </div>
               <div className="p-3">
-                <p className="font-condensed text-sm uppercase tracking-editorial text-ink">
-                  {moment.label}
-                </p>
-                <p className="mt-1 break-all text-xs leading-5 text-ink/45">{moment.pathname}</p>
-                <button
-                  type="button"
-                  disabled={loading}
-                  onClick={() => deleteMoment(moment)}
-                  className="mt-3 inline-flex w-full items-center justify-center gap-2 bg-ink px-3 py-2.5 font-condensed text-xs uppercase tracking-editorial text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  <Trash2 className="h-4 w-4" />
-                  Delete
-                </button>
+                {editingLabel?.url === moment.url ? (
+                  <div className="flex gap-1.5">
+                    <input
+                      value={editingLabel.value}
+                      onChange={(e) =>
+                        setEditingLabel((s) => s ? { ...s, value: e.target.value } : s)
+                      }
+                      className="min-w-0 flex-1 border border-ink/15 bg-white px-2 py-1.5 font-condensed text-xs uppercase tracking-editorial outline-none focus:border-teal"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") saveLabel(moment.url, editingLabel.value);
+                        if (e.key === "Escape") setEditingLabel(null);
+                      }}
+                      autoFocus
+                    />
+                    <button
+                      type="button"
+                      disabled={loading}
+                      onClick={() => saveLabel(moment.url, editingLabel.value)}
+                      className="inline-flex h-8 w-8 shrink-0 items-center justify-center bg-ink text-white transition hover:bg-teal disabled:opacity-60"
+                    >
+                      <Check className="h-3.5 w-3.5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setEditingLabel(null)}
+                      className="inline-flex h-8 w-8 shrink-0 items-center justify-center border border-ink/20 text-ink transition hover:bg-ink hover:text-white"
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    className="group flex w-full items-center gap-1.5 text-left"
+                    onClick={() => setEditingLabel({ url: moment.url, value: moment.label })}
+                    title="Click to edit label"
+                  >
+                    <p className="font-condensed text-sm uppercase tracking-editorial text-ink group-hover:text-teal">
+                      {moment.label}
+                    </p>
+                    <Pencil className="h-3 w-3 shrink-0 text-ink/30 group-hover:text-teal" />
+                  </button>
+                )}
+                <div className="mt-3 flex gap-2">
+                  <button
+                    type="button"
+                    disabled={loading}
+                    onClick={() => setEditingLabel({ url: moment.url, value: moment.label })}
+                    className="inline-flex flex-1 items-center justify-center gap-1.5 border border-ink/20 px-2 py-2 font-condensed text-xs uppercase tracking-editorial text-ink transition hover:bg-ink hover:text-white disabled:opacity-60"
+                  >
+                    <Pencil className="h-3.5 w-3.5" />
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    disabled={loading}
+                    onClick={() => deleteMoment(moment)}
+                    className="inline-flex flex-1 items-center justify-center gap-1.5 bg-ink px-2 py-2 font-condensed text-xs uppercase tracking-editorial text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                    Delete
+                  </button>
+                </div>
               </div>
             </article>
           ))}
