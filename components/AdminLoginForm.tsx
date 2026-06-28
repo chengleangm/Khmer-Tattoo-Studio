@@ -25,7 +25,8 @@ export default function AdminLoginForm() {
     setMessage("");
 
     try {
-      const response = await fetch("/api/admin/review-moments", {
+      const response = await fetch("/api/admin/login", {
+        method: "POST",
         headers: { "x-admin-token": password.trim() },
         cache: "no-store",
       });
