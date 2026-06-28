@@ -3,6 +3,7 @@
 import Button from "@/components/Button";
 import GalleryPreviewStrip from "@/components/GalleryPreviewStrip";
 import ImageCard from "@/components/ImageCard";
+import RollingCustomerMoments from "@/components/RollingCustomerMoments";
 import SectionTitle from "@/components/SectionTitle";
 import TattooStyleShowcase from "@/components/TattooStyleShowcase";
 import { galleryItems } from "@/data/site";
@@ -99,6 +100,25 @@ export default function Home() {
               <Button href="/gallery" variant="dark" className="mt-5">{tx.common.chooseArtist}</Button>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="bg-bone px-4 py-10 sm:px-5 sm:py-14 lg:px-8 lg:py-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="font-condensed text-xs uppercase tracking-editorial text-teal sm:text-sm">
+                Recent Moments
+              </p>
+              <h2 className="mt-2 font-display text-[clamp(2.5rem,10vw,6rem)] leading-[0.78] text-ink">
+                Client Moments
+              </h2>
+            </div>
+            <Button href="/reviews" variant="dark" className="w-full shrink-0 px-4 py-3 text-xs sm:w-auto sm:text-sm">
+              View all reviews
+            </Button>
+          </div>
+          <RollingCustomerMoments />
         </div>
       </section>
 
