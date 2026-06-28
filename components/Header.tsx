@@ -19,6 +19,7 @@ export default function Header() {
     { label: text.artists, href: "/artists" },
     { label: text.gallery, href: "/gallery" },
     { label: text.services, href: "/services" },
+    { label: text.reviews, href: "/reviews" },
     { label: text.booking, href: "/booking" },
     { label: text.about, href: "/about" },
     { label: text.contact, href: "/contact" },
@@ -47,7 +48,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav — ml-auto pushes it right of the logo */}
-          <nav className="ml-auto hidden items-center gap-6 lg:flex">
+          <nav className="ml-auto hidden items-center gap-4 xl:gap-5 lg:flex">
             {navItems.map((item) => {
               const active = pathname === item.href;
               return (

@@ -59,6 +59,7 @@ export default function Footer() {
             <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 font-condensed text-xs uppercase tracking-editorial text-white/70 sm:grid-cols-1 md:mt-4 md:text-sm">
               <Link href="/gallery" className="hover:text-white">{nav.gallery}</Link>
               <Link href="/artists" className="hover:text-white">{nav.artists}</Link>
+              <Link href="/reviews" className="hover:text-white">{nav.reviews}</Link>
               <Link href="/aftercare" className="hover:text-white">{nav.aftercare}</Link>
               <Link href="/booking" className="hover:text-white">{nav.booking}</Link>
             </div>
