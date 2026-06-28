@@ -138,18 +138,18 @@ function ReviewForm({ formRef }: { formRef: React.RefObject<HTMLElement | null> 
 
   if (status === "success") {
     return (
-      <section ref={formRef as React.RefObject<HTMLElement>} className="border border-ink/10 bg-white p-5 sm:p-6 lg:p-8">
+      <section ref={formRef as React.RefObject<HTMLElement>} className="border border-ink/10 bg-white p-4 sm:p-6">
         <p className="font-condensed text-xs uppercase tracking-editorial text-teal">Thank you</p>
-        <p className="mt-3 font-display text-[clamp(2rem,8vw,4rem)] leading-[0.85] text-ink">
+        <p className="mt-2 font-display text-[clamp(1.8rem,7vw,3.5rem)] leading-[0.85] text-ink">
           Review Received
         </p>
-        <p className="mt-4 text-sm leading-6 text-ink/65">
-          Your review is pending approval and will appear on this page once we review it. Thank you for sharing your experience.
+        <p className="mt-3 text-sm leading-6 text-ink/60">
+          Pending approval — it will appear on this page once reviewed.
         </p>
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-5 inline-flex items-center justify-center gap-2 border border-ink px-4 py-3 font-condensed text-xs uppercase tracking-editorial text-ink transition hover:bg-ink hover:text-white"
+          className="mt-4 inline-flex items-center justify-center gap-2 border border-ink px-4 py-2.5 font-condensed text-xs uppercase tracking-editorial text-ink transition hover:bg-ink hover:text-white"
         >
           Leave another review
         </button>
@@ -158,54 +158,67 @@ function ReviewForm({ formRef }: { formRef: React.RefObject<HTMLElement | null> 
   }
 
   return (
-    <section ref={formRef as React.RefObject<HTMLElement>} className="border border-ink/10 bg-white p-5 sm:p-6 lg:p-8">
-      <p className="font-condensed text-xs uppercase tracking-editorial text-teal">Leave a Review</p>
-      <h2 className="mt-3 font-display text-[clamp(2.5rem,10vw,5rem)] leading-[0.78] text-ink">
-        Share Your Experience
-      </h2>
-      <p className="mt-4 text-sm leading-6 text-ink/65">
-        Got tattooed at Khmer Bamboo Sakyant? Fill in the form below — your review will appear on this page after approval.
-      </p>
+    <section ref={formRef as React.RefObject<HTMLElement>} className="border border-ink/10 bg-white p-4 sm:p-6">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="font-condensed text-xs uppercase tracking-editorial text-teal">Leave a Review</p>
+          <h2 className="mt-1.5 font-display text-[clamp(1.8rem,7vw,3rem)] leading-[0.82] text-ink">
+            Share Your Experience
+          </h2>
+        </div>
+        <div className="shrink-0 text-right">
+          <div className="flex gap-0.5 text-teal">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star key={i} className="h-3 w-3 fill-current" />
+            ))}
+          </div>
+          <p className="mt-1 font-condensed text-[10px] uppercase tracking-editorial text-ink/35">Verified studio</p>
+        </div>
+      </div>
 
-      <form onSubmit={handleSubmit} className="mt-6 grid gap-4 sm:grid-cols-2">
-        <label className="grid gap-2">
-          <span className="font-condensed text-xs uppercase tracking-editorial text-ink/60">
-            Your name <span className="text-teal">*</span>
-          </span>
-          <input
-            type="text"
-            value={form.name}
-            onChange={(e) => setForm((v) => ({ ...v, name: e.target.value }))}
-            required
-            maxLength={80}
-            className="border border-ink/15 bg-bone px-3 py-3 text-sm outline-none focus:border-teal"
-            placeholder="Your name"
-          />
-        </label>
-        <label className="grid gap-2">
-          <span className="font-condensed text-xs uppercase tracking-editorial text-ink/60">Country or city</span>
-          <input
-            type="text"
-            value={form.origin}
-            onChange={(e) => setForm((v) => ({ ...v, origin: e.target.value }))}
-            maxLength={80}
-            className="border border-ink/15 bg-bone px-3 py-3 text-sm outline-none focus:border-teal"
-            placeholder="e.g. Australia, UK, Japan"
-          />
-        </label>
-        <label className="grid gap-2 sm:col-span-2">
-          <span className="font-condensed text-xs uppercase tracking-editorial text-ink/60">What did you get?</span>
+      <form onSubmit={handleSubmit} className="mt-4 grid gap-3">
+        <div className="grid grid-cols-2 gap-3">
+          <label className="grid gap-1">
+            <span className="font-condensed text-[10px] uppercase tracking-editorial text-ink/50">
+              Name <span className="text-teal">*</span>
+            </span>
+            <input
+              type="text"
+              value={form.name}
+              onChange={(e) => setForm((v) => ({ ...v, name: e.target.value }))}
+              required
+              maxLength={80}
+              className="border border-ink/12 bg-bone px-2.5 py-2 text-sm outline-none focus:border-teal"
+              placeholder="Your name"
+            />
+          </label>
+          <label className="grid gap-1">
+            <span className="font-condensed text-[10px] uppercase tracking-editorial text-ink/50">Country / City</span>
+            <input
+              type="text"
+              value={form.origin}
+              onChange={(e) => setForm((v) => ({ ...v, origin: e.target.value }))}
+              maxLength={80}
+              className="border border-ink/12 bg-bone px-2.5 py-2 text-sm outline-none focus:border-teal"
+              placeholder="e.g. Japan, UK"
+            />
+          </label>
+        </div>
+
+        <label className="grid gap-1">
+          <span className="font-condensed text-[10px] uppercase tracking-editorial text-ink/50">What did you get?</span>
           <input
             type="text"
             value={form.service}
             onChange={(e) => setForm((v) => ({ ...v, service: e.target.value }))}
             maxLength={120}
-            className="border border-ink/15 bg-bone px-3 py-3 text-sm outline-none focus:border-teal"
+            className="border border-ink/12 bg-bone px-2.5 py-2 text-sm outline-none focus:border-teal"
             placeholder="e.g. Khmer Sakyant arm piece"
           />
         </label>
-        <label className="grid gap-2 sm:col-span-2">
-          <span className="font-condensed text-xs uppercase tracking-editorial text-ink/60">
+
+        <label className="grid gap-1">
+          <span className="font-condensed text-[10px] uppercase tracking-editorial text-ink/50">
             Your review <span className="text-teal">*</span>
           </span>
           <textarea
@@ -213,47 +226,46 @@ function ReviewForm({ formRef }: { formRef: React.RefObject<HTMLElement | null> 
             onChange={(e) => setForm((v) => ({ ...v, text: e.target.value }))}
             required
             maxLength={1000}
-            rows={4}
-            className="border border-ink/15 bg-bone px-3 py-3 text-sm leading-6 outline-none focus:border-teal"
-            placeholder="Tell us about your experience at the studio..."
+            rows={3}
+            className="border border-ink/12 bg-bone px-2.5 py-2 text-sm leading-6 outline-none focus:border-teal"
+            placeholder="Tell us about your experience..."
           />
-          <span className="text-right text-xs text-ink/30">{form.text.length}/1000</span>
+          <span className="text-right font-condensed text-[10px] text-ink/25">{form.text.length}/1000</span>
         </label>
-        <label className="grid gap-2 sm:col-span-2">
-          <span className="font-condensed text-xs uppercase tracking-editorial text-ink/60">Rating</span>
-          <div className="flex items-center gap-2">
+
+        <div className="flex items-center justify-between gap-3 border border-ink/8 bg-bone px-3 py-2">
+          <span className="font-condensed text-[10px] uppercase tracking-editorial text-ink/50">Rating</span>
+          <div className="flex items-center gap-1">
             {[1, 2, 3, 4, 5].map((star) => (
               <button
                 key={star}
                 type="button"
                 onClick={() => setForm((v) => ({ ...v, rating: star }))}
-                className={`transition ${form.rating >= star ? "text-teal" : "text-ink/20 hover:text-teal/60"}`}
+                className={`transition ${form.rating >= star ? "text-teal" : "text-ink/20 hover:text-teal/50"}`}
                 aria-label={`${star} star${star !== 1 ? "s" : ""}`}
               >
-                <Star className={`h-6 w-6 ${form.rating >= star ? "fill-current" : ""}`} />
+                <Star className={`h-5 w-5 ${form.rating >= star ? "fill-current" : ""}`} />
               </button>
             ))}
-            <span className="ml-1 font-condensed text-xs uppercase tracking-editorial text-ink/50">
-              {form.rating}/5
-            </span>
+            <span className="ml-1.5 font-condensed text-xs text-ink/40">{form.rating}/5</span>
           </div>
-        </label>
+        </div>
 
         {status === "error" && errorMessage && (
-          <p className="text-sm text-red-600 sm:col-span-2">{errorMessage}</p>
+          <p className="text-xs text-red-500">{errorMessage}</p>
         )}
 
-        <div className="sm:col-span-2">
+        <div className="flex items-center gap-3 pt-1">
           <button
             type="submit"
             disabled={status === "sending"}
-            className="inline-flex items-center justify-center gap-2 bg-ink px-5 py-3 font-condensed text-xs uppercase tracking-editorial text-white transition hover:bg-teal disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex items-center justify-center gap-2 bg-ink px-4 py-2.5 font-condensed text-xs uppercase tracking-editorial text-white transition hover:bg-teal disabled:cursor-not-allowed disabled:opacity-60"
           >
-            <Send className="h-4 w-4" />
-            {status === "sending" ? "Sending..." : "Submit Review"}
+            <Send className="h-3.5 w-3.5" />
+            {status === "sending" ? "Sending..." : "Submit"}
           </button>
-          <p className="mt-3 text-xs leading-5 text-ink/40">
-            Reviews are checked before going live. Yours will appear here once approved.
+          <p className="text-[10px] leading-4 text-ink/35">
+            Reviewed before going live.
           </p>
         </div>
       </form>

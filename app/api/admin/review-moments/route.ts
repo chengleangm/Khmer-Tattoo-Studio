@@ -8,7 +8,7 @@ const MAX_UPLOAD_SIZE = 4 * 1024 * 1024;
 function hasBlobCredentials() {
   return Boolean(
     process.env.BLOB_READ_WRITE_TOKEN ||
-      (process.env.BLOB_STORE_ID && process.env.VERCEL_OIDC_TOKEN)
+      process.env.VERCEL_OIDC_TOKEN
   );
 }
 
