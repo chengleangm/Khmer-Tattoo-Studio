@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { MessageCircle, Quote, Send, Star } from "lucide-react";
 import Button from "@/components/Button";
 import RecentCustomerMoments from "@/components/RecentCustomerMoments";
@@ -10,17 +10,106 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { contactDetails, reviewPageContent } from "@/data/site";
 import { t } from "@/data/translations";
 
-function Stars() {
+type Review = {
+  id: string;
+  name: string;
+  origin: string;
+  service: string;
+  text: string;
+  rating: number;
+  createdAt: string;
+  approved: boolean;
+};
+
+function StarRow({ rating, size = "sm" }: { rating: number; size?: "sm" | "lg" }) {
+  const cls = size === "lg" ? "h-5 w-5" : "h-4 w-4";
   return (
-    <div className="flex gap-1 text-teal" aria-label="5 out of 5 stars">
-      {Array.from({ length: 5 }).map((_, index) => (
-        <Star key={index} className="h-4 w-4 fill-current" />
+    <div className="flex gap-1 text-teal" aria-label={`${rating} out of 5 stars`}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Star key={i} className={`${cls} ${i < rating ? "fill-current" : "fill-none opacity-25"}`} />
       ))}
     </div>
   );
 }
 
-function ReviewForm() {
+function DynamicReviews({ formRef }: { formRef: React.RefObject<HTMLElement | null> }) {
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/reviews", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((data) => {
+        setReviews(Array.isArray(data.reviews) ? data.reviews : []);
+        setLoaded(true);
+      })
+      .catch(() => setLoaded(true));
+  }, []);
+
+  if (!loaded) {
+    return (
+      <div className="grid gap-3 sm:grid-cols-2 lg:gap-4">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div key={i} className={`h-48 animate-pulse bg-ink/5 ${i === 0 ? "sm:col-span-2" : ""}`} />
+        ))}
+      </div>
+    );
+  }
+
+  if (reviews.length === 0) {
+    return (
+      <div className="border border-dashed border-ink/15 p-8 text-center sm:p-12">
+        <Quote className="mx-auto h-8 w-8 text-ink/20" />
+        <p className="mt-4 font-condensed text-xs uppercase tracking-editorial text-ink/40">
+          No reviews yet
+        </p>
+        <p className="mt-2 text-sm leading-6 text-ink/50">
+          Be the first to share your experience.
+        </p>
+        <button
+          type="button"
+          onClick={() => formRef.current?.scrollIntoView({ behavior: "smooth" })}
+          className="mt-5 inline-flex items-center justify-center gap-2 bg-ink px-4 py-3 font-condensed text-xs uppercase tracking-editorial text-white transition hover:bg-teal"
+        >
+          Leave a Review
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid gap-3 sm:grid-cols-2 lg:gap-4">
+      {reviews.map((review, index) => (
+        <article
+          key={review.id}
+          className={`border border-ink/10 bg-white p-4 sm:p-5 ${
+            index === 0 ? "sm:col-span-2 lg:grid lg:grid-cols-[0.58fr_1fr] lg:gap-6 lg:p-6" : ""
+          }`}
+        >
+          <div>
+            <Quote className="h-7 w-7 text-teal" />
+            <div className="mt-4">
+              <StarRow rating={review.rating} />
+            </div>
+          </div>
+          <div className={index === 0 ? "mt-4 lg:mt-0" : "mt-4"}>
+            <p className="text-sm leading-6 text-ink/70 sm:text-base sm:leading-7">{review.text}</p>
+            <div className="mt-5 border-t border-ink/10 pt-4">
+              <p className="font-condensed text-lg uppercase tracking-editorial text-ink">{review.name}</p>
+              {(review.origin || review.service) && (
+                <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink/45">
+                  {[review.origin, review.service].filter(Boolean).join(" / ")}
+                </p>
+              )}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function ReviewForm({ formRef }: { formRef: React.RefObject<HTMLElement | null> }) {
   const [form, setForm] = useState({ name: "", origin: "", service: "", text: "", rating: 5 });
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -53,15 +142,13 @@ function ReviewForm() {
 
   if (status === "success") {
     return (
-      <div className="border border-ink/10 bg-white p-5 sm:p-6 lg:p-8">
-        <p className="font-condensed text-xs uppercase tracking-editorial text-teal">
-          Thank you
-        </p>
+      <section ref={formRef as React.RefObject<HTMLElement>} className="border border-ink/10 bg-white p-5 sm:p-6 lg:p-8">
+        <p className="font-condensed text-xs uppercase tracking-editorial text-teal">Thank you</p>
         <p className="mt-3 font-display text-[clamp(2rem,8vw,4rem)] leading-[0.85] text-ink">
           Review Received
         </p>
         <p className="mt-4 text-sm leading-6 text-ink/65">
-          Your review is pending approval and will appear on this page soon.
+          Your review is pending approval and will appear on this page once we review it. Thank you for sharing your experience.
         </p>
         <button
           type="button"
@@ -70,23 +157,21 @@ function ReviewForm() {
         >
           Leave another review
         </button>
-      </div>
+      </section>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="border border-ink/10 bg-white p-5 sm:p-6 lg:p-8">
-      <p className="font-condensed text-xs uppercase tracking-editorial text-teal">
-        Leave a Review
-      </p>
+    <section ref={formRef as React.RefObject<HTMLElement>} className="border border-ink/10 bg-white p-5 sm:p-6 lg:p-8">
+      <p className="font-condensed text-xs uppercase tracking-editorial text-teal">Leave a Review</p>
       <h2 className="mt-3 font-display text-[clamp(2.5rem,10vw,5rem)] leading-[0.78] text-ink">
         Share Your Experience
       </h2>
       <p className="mt-4 text-sm leading-6 text-ink/65">
-        Got tattooed at Khmer Bamboo Sakyant? Let others know what the experience was like.
+        Got tattooed at Khmer Bamboo Sakyant? Fill in the form below — your review will appear on this page after approval.
       </p>
 
-      <div className="mt-6 grid gap-4 sm:grid-cols-2">
+      <form onSubmit={handleSubmit} className="mt-6 grid gap-4 sm:grid-cols-2">
         <label className="grid gap-2">
           <span className="font-condensed text-xs uppercase tracking-editorial text-ink/60">
             Your name <span className="text-teal">*</span>
@@ -102,9 +187,7 @@ function ReviewForm() {
           />
         </label>
         <label className="grid gap-2">
-          <span className="font-condensed text-xs uppercase tracking-editorial text-ink/60">
-            Country or city
-          </span>
+          <span className="font-condensed text-xs uppercase tracking-editorial text-ink/60">Country or city</span>
           <input
             type="text"
             value={form.origin}
@@ -115,9 +198,7 @@ function ReviewForm() {
           />
         </label>
         <label className="grid gap-2 sm:col-span-2">
-          <span className="font-condensed text-xs uppercase tracking-editorial text-ink/60">
-            What did you get?
-          </span>
+          <span className="font-condensed text-xs uppercase tracking-editorial text-ink/60">What did you get?</span>
           <input
             type="text"
             value={form.service}
@@ -142,12 +223,10 @@ function ReviewForm() {
           />
           <span className="text-right text-xs text-ink/30">{form.text.length}/1000</span>
         </label>
-        <label className="grid gap-2">
-          <span className="font-condensed text-xs uppercase tracking-editorial text-ink/60">
-            Rating
-          </span>
+        <label className="grid gap-2 sm:col-span-2">
+          <span className="font-condensed text-xs uppercase tracking-editorial text-ink/60">Rating</span>
           <div className="flex items-center gap-2">
-            {[5, 4, 3, 2, 1].map((star) => (
+            {[1, 2, 3, 4, 5].map((star) => (
               <button
                 key={star}
                 type="button"
@@ -163,21 +242,26 @@ function ReviewForm() {
             </span>
           </div>
         </label>
-      </div>
 
-      {status === "error" && errorMessage && (
-        <p className="mt-4 text-sm text-red-600">{errorMessage}</p>
-      )}
+        {status === "error" && errorMessage && (
+          <p className="text-sm text-red-600 sm:col-span-2">{errorMessage}</p>
+        )}
 
-      <button
-        type="submit"
-        disabled={status === "sending"}
-        className="mt-6 inline-flex items-center justify-center gap-2 bg-ink px-5 py-3 font-condensed text-xs uppercase tracking-editorial text-white transition hover:bg-teal disabled:cursor-not-allowed disabled:opacity-60"
-      >
-        <Send className="h-4 w-4" />
-        {status === "sending" ? "Sending..." : "Submit Review"}
-      </button>
-    </form>
+        <div className="sm:col-span-2">
+          <button
+            type="submit"
+            disabled={status === "sending"}
+            className="inline-flex items-center justify-center gap-2 bg-ink px-5 py-3 font-condensed text-xs uppercase tracking-editorial text-white transition hover:bg-teal disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            <Send className="h-4 w-4" />
+            {status === "sending" ? "Sending..." : "Submit Review"}
+          </button>
+          <p className="mt-3 text-xs leading-5 text-ink/40">
+            Reviews are checked before going live. Yours will appear here once approved.
+          </p>
+        </div>
+      </form>
+    </section>
   );
 }
 
@@ -185,6 +269,7 @@ export default function ReviewsPage() {
   const { lang } = useLanguage();
   const tx = t[lang];
   const page = reviewPageContent[lang];
+  const formRef = useRef<HTMLElement>(null);
 
   return (
     <main>
@@ -199,7 +284,7 @@ export default function ReviewsPage() {
                 </p>
                 <p className="mt-2 font-display text-6xl leading-none text-white">5.0</p>
               </div>
-              <Stars />
+              <StarRow rating={5} size="lg" />
             </div>
             <p className="mt-4 text-sm leading-6 text-white/65">{page.reviewCount}</p>
           </div>
@@ -235,36 +320,7 @@ export default function ReviewsPage() {
               </div>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2 lg:gap-4">
-              {page.reviews.map((review, index) => (
-                <article
-                  key={review.name}
-                  className={`border border-ink/10 bg-white p-4 sm:p-5 ${
-                    index === 0 ? "sm:col-span-2 lg:grid lg:grid-cols-[0.58fr_1fr] lg:gap-6 lg:p-6" : ""
-                  }`}
-                >
-                  <div>
-                    <Quote className="h-7 w-7 text-teal" />
-                    <div className="mt-4">
-                      <Stars />
-                    </div>
-                  </div>
-                  <div className={index === 0 ? "mt-4 lg:mt-0" : "mt-4"}>
-                    <p className="text-sm leading-6 text-ink/70 sm:text-base sm:leading-7">
-                      {review.text}
-                    </p>
-                    <div className="mt-5 border-t border-ink/10 pt-4">
-                      <p className="font-condensed text-lg uppercase tracking-editorial text-ink">
-                        {review.name}
-                      </p>
-                      <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink/45">
-                        {review.origin} / {review.service}
-                      </p>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
+            <DynamicReviews formRef={formRef} />
           </div>
         </div>
       </section>
@@ -285,13 +341,13 @@ export default function ReviewsPage() {
             </p>
           </div>
 
-          <RecentCustomerMoments initialMoments={page.moments} />
+          <RecentCustomerMoments />
         </div>
       </section>
 
       <section className="px-4 py-12 sm:px-5 sm:py-16 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-4xl">
-          <ReviewForm />
+          <ReviewForm formRef={formRef} />
         </div>
       </section>
 

@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import { Camera } from "lucide-react";
 
 type Moment = {
   src: string;
@@ -9,14 +10,11 @@ type Moment = {
   uploadedAt?: string;
 };
 
-type RecentCustomerMomentsProps = {
-  initialMoments: readonly Moment[];
-};
-
 const REVIEW_MOMENTS_CHANGED_EVENT = "review-moments:changed";
 
-export default function RecentCustomerMoments({ initialMoments }: RecentCustomerMomentsProps) {
-  const [uploadedMoments, setUploadedMoments] = useState<Moment[]>([]);
+export default function RecentCustomerMoments() {
+  const [moments, setMoments] = useState<Moment[]>([]);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -25,34 +23,53 @@ export default function RecentCustomerMoments({ initialMoments }: RecentCustomer
       try {
         const response = await fetch("/api/review-moments", { cache: "no-store" });
         const result = await response.json();
-        if (active && Array.isArray(result.moments)) {
-          setUploadedMoments(result.moments);
+        if (active) {
+          setMoments(Array.isArray(result.moments) ? result.moments : []);
+          setLoaded(true);
         }
       } catch {
-        if (active) setUploadedMoments([]);
+        if (active) {
+          setMoments([]);
+          setLoaded(true);
+        }
       }
     }
 
-    const handleMomentsChanged = () => {
-      void loadMoments();
-    };
-
     loadMoments();
-    window.addEventListener(REVIEW_MOMENTS_CHANGED_EVENT, handleMomentsChanged);
+    window.addEventListener(REVIEW_MOMENTS_CHANGED_EVENT, () => loadMoments());
 
     return () => {
       active = false;
-      window.removeEventListener(REVIEW_MOMENTS_CHANGED_EVENT, handleMomentsChanged);
+      window.removeEventListener(REVIEW_MOMENTS_CHANGED_EVENT, () => loadMoments());
     };
   }, []);
 
-  const moments = useMemo(() => {
-    const uploadedSources = new Set(uploadedMoments.map((moment) => moment.src));
-    return [
-      ...uploadedMoments,
-      ...initialMoments.filter((moment) => !uploadedSources.has(moment.src)),
-    ];
-  }, [initialMoments, uploadedMoments]);
+  if (!loaded) {
+    return (
+      <div className="mt-6 grid grid-cols-2 gap-2 sm:mt-8 sm:grid-cols-3 sm:gap-3 lg:gap-4">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div
+            key={i}
+            className={`animate-pulse bg-charcoal/20 ${
+              i === 0 ? "col-span-2 h-[300px] sm:col-span-1 sm:h-[360px] lg:h-[460px]" : "h-[180px] sm:h-[360px] lg:h-[460px]"
+            }`}
+          />
+        ))}
+      </div>
+    );
+  }
+
+  if (moments.length === 0) {
+    return (
+      <div className="mt-6 flex flex-col items-center justify-center gap-4 border border-dashed border-ink/20 py-16 text-center sm:mt-8">
+        <Camera className="h-8 w-8 text-ink/25" />
+        <div>
+          <p className="font-condensed text-sm uppercase tracking-editorial text-ink/40">Coming Soon</p>
+          <p className="mt-1 text-sm text-ink/35">Studio moments will appear here.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-6 grid grid-cols-2 gap-2 sm:mt-8 sm:grid-cols-3 sm:gap-3 lg:gap-4">
