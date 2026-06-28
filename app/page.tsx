@@ -11,8 +11,8 @@ import { t } from "@/data/translations";
 import Image from "next/image";
 import heroArtwork1 from "../public/hero img/hero1.jpg";
 import heroArtwork2 from "../public/hero img/hero2.jpg";
-import sakyantArtwork1 from "../public/Sakyant/sakyant1.jpg";
-import sakyantArtwork2 from "../public/Sakyant/sakyant2.jpg";
+import sakyantArtwork1 from "../public/KHMER SAKYANT DESIGN section/photo_2026-06-28_18-24-16.jpg";
+import sakyantArtwork2 from "../public/KHMER SAKYANT DESIGN section/photo_2026-06-28_18-24-21.jpg";
 
 export default function Home() {
   const { lang } = useLanguage();
