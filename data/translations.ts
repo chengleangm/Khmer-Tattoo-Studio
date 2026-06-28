@@ -38,9 +38,9 @@ export const t = {
       valuesTitle: "WHAT WE RESPECT",
       values: [
         { title: "Meaning First", text: "We start with the intention behind the tattoo before choosing symbols, script-inspired flow, or placement." },
-        { title: "Khmer Structure", text: "Yantra geometry, Khmer visual rhythm, and sacred composition guide the design without turning tradition into decoration." },
+        { title: "Khmer Structure", text: "Yantra geometry, Khmer visual rhythm, and sacred composition shape the design without turning tradition into decoration." },
         { title: "Body Flow", text: "Each tattoo is shaped around the shoulder, chest, back, arm, or leg so the piece feels balanced on the body." },
-        { title: "Clean Practice", text: "The studio uses hygienic setup, careful preparation, and clear aftercare guidance for every session." },
+        { title: "Clean Practice", text: "The studio uses hygienic setup, careful preparation, and clear aftercare support for every session." },
       ],
       craftTitle: "HOW EACH PIECE IS BUILT",
       craftSteps: [
@@ -96,7 +96,7 @@ export const t = {
         { number: "02", title: "Design", text: "Your artist builds a Khmer-focused composition with the right symbol balance, density, and body flow." },
         { number: "03", title: "Tattoo Session", text: "A prepared, hygienic session with calm pacing, precise linework, and respect for the design." },
         { number: "04", title: "Monk Blessing", text: "After the tattoo, a monk performs a traditional Buddhist blessing ceremony to activate the sacred Yant and complete the ritual with prayer and intention." },
-        { number: "05", title: "Aftercare", text: "You leave with clear healing instructions so the linework, contrast, and detail settle cleanly." },
+        { number: "05", title: "Aftercare", text: "You leave with aftercare support so the linework, contrast, and detail settle cleanly." },
       ],
     },
     booking: {
@@ -128,7 +128,7 @@ export const t = {
     },
     aftercare: {
       pageTitle: "SAKYANT AFTERCARE",
-      pageDesc: "Good healing protects the linework and meaning of the piece. Follow your artist's advice first, and use this guide as your baseline.",
+      pageDesc: "Good healing protects the linework and meaning of the piece. Follow your artist's advice first.",
       do: "DO", dont: "DON'T",
       warning: "If healing looks unusual, feels hot, or worries you, contact the studio before changing products.",
       steps: [

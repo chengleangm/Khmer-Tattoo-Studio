@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { FormEvent, useState } from "react";
-import { ImagePlus, Lock, LogOut, RefreshCcw, Trash2, UploadCloud } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ImagePlus, LogOut, RefreshCcw, Trash2, UploadCloud } from "lucide-react";
 
 type AdminMoment = {
   src: string;
@@ -14,13 +15,15 @@ type AdminMoment = {
 };
 
 const TOKEN_STORAGE_KEY = "khmer_tattoo_admin_token";
+const REVIEW_MOMENTS_CHANGED_EVENT = "review-moments:changed";
+
+function notifyReviewMomentsChanged() {
+  window.dispatchEvent(new Event(REVIEW_MOMENTS_CHANGED_EVENT));
+}
 
 export default function AdminReviewMomentsManager() {
+  const router = useRouter();
   const [token, setToken] = useState(() => {
-    if (typeof window === "undefined") return "";
-    return window.sessionStorage.getItem(TOKEN_STORAGE_KEY) ?? "";
-  });
-  const [tokenInput, setTokenInput] = useState(() => {
     if (typeof window === "undefined") return "";
     return window.sessionStorage.getItem(TOKEN_STORAGE_KEY) ?? "";
   });
@@ -29,8 +32,6 @@ export default function AdminReviewMomentsManager() {
   const [moments, setMoments] = useState<AdminMoment[]>([]);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const loggedIn = Boolean(token);
 
   async function loadMoments(currentToken = token) {
     setLoading(true);
@@ -54,41 +55,11 @@ export default function AdminReviewMomentsManager() {
     }
   }
 
-  async function handleLogin(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!tokenInput.trim()) {
-      setMessage("Enter the admin password first.");
-      return;
-    }
-
-    setLoading(true);
-    setMessage("");
-
-    try {
-      const response = await fetch("/api/admin/review-moments", {
-        headers: { "x-admin-token": tokenInput.trim() },
-        cache: "no-store",
-      });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || "Login failed.");
-
-      window.sessionStorage.setItem(TOKEN_STORAGE_KEY, tokenInput.trim());
-      setToken(tokenInput.trim());
-      setMoments(result.moments);
-      setMessage("Logged in.");
-    } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Login failed.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
   function logout() {
     window.sessionStorage.removeItem(TOKEN_STORAGE_KEY);
     setToken("");
-    setTokenInput("");
     setMoments([]);
-    setMessage("Logged out.");
+    router.push("/admin");
   }
 
   async function handleUpload(event: FormEvent<HTMLFormElement>) {
@@ -115,8 +86,9 @@ export default function AdminReviewMomentsManager() {
       if (!response.ok) throw new Error(result.error || "Upload failed.");
       setLabel("");
       setFile(null);
-      setMessage("Uploaded. It will appear first on the Reviews page.");
+      setMessage("Uploaded.");
       await loadMoments(token);
+      notifyReviewMomentsChanged();
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Upload failed.");
     } finally {
@@ -141,6 +113,7 @@ export default function AdminReviewMomentsManager() {
       if (!response.ok) throw new Error(result.error || "Delete failed.");
       setMoments((items) => items.filter((item) => item.url !== moment.url));
       setMessage("Deleted.");
+      notifyReviewMomentsChanged();
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Delete failed.");
     } finally {
@@ -148,40 +121,21 @@ export default function AdminReviewMomentsManager() {
     }
   }
 
-  if (!loggedIn) {
+  if (!token) {
     return (
       <div className="mx-auto max-w-xl border border-ink/10 bg-white p-5 sm:p-6">
-        <div className="flex h-12 w-12 items-center justify-center bg-ink text-white">
-          <Lock className="h-5 w-5" />
-        </div>
         <p className="mt-5 font-condensed text-xs uppercase tracking-editorial text-teal">
-          Admin login
+          Admin
         </p>
         <h2 className="mt-2 font-display text-[clamp(2.5rem,12vw,4.5rem)] leading-[0.78] text-ink">
-          Enter Password
+          Login Required
         </h2>
-        <p className="mt-4 text-sm leading-6 text-ink/60">
-          Use the value from `ADMIN_UPLOAD_TOKEN`. After login, you can upload and delete Recent customer moments.
-        </p>
-
-        <form onSubmit={handleLogin} className="mt-5 grid gap-3">
-          <input
-            type="password"
-            value={tokenInput}
-            onChange={(event) => setTokenInput(event.target.value)}
-            className="border border-ink/15 bg-bone px-3 py-3 text-sm outline-none focus:border-teal"
-            placeholder="Admin password"
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            className="inline-flex items-center justify-center gap-2 bg-ink px-4 py-3 font-condensed text-xs uppercase tracking-editorial text-white transition hover:bg-teal disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            <Lock className="h-4 w-4" />
-            {loading ? "Checking..." : "Log In"}
-          </button>
-        </form>
-        {message && <p className="mt-4 text-sm leading-6 text-ink/65">{message}</p>}
+        <a
+          href="/admin"
+          className="mt-5 inline-flex items-center justify-center bg-ink px-4 py-3 font-condensed text-xs uppercase tracking-editorial text-white transition hover:bg-teal"
+        >
+          Go To Login
+        </a>
       </div>
     );
   }
@@ -194,9 +148,6 @@ export default function AdminReviewMomentsManager() {
             <div>
               <p className="font-condensed text-xs uppercase tracking-editorial text-teal">
                 Logged in
-              </p>
-              <p className="mt-2 text-sm leading-6 text-ink/65">
-                Manage the Reviews page Recent customer moments.
               </p>
             </div>
             <button
@@ -306,7 +257,7 @@ export default function AdminReviewMomentsManager() {
 
         {!moments.length && (
           <div className="mt-5 border border-dashed border-ink/20 p-6 text-center text-sm leading-6 text-ink/55">
-            No uploaded moments yet. Upload one to show it first on the Reviews page.
+            No uploaded moments yet.
           </div>
         )}
       </div>

@@ -13,6 +13,8 @@ type RecentCustomerMomentsProps = {
   initialMoments: readonly Moment[];
 };
 
+const REVIEW_MOMENTS_CHANGED_EVENT = "review-moments:changed";
+
 export default function RecentCustomerMoments({ initialMoments }: RecentCustomerMomentsProps) {
   const [uploadedMoments, setUploadedMoments] = useState<Moment[]>([]);
 
@@ -31,9 +33,16 @@ export default function RecentCustomerMoments({ initialMoments }: RecentCustomer
       }
     }
 
+    const handleMomentsChanged = () => {
+      void loadMoments();
+    };
+
     loadMoments();
+    window.addEventListener(REVIEW_MOMENTS_CHANGED_EVENT, handleMomentsChanged);
+
     return () => {
       active = false;
+      window.removeEventListener(REVIEW_MOMENTS_CHANGED_EVENT, handleMomentsChanged);
     };
   }, []);
 

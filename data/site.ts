@@ -165,7 +165,7 @@ export const processSteps = [
   { number: "01", title: "Consultation", text: "We listen, map the idea, and confirm placement, size, and reference direction." },
   { number: "02", title: "Design", text: "Your artist builds a custom composition with the right density and body flow." },
   { number: "03", title: "Tattoo Session", text: "A prepared, hygienic session with calm pacing and precise execution." },
-  { number: "04", title: "Aftercare", text: "You leave with clear healing instructions and support if questions come up." },
+  { number: "04", title: "Aftercare", text: "You leave with aftercare support if questions come up." },
 ];
 
 export const reviewPageContent = {
