@@ -23,29 +23,25 @@ type Review = {
 
 function StarRow({ rating, size = "sm" }: { rating: number; size?: "sm" | "lg" }) {
   const cls = size === "lg" ? "h-5 w-5" : "h-4 w-4";
+  const rounded = Math.round(rating);
   return (
     <div className="flex gap-1 text-teal" aria-label={`${rating} out of 5 stars`}>
       {Array.from({ length: 5 }).map((_, i) => (
-        <Star key={i} className={`${cls} ${i < rating ? "fill-current" : "fill-none opacity-25"}`} />
+        <Star key={i} className={`${cls} ${i < rounded ? "fill-current" : "fill-none opacity-25"}`} />
       ))}
     </div>
   );
 }
 
-function DynamicReviews({ formRef }: { formRef: React.RefObject<HTMLElement | null> }) {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    fetch("/api/reviews", { cache: "no-store" })
-      .then((r) => r.json())
-      .then((data) => {
-        setReviews(Array.isArray(data.reviews) ? data.reviews : []);
-        setLoaded(true);
-      })
-      .catch(() => setLoaded(true));
-  }, []);
-
+function DynamicReviews({
+  reviews,
+  loaded,
+  formRef,
+}: {
+  reviews: Review[];
+  loaded: boolean;
+  formRef: React.RefObject<HTMLElement | null>;
+}) {
   if (!loaded) {
     return (
       <div className="grid gap-3 sm:grid-cols-2 lg:gap-4">
@@ -271,6 +267,31 @@ export default function ReviewsPage() {
   const page = reviewPageContent[lang];
   const formRef = useRef<HTMLElement>(null);
 
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviewsLoaded, setReviewsLoaded] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/reviews", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((data) => {
+        setReviews(Array.isArray(data.reviews) ? data.reviews : []);
+        setReviewsLoaded(true);
+      })
+      .catch(() => setReviewsLoaded(true));
+  }, []);
+
+  const avgRating =
+    reviews.length > 0
+      ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+      : null;
+
+  const scoreDisplay = avgRating !== null ? avgRating.toFixed(1) : "5.0";
+  const starsDisplay = avgRating !== null ? avgRating : 5;
+  const countLabel =
+    reviews.length > 0
+      ? `Based on ${reviews.length} client review${reviews.length !== 1 ? "s" : ""}`
+      : page.reviewCount;
+
   return (
     <main>
       <section className="grain bg-ink px-5 py-14 text-white sm:py-16 lg:px-8 lg:py-20">
@@ -282,11 +303,11 @@ export default function ReviewsPage() {
                 <p className="font-condensed text-xs uppercase tracking-editorial text-white/55">
                   {page.scoreLabel}
                 </p>
-                <p className="mt-2 font-display text-6xl leading-none text-white">5.0</p>
+                <p className="mt-2 font-display text-6xl leading-none text-white">{scoreDisplay}</p>
               </div>
-              <StarRow rating={5} size="lg" />
+              <StarRow rating={starsDisplay} size="lg" />
             </div>
-            <p className="mt-4 text-sm leading-6 text-white/65">{page.reviewCount}</p>
+            <p className="mt-4 text-sm leading-6 text-white/65">{countLabel}</p>
           </div>
         </div>
       </section>
@@ -320,7 +341,7 @@ export default function ReviewsPage() {
               </div>
             </div>
 
-            <DynamicReviews formRef={formRef} />
+            <DynamicReviews reviews={reviews} loaded={reviewsLoaded} formRef={formRef} />
           </div>
         </div>
       </section>
