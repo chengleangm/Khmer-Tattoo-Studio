@@ -4,6 +4,13 @@ import { NextRequest } from "next/server";
 const REVIEW_MOMENTS_PREFIX = "review-moments/";
 const MAX_UPLOAD_SIZE = 4 * 1024 * 1024;
 
+function hasBlobCredentials() {
+  return Boolean(
+    process.env.BLOB_READ_WRITE_TOKEN ||
+      (process.env.BLOB_STORE_ID && process.env.VERCEL_OIDC_TOKEN)
+  );
+}
+
 function verifyAdminToken(request: NextRequest) {
   const configuredToken = process.env.ADMIN_UPLOAD_TOKEN;
   const providedToken = request.headers.get("x-admin-token");
@@ -49,8 +56,11 @@ export async function GET(request: NextRequest) {
     return Response.json({ error: "Unauthorized." }, { status: 401 });
   }
 
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
-    return Response.json({ error: "BLOB_READ_WRITE_TOKEN is not configured." }, { status: 503 });
+  if (!hasBlobCredentials()) {
+    return Response.json(
+      { error: "Vercel Blob is not connected. Connect a Blob store or set BLOB_READ_WRITE_TOKEN." },
+      { status: 503 }
+    );
   }
 
   return Response.json({ moments: await listMoments() });
@@ -61,8 +71,11 @@ export async function POST(request: NextRequest) {
     return Response.json({ error: "Unauthorized." }, { status: 401 });
   }
 
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
-    return Response.json({ error: "BLOB_READ_WRITE_TOKEN is not configured." }, { status: 503 });
+  if (!hasBlobCredentials()) {
+    return Response.json(
+      { error: "Vercel Blob is not connected. Connect a Blob store or set BLOB_READ_WRITE_TOKEN." },
+      { status: 503 }
+    );
   }
 
   const formData = await request.formData();
@@ -105,8 +118,11 @@ export async function DELETE(request: NextRequest) {
     return Response.json({ error: "Unauthorized." }, { status: 401 });
   }
 
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
-    return Response.json({ error: "BLOB_READ_WRITE_TOKEN is not configured." }, { status: 503 });
+  if (!hasBlobCredentials()) {
+    return Response.json(
+      { error: "Vercel Blob is not connected. Connect a Blob store or set BLOB_READ_WRITE_TOKEN." },
+      { status: 503 }
+    );
   }
 
   const body = await request.json().catch(() => null) as { url?: string } | null;

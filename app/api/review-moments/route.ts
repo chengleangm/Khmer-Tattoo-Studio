@@ -2,6 +2,13 @@ import { list } from "@vercel/blob";
 
 const REVIEW_MOMENTS_PREFIX = "review-moments/";
 
+function hasBlobCredentials() {
+  return Boolean(
+    process.env.BLOB_READ_WRITE_TOKEN ||
+      (process.env.BLOB_STORE_ID && process.env.VERCEL_OIDC_TOKEN)
+  );
+}
+
 function titleFromPathname(pathname: string) {
   const fileName = pathname.split("/").pop() ?? "customer-moment";
   const withoutExtension = fileName.replace(/\.[^.]+$/, "");
@@ -12,7 +19,7 @@ function titleFromPathname(pathname: string) {
 }
 
 export async function GET() {
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+  if (!hasBlobCredentials()) {
     return Response.json({ moments: [] });
   }
 
