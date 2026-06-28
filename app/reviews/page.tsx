@@ -158,26 +158,23 @@ function ReviewForm({ formRef }: { formRef: React.RefObject<HTMLElement | null> 
   }
 
   return (
-    <section ref={formRef as React.RefObject<HTMLElement>} className="border border-ink/10 bg-white p-4 sm:p-6">
-      <div className="flex items-start justify-between gap-3">
+    <section ref={formRef as React.RefObject<HTMLElement>} className="border border-ink/10 bg-white p-4 sm:p-5">
+      <div className="flex items-center justify-between gap-2">
         <div>
           <p className="font-condensed text-xs uppercase tracking-editorial text-teal">Leave a Review</p>
-          <h2 className="mt-1.5 font-display text-[clamp(1.8rem,7vw,3rem)] leading-[0.82] text-ink">
+          <h2 className="mt-1 font-display text-[clamp(1.6rem,6vw,2.8rem)] leading-[0.85] text-ink">
             Share Your Experience
           </h2>
         </div>
-        <div className="shrink-0 text-right">
-          <div className="flex gap-0.5 text-teal">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} className="h-3 w-3 fill-current" />
-            ))}
-          </div>
-          <p className="mt-1 font-condensed text-[10px] uppercase tracking-editorial text-ink/35">Verified studio</p>
+        <div className="flex shrink-0 gap-0.5 text-teal">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Star key={i} className="h-3 w-3 fill-current" />
+          ))}
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="mt-4 grid gap-3">
-        <div className="grid grid-cols-2 gap-3">
+      <form onSubmit={handleSubmit} className="mt-4 grid gap-2.5">
+        <div className="grid gap-2.5 sm:grid-cols-2">
           <label className="grid gap-1">
             <span className="font-condensed text-[10px] uppercase tracking-editorial text-ink/50">
               Name <span className="text-teal">*</span>
@@ -188,7 +185,7 @@ function ReviewForm({ formRef }: { formRef: React.RefObject<HTMLElement | null> 
               onChange={(e) => setForm((v) => ({ ...v, name: e.target.value }))}
               required
               maxLength={80}
-              className="border border-ink/12 bg-bone px-2.5 py-2 text-sm outline-none focus:border-teal"
+              className="w-full border border-ink/15 bg-bone px-3 py-2 text-sm outline-none focus:border-teal"
               placeholder="Your name"
             />
           </label>
@@ -199,7 +196,7 @@ function ReviewForm({ formRef }: { formRef: React.RefObject<HTMLElement | null> 
               value={form.origin}
               onChange={(e) => setForm((v) => ({ ...v, origin: e.target.value }))}
               maxLength={80}
-              className="border border-ink/12 bg-bone px-2.5 py-2 text-sm outline-none focus:border-teal"
+              className="w-full border border-ink/15 bg-bone px-3 py-2 text-sm outline-none focus:border-teal"
               placeholder="e.g. Japan, UK"
             />
           </label>
@@ -212,7 +209,7 @@ function ReviewForm({ formRef }: { formRef: React.RefObject<HTMLElement | null> 
             value={form.service}
             onChange={(e) => setForm((v) => ({ ...v, service: e.target.value }))}
             maxLength={120}
-            className="border border-ink/12 bg-bone px-2.5 py-2 text-sm outline-none focus:border-teal"
+            className="w-full border border-ink/15 bg-bone px-3 py-2 text-sm outline-none focus:border-teal"
             placeholder="e.g. Khmer Sakyant arm piece"
           />
         </label>
@@ -227,15 +224,15 @@ function ReviewForm({ formRef }: { formRef: React.RefObject<HTMLElement | null> 
             required
             maxLength={1000}
             rows={3}
-            className="border border-ink/12 bg-bone px-2.5 py-2 text-sm leading-6 outline-none focus:border-teal"
+            className="w-full border border-ink/15 bg-bone px-3 py-2 text-sm leading-6 outline-none focus:border-teal"
             placeholder="Tell us about your experience..."
           />
           <span className="text-right font-condensed text-[10px] text-ink/25">{form.text.length}/1000</span>
         </label>
 
-        <div className="flex items-center justify-between gap-3 border border-ink/8 bg-bone px-3 py-2">
+        <div className="flex items-center justify-between border border-ink/10 bg-bone px-3 py-2.5">
           <span className="font-condensed text-[10px] uppercase tracking-editorial text-ink/50">Rating</span>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
             {[1, 2, 3, 4, 5].map((star) => (
               <button
                 key={star}
@@ -247,7 +244,7 @@ function ReviewForm({ formRef }: { formRef: React.RefObject<HTMLElement | null> 
                 <Star className={`h-5 w-5 ${form.rating >= star ? "fill-current" : ""}`} />
               </button>
             ))}
-            <span className="ml-1.5 font-condensed text-xs text-ink/40">{form.rating}/5</span>
+            <span className="ml-1 font-condensed text-[11px] text-ink/40">{form.rating}/5</span>
           </div>
         </div>
 
@@ -255,16 +252,16 @@ function ReviewForm({ formRef }: { formRef: React.RefObject<HTMLElement | null> 
           <p className="text-xs text-red-500">{errorMessage}</p>
         )}
 
-        <div className="flex items-center gap-3 pt-1">
+        <div className="flex flex-col gap-2 pt-0.5 sm:flex-row sm:items-center sm:gap-4">
           <button
             type="submit"
             disabled={status === "sending"}
-            className="inline-flex items-center justify-center gap-2 bg-ink px-4 py-2.5 font-condensed text-xs uppercase tracking-editorial text-white transition hover:bg-teal disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex w-full items-center justify-center gap-2 bg-ink px-4 py-2.5 font-condensed text-xs uppercase tracking-editorial text-white transition hover:bg-teal disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
           >
             <Send className="h-3.5 w-3.5" />
-            {status === "sending" ? "Sending..." : "Submit"}
+            {status === "sending" ? "Sending..." : "Submit Review"}
           </button>
-          <p className="text-[10px] leading-4 text-ink/35">
+          <p className="text-center text-[10px] leading-4 text-ink/35 sm:text-left">
             Reviewed before going live.
           </p>
         </div>
