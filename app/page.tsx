@@ -13,6 +13,9 @@ import heroArtwork1 from "../public/hero img/hero1.jpg";
 import heroArtwork2 from "../public/hero img/hero2.jpg";
 import sakyantArtwork1 from "../public/KHMER SAKYANT DESIGN section/photo_2026-06-28_18-24-16.jpg";
 import sakyantArtwork2 from "../public/KHMER SAKYANT DESIGN section/photo_2026-06-28_18-24-21.jpg";
+import sacredInkArtwork1 from "../public/SACRED KHMER INK section/photo_2026-06-28_18-42-34.jpg";
+import sacredInkArtwork2 from "../public/SACRED KHMER INK section/photo_2026-06-28_18-46-33.jpg";
+import sacredInkArtwork3 from "../public/SACRED KHMER INK section/photo_2026-06-28_18-46-39.jpg";
 
 export default function Home() {
   const { lang } = useLanguage();
@@ -99,25 +102,31 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="editorial-section bg-white px-5 py-14 lg:px-8 lg:py-28" data-bg-word="ART">
-        <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.8fr_0.35fr_0.85fr] lg:gap-10 lg:items-center">
-          <h2 className="font-display text-[clamp(3.3rem,14vw,5.5rem)] leading-[0.78] lg:vertical-title lg:justify-self-center lg:text-[clamp(5rem,9vw,9rem)] lg:leading-none">
-            <span className="km-title-text">{h.eternalTitle}</span>
-          </h2>
-          <div className="lg:order-first">
-            <div className="grid grid-cols-2 gap-2 lg:block">
-              <ImageCard src="/gallery/photo_2026-06-26_11-12-44.jpg" alt="Khmer script sacred tattoo close up" className="h-[240px] lg:h-[420px]" />
-              <ImageCard src="/gallery/photo_2026-06-26_11-16-00.jpg" alt="Full back Sak Yant Khmer tattoo" className="h-[240px] lg:hidden" />
-            </div>
-            <p className="mt-6 max-w-md text-sm leading-6 text-ink/65">{h.eternalDesc}</p>
-            <Button href="/artists" variant="dark" className="mt-5">{tx.common.chooseArtist}</Button>
+      <section className="editorial-section overflow-hidden bg-white px-4 py-10 sm:px-5 sm:py-12 lg:px-8 lg:py-20" data-bg-word="ART">
+        <div className="mx-auto grid max-w-7xl gap-4 sm:gap-5 lg:grid-cols-[0.95fr_0.58fr_0.9fr] lg:items-stretch lg:gap-6">
+          <div className="order-3 grid grid-cols-2 gap-2 sm:gap-3 lg:order-first lg:grid-cols-1 lg:content-between">
+            <ImageCard src={sacredInkArtwork1} alt="Sacred Khmer ink tattoo close up" className="h-[150px] sm:h-[240px] lg:h-[480px]" />
+            <ImageCard src={sacredInkArtwork3} alt="Sacred Khmer ink tattoo detail" className="h-[150px] sm:h-[240px] lg:h-[180px]" />
           </div>
-          <div className="text-center lg:text-left">
-            <p className="mx-auto mb-4 max-w-[16rem] font-condensed text-sm uppercase tracking-editorial text-ink/70 sm:text-xl lg:mx-0 lg:mb-8 lg:max-w-sm lg:text-2xl">
+
+          <div className="order-1 flex flex-col justify-center gap-3 text-center sm:gap-4 lg:order-none lg:text-left">
+            <h2 className="mx-auto max-w-[16rem] break-words font-display text-[clamp(2.45rem,12vw,4.25rem)] leading-[0.8] lg:mx-0 lg:max-w-none lg:text-[clamp(3.7rem,6vw,6.5rem)]">
+              <span className="km-title-text">{h.eternalTitle}</span>
+            </h2>
+            <p className="mx-auto max-w-[18rem] font-condensed text-xs uppercase leading-5 tracking-editorial text-ink/70 sm:max-w-sm sm:text-base sm:leading-6 lg:mx-0">
               {h.yearsExp}
             </p>
-            <Button href="/booking" variant="dark" className="px-4 py-3 text-xs sm:text-sm">{tx.common.bookNow}</Button>
-            <ImageCard src="/gallery/photo_2026-06-26_11-16-00.jpg" alt="Full back Sak Yant Khmer tattoo" className="mt-12 hidden h-[420px] lg:block" />
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-center sm:gap-3 lg:justify-start">
+              <Button href="/booking" variant="dark" className="w-full px-2 py-2.5 text-[0.62rem] sm:w-auto sm:px-4 sm:text-xs">{tx.common.bookNow}</Button>
+              <Button href="/artists" variant="outline" className="w-full px-2 py-2.5 text-[0.62rem] sm:w-auto sm:px-4 sm:text-xs">{tx.common.chooseArtist}</Button>
+            </div>
+          </div>
+
+          <div className="order-2 grid gap-3 lg:order-none lg:content-center">
+            <ImageCard src={sacredInkArtwork2} alt="Sacred Khmer ink tattoo artwork" className="h-[250px] sm:h-[340px] lg:h-[460px]" />
+            <p className="mx-auto max-w-sm text-center text-xs leading-5 text-ink/65 sm:text-sm sm:leading-6 lg:mx-0 lg:max-w-sm lg:text-left">
+              {h.eternalDesc}
+            </p>
           </div>
         </div>
       </section>
