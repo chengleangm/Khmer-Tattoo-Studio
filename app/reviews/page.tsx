@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { MessageCircle, Quote, Send, Star } from "lucide-react";
+import { ChevronLeft, ChevronRight, MessageCircle, Quote, Send, Star } from "lucide-react";
 import Button from "@/components/Button";
 import RecentCustomerMoments from "@/components/RecentCustomerMoments";
 import SectionTitle from "@/components/SectionTitle";
@@ -33,6 +33,8 @@ function StarRow({ rating, size = "sm" }: { rating: number; size?: "sm" | "lg" }
   );
 }
 
+const PER_PAGE = 5;
+
 function DynamicReviews({
   reviews,
   loaded,
@@ -42,6 +44,17 @@ function DynamicReviews({
   loaded: boolean;
   formRef: React.RefObject<HTMLElement | null>;
 }) {
+  const [page, setPage] = useState(0);
+  const topRef = useRef<HTMLDivElement>(null);
+
+  const totalPages = Math.max(1, Math.ceil(reviews.length / PER_PAGE));
+  const pageReviews = reviews.slice(page * PER_PAGE, (page + 1) * PER_PAGE);
+
+  function goTo(next: number) {
+    setPage(next);
+    topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   if (!loaded) {
     return (
       <div className="grid gap-3 sm:grid-cols-2 lg:gap-4">
@@ -74,33 +87,63 @@ function DynamicReviews({
   }
 
   return (
-    <div className="grid gap-3 sm:grid-cols-2 lg:gap-4">
-      {reviews.map((review, index) => (
-        <article
-          key={review.id}
-          className={`border border-ink/10 bg-white p-4 sm:p-5 ${
-            index === 0 ? "sm:col-span-2 lg:grid lg:grid-cols-[0.58fr_1fr] lg:gap-6 lg:p-6" : ""
-          }`}
-        >
-          <div>
-            <Quote className="h-7 w-7 text-teal" />
-            <div className="mt-4">
-              <StarRow rating={review.rating} />
+    <div ref={topRef}>
+      <div className="grid gap-3 sm:grid-cols-2 lg:gap-4">
+        {pageReviews.map((review, index) => (
+          <article
+            key={review.id}
+            className={`border border-ink/10 bg-white p-4 sm:p-5 ${
+              index === 0 ? "sm:col-span-2 lg:grid lg:grid-cols-[0.58fr_1fr] lg:gap-6 lg:p-6" : ""
+            }`}
+          >
+            <div>
+              <Quote className="h-7 w-7 text-teal" />
+              <div className="mt-4">
+                <StarRow rating={review.rating} />
+              </div>
             </div>
-          </div>
-          <div className={index === 0 ? "mt-4 lg:mt-0" : "mt-4"}>
-            <p className="text-sm leading-6 text-ink/70 sm:text-base sm:leading-7">{review.text}</p>
-            <div className="mt-5 border-t border-ink/10 pt-4">
-              <p className="font-condensed text-lg uppercase tracking-editorial text-ink">{review.name}</p>
-              {(review.origin || review.service) && (
-                <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink/45">
-                  {[review.origin, review.service].filter(Boolean).join(" / ")}
-                </p>
-              )}
+            <div className={index === 0 ? "mt-4 lg:mt-0" : "mt-4"}>
+              <p className="text-sm leading-6 text-ink/70 sm:text-base sm:leading-7">{review.text}</p>
+              <div className="mt-5 border-t border-ink/10 pt-4">
+                <p className="font-condensed text-lg uppercase tracking-editorial text-ink">{review.name}</p>
+                {(review.origin || review.service) && (
+                  <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink/45">
+                    {[review.origin, review.service].filter(Boolean).join(" / ")}
+                  </p>
+                )}
+              </div>
             </div>
+          </article>
+        ))}
+      </div>
+
+      {totalPages > 1 && (
+        <div className="mt-5 flex items-center justify-between border-t border-ink/10 pt-5">
+          <p className="font-condensed text-xs uppercase tracking-editorial text-ink/40">
+            {page + 1} / {totalPages}
+          </p>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => goTo(page - 1)}
+              disabled={page === 0}
+              className="inline-flex h-9 w-9 items-center justify-center border border-ink/20 text-ink transition hover:bg-ink hover:text-white disabled:cursor-not-allowed disabled:opacity-25"
+              aria-label="Previous page"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => goTo(page + 1)}
+              disabled={page === totalPages - 1}
+              className="inline-flex h-9 w-9 items-center justify-center border border-ink/20 text-ink transition hover:bg-ink hover:text-white disabled:cursor-not-allowed disabled:opacity-25"
+              aria-label="Next page"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
           </div>
-        </article>
-      ))}
+        </div>
+      )}
     </div>
   );
 }
