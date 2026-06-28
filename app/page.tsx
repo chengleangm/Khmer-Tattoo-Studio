@@ -102,29 +102,29 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="editorial-section overflow-hidden bg-white px-4 py-10 sm:px-5 sm:py-12 lg:px-8 lg:py-20" data-bg-word="ART">
-        <div className="mx-auto grid max-w-7xl gap-4 sm:gap-5 lg:grid-cols-[0.95fr_0.58fr_0.9fr] lg:items-stretch lg:gap-6">
-          <div className="order-3 grid grid-cols-2 gap-2 sm:gap-3 lg:order-first lg:grid-cols-1 lg:content-between">
-            <ImageCard src={sacredInkArtwork1} alt="Sacred Khmer ink tattoo close up" className="h-[150px] sm:h-[240px] lg:h-[480px]" />
-            <ImageCard src={sacredInkArtwork3} alt="Sacred Khmer ink tattoo detail" className="h-[150px] sm:h-[240px] lg:h-[180px]" />
+      <section className="editorial-section overflow-hidden bg-white px-4 py-10 sm:px-5 sm:py-12 md:px-6 md:py-14 lg:px-8 lg:py-20" data-bg-word="ART">
+        <div className="mx-auto grid max-w-7xl gap-4 sm:gap-5 md:grid-cols-[0.82fr_1.18fr] md:items-center lg:grid-cols-[0.95fr_0.58fr_0.9fr] lg:items-stretch lg:gap-6">
+          <div className="order-3 grid grid-cols-2 gap-2 sm:gap-3 md:col-span-2 md:grid-cols-2 lg:order-first lg:col-span-1 lg:grid-cols-1 lg:content-between">
+            <ImageCard src={sacredInkArtwork1} alt="Sacred Khmer ink tattoo close up" className="h-[150px] sm:h-[240px] md:h-[190px] lg:h-[480px]" />
+            <ImageCard src={sacredInkArtwork3} alt="Sacred Khmer ink tattoo detail" className="h-[150px] sm:h-[240px] md:h-[190px] lg:h-[180px]" />
           </div>
 
-          <div className="order-1 flex flex-col justify-center gap-3 text-center sm:gap-4 lg:order-none lg:text-left">
-            <h2 className="mx-auto max-w-[16rem] break-words font-display text-[clamp(2.45rem,12vw,4.25rem)] leading-[0.8] lg:mx-0 lg:max-w-none lg:text-[clamp(3.7rem,6vw,6.5rem)]">
+          <div className="order-1 flex flex-col justify-center gap-3 text-center sm:gap-4 md:text-left lg:order-none">
+            <h2 className="mx-auto max-w-[16rem] break-words font-display text-[clamp(2.45rem,12vw,4.25rem)] leading-[0.8] md:mx-0 md:max-w-[17rem] md:text-[clamp(3rem,7vw,4.6rem)] lg:max-w-none lg:text-[clamp(3.7rem,6vw,6.5rem)]">
               <span className="km-title-text">{h.eternalTitle}</span>
             </h2>
-            <p className="mx-auto max-w-[18rem] font-condensed text-xs uppercase leading-5 tracking-editorial text-ink/70 sm:max-w-sm sm:text-base sm:leading-6 lg:mx-0">
+            <p className="mx-auto max-w-[18rem] font-condensed text-xs uppercase leading-5 tracking-editorial text-ink/70 sm:max-w-sm sm:text-base sm:leading-6 md:mx-0 md:max-w-[19rem]">
               {h.yearsExp}
             </p>
-            <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-center sm:gap-3 lg:justify-start">
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-center sm:gap-3 md:justify-start">
               <Button href="/booking" variant="dark" className="w-full px-2 py-2.5 text-[0.62rem] sm:w-auto sm:px-4 sm:text-xs">{tx.common.bookNow}</Button>
               <Button href="/artists" variant="outline" className="w-full px-2 py-2.5 text-[0.62rem] sm:w-auto sm:px-4 sm:text-xs">{tx.common.chooseArtist}</Button>
             </div>
           </div>
 
-          <div className="order-2 grid gap-3 lg:order-none lg:content-center">
-            <ImageCard src={sacredInkArtwork2} alt="Sacred Khmer ink tattoo artwork" className="h-[250px] sm:h-[340px] lg:h-[460px]" />
-            <p className="mx-auto max-w-sm text-center text-xs leading-5 text-ink/65 sm:text-sm sm:leading-6 lg:mx-0 lg:max-w-sm lg:text-left">
+          <div className="order-2 grid gap-3 md:content-center lg:order-none">
+            <ImageCard src={sacredInkArtwork2} alt="Sacred Khmer ink tattoo artwork" className="h-[250px] sm:h-[340px] md:h-[360px] lg:h-[460px]" />
+            <p className="mx-auto max-w-sm text-center text-xs leading-5 text-ink/65 sm:text-sm sm:leading-6 md:mx-0 md:text-left lg:max-w-sm">
               {h.eternalDesc}
             </p>
           </div>
