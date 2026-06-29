@@ -4,8 +4,9 @@ import { useState } from "react";
 import AdminReviewMomentsManager from "@/components/AdminReviewMomentsManager";
 import AdminReviewsManager from "@/components/AdminReviewsManager";
 import AdminStoreManager from "@/components/AdminStoreManager";
+import AdminOrdersManager from "@/components/AdminOrdersManager";
 
-type Tab = "moments" | "reviews" | "store";
+type Tab = "moments" | "reviews" | "store" | "orders";
 
 export default function AdminDashboardPage() {
   const [activeTab, setActiveTab] = useState<Tab>("moments");
@@ -14,6 +15,7 @@ export default function AdminDashboardPage() {
     { id: "moments", label: "Customer Moments" },
     { id: "reviews", label: "Reviews" },
     { id: "store", label: "Store Products" },
+    { id: "orders", label: "Orders" },
   ];
 
   return (
@@ -58,6 +60,7 @@ export default function AdminDashboardPage() {
           </div>
         )}
         {activeTab === "store" && <AdminStoreManager />}
+        {activeTab === "orders" && <AdminOrdersManager />}
       </section>
     </main>
   );

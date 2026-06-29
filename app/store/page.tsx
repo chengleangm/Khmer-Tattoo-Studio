@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import Button from "@/components/Button";
 import SectionTitle from "@/components/SectionTitle";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -8,7 +9,7 @@ import { t } from "@/data/translations";
 import { contactDetails } from "@/data/site";
 import { useEffect, useState } from "react";
 import {
-  Clock, MessageCircle, Package, ShoppingBag, Truck,
+  ArrowRight, Clock, MessageCircle, Package, ShoppingBag, Truck,
 } from "lucide-react";
 
 type StoreProduct = {
@@ -152,7 +153,7 @@ export default function StorePage() {
             {/* Grid */}
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 lg:gap-5">
               {filtered.map((product) => (
-                <ProductCard key={product.id} product={product} orderLabel={s.orderVia} outOfStockLabel={s.outOfStock} whatsappHref={contactDetails.whatsappHref} />
+                <ProductCard key={product.id} product={product} outOfStockLabel={s.outOfStock} />
               ))}
             </div>
 
@@ -226,20 +227,16 @@ export default function StorePage() {
 
 function ProductCard({
   product,
-  orderLabel,
   outOfStockLabel,
-  whatsappHref,
 }: {
   product: StoreProduct;
-  orderLabel: string;
   outOfStockLabel: string;
-  whatsappHref: string;
 }) {
-  const msg = encodeURIComponent(`Hi! I'd like to order: ${product.name} (${product.price})`);
-  const orderHref = `${whatsappHref}?text=${msg}`;
-
   return (
-    <article className="relative flex flex-col border border-ink/10 bg-white transition hover:border-teal/40">
+    <Link
+      href={`/store/${product.id}`}
+      className="group relative flex flex-col border border-ink/10 bg-white transition hover:border-teal/50"
+    >
       {/* Image */}
       <div className="relative aspect-square overflow-hidden bg-bone">
         {product.imageUrl ? (
@@ -248,7 +245,7 @@ function ProductCard({
             alt={product.name}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover transition duration-500 hover:scale-105"
+            className="object-cover transition duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full items-center justify-center">
@@ -279,27 +276,16 @@ function ProductCard({
         )}
         <h3 className="mt-1 font-display text-xl leading-none sm:text-2xl">{product.name}</h3>
         {product.desc && (
-          <p className="mt-2 flex-1 text-xs leading-5 text-ink/60">{product.desc}</p>
+          <p className="mt-2 flex-1 line-clamp-2 text-xs leading-5 text-ink/60">{product.desc}</p>
         )}
         <div className="mt-4 flex items-center justify-between border-t border-ink/10 pt-3">
           <p className="font-display text-2xl leading-none text-teal">{product.price}</p>
-          {product.inStock ? (
-            <a
-              href={orderHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 bg-ink px-3 py-2 font-condensed text-[0.65rem] uppercase tracking-editorial text-white transition hover:bg-teal"
-            >
-              <MessageCircle size={12} />
-              {orderLabel}
-            </a>
-          ) : (
-            <span className="font-condensed text-[0.65rem] uppercase tracking-editorial text-ink/35">
-              {outOfStockLabel}
-            </span>
-          )}
+          <span className="inline-flex items-center gap-1 font-condensed text-[0.65rem] uppercase tracking-editorial text-ink/50 transition group-hover:text-teal">
+            {product.inStock ? "Order" : outOfStockLabel}
+            {product.inStock && <ArrowRight size={11} />}
+          </span>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
