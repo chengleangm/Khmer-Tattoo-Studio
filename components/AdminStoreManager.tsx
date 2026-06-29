@@ -381,15 +381,25 @@ export default function AdminStoreManager() {
                   </div>
                 </label>
 
-                <label className="grid gap-1.5">
+                <div className="grid gap-1.5">
                   <span className="label-xs">Badge tag</span>
-                  <input
-                    value={form.tag}
-                    onChange={(e) => setForm((v) => ({ ...v, tag: e.target.value }))}
-                    className="field"
-                    placeholder="e.g. New, Best Seller, Sale"
-                  />
-                </label>
+                  <div className="flex gap-2">
+                    {["New", "Best Seller"].map((tag) => (
+                      <button
+                        key={tag}
+                        type="button"
+                        onClick={() => setForm((v) => ({ ...v, tag: v.tag === tag ? "" : tag }))}
+                        className={`flex-1 border py-2 font-condensed text-xs uppercase tracking-editorial transition ${
+                          form.tag === tag
+                            ? "border-teal bg-teal text-white"
+                            : "border-ink/20 text-ink/50 hover:border-teal hover:text-teal"
+                        }`}
+                      >
+                        {tag}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
                 <label className="grid gap-1.5">
                   <span className="label-xs">Description</span>
@@ -596,10 +606,25 @@ function ProductCard({ product, categories, editing, loading, onEdit, onCancelEd
                 <input type="number" min="0" step="0.01" value={editing.price} onChange={(e) => onEditChange("price", e.target.value)} className="field min-w-0 flex-1" placeholder="18.00" />
               </div>
             </label>
-            <label className="grid gap-1">
+            <div className="grid gap-1">
               <span className="label-xs">Badge tag</span>
-              <input value={editing.tag} onChange={(e) => onEditChange("tag", e.target.value)} className="field" placeholder="New, Sale..." />
-            </label>
+              <div className="flex gap-2">
+                {["New", "Best Seller"].map((tag) => (
+                  <button
+                    key={tag}
+                    type="button"
+                    onClick={() => onEditChange("tag", editing.tag === tag ? "" : tag)}
+                    className={`flex-1 border py-1.5 font-condensed text-xs uppercase tracking-editorial transition ${
+                      editing.tag === tag
+                        ? "border-teal bg-teal text-white"
+                        : "border-ink/20 text-ink/50 hover:border-teal hover:text-teal"
+                    }`}
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
+            </div>
             <label className="grid gap-1 sm:col-span-2">
               <span className="label-xs">Description</span>
               <textarea value={editing.desc} onChange={(e) => onEditChange("desc", e.target.value)} rows={2} className="field resize-none" />
