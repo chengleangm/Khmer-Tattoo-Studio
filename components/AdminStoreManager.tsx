@@ -366,13 +366,19 @@ export default function AdminStoreManager() {
                 </label>
 
                 <label className="grid gap-1.5">
-                  <span className="label-xs">Price *</span>
-                  <input
-                    value={form.price}
-                    onChange={(e) => setForm((v) => ({ ...v, price: e.target.value }))}
-                    className="field"
-                    placeholder="e.g. $18 or From $20"
-                  />
+                  <span className="label-xs">Price (USD) *</span>
+                  <div className="flex">
+                    <span className="flex shrink-0 items-center border border-r-0 border-ink/15 bg-bone px-3 font-condensed text-sm text-ink/50">$</span>
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={form.price}
+                      onChange={(e) => setForm((v) => ({ ...v, price: e.target.value }))}
+                      className="field min-w-0 flex-1"
+                      placeholder="18.00"
+                    />
+                  </div>
                 </label>
 
                 <label className="grid gap-1.5">
@@ -584,8 +590,11 @@ function ProductCard({ product, categories, editing, loading, onEdit, onCancelEd
               </select>
             </label>
             <label className="grid gap-1">
-              <span className="label-xs">Price</span>
-              <input value={editing.price} onChange={(e) => onEditChange("price", e.target.value)} className="field" placeholder="$18" />
+              <span className="label-xs">Price (USD)</span>
+              <div className="flex">
+                <span className="flex shrink-0 items-center border border-r-0 border-ink/15 bg-bone px-2 font-condensed text-xs text-ink/50">$</span>
+                <input type="number" min="0" step="0.01" value={editing.price} onChange={(e) => onEditChange("price", e.target.value)} className="field min-w-0 flex-1" placeholder="18.00" />
+              </div>
             </label>
             <label className="grid gap-1">
               <span className="label-xs">Badge tag</span>

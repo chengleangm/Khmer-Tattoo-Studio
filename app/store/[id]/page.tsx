@@ -26,6 +26,13 @@ type StoreProduct = {
 
 type Fulfillment = "pickup" | "delivery";
 
+function formatPrice(price: string): string {
+  if (!price) return "";
+  if (price.startsWith("$")) return price;
+  const n = parseFloat(price);
+  return isNaN(n) ? price : `$${n % 1 === 0 ? n.toString() : n.toFixed(2)}`;
+}
+
 // ── Delivery zones for Siem Reap ──────────────────────────────────────────────
 
 export const DELIVERY_ZONES = [
@@ -119,7 +126,7 @@ export default function ProductDetailPage() {
     );
   }
 
-  const whatsappMsg = encodeURIComponent(`Hi! I'd like to order:\n${product.name} (${product.price})\n\nPlease let me know availability and delivery options.`);
+  const whatsappMsg = encodeURIComponent(`Hi! I'd like to order:\n${product.name} (${formatPrice(product.price)})\n\nPlease let me know availability and delivery options.`);
   const whatsappHref = `${contactDetails.whatsappHref}?text=${whatsappMsg}`;
 
   return (
@@ -186,7 +193,7 @@ export default function ProductDetailPage() {
                 {product.name}
               </h1>
               <p className="mt-4 font-display text-4xl leading-none text-teal sm:text-5xl">
-                {product.price}
+                {formatPrice(product.price)}
               </p>
 
               {product.desc && (
@@ -375,7 +382,7 @@ function OrderForm({
         <div className="min-w-0 flex-1">
           <p className="font-condensed text-xs uppercase tracking-editorial text-ink/45">{product.category}</p>
           <p className="font-display text-lg leading-none">{product.name}</p>
-          <p className="mt-1 font-display text-xl leading-none text-teal">{product.price}</p>
+          <p className="mt-1 font-display text-xl leading-none text-teal">{formatPrice(product.price)}</p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <button type="button" onClick={() => setQuantity((q) => Math.max(1, q - 1))} className="flex h-8 w-8 items-center justify-center border border-ink/20 font-condensed text-sm text-ink transition hover:bg-ink hover:text-white">−</button>
@@ -503,7 +510,7 @@ function OrderForm({
         <div className="mt-3 grid gap-2 text-sm">
           <div className="flex justify-between">
             <span className="text-ink/65">{product.name} × {quantity}</span>
-            <span>{product.price}{quantity > 1 ? ` × ${quantity}` : ""}</span>
+            <span>{formatPrice(product.price)}{quantity > 1 ? ` × ${quantity}` : ""}</span>
           </div>
           <div className="flex justify-between">
             <span className="text-ink/65">

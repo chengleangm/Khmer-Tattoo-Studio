@@ -25,6 +25,13 @@ type StoreProduct = {
   visible: boolean;
 };
 
+function formatPrice(price: string): string {
+  if (!price) return "";
+  if (price.startsWith("$")) return price;
+  const n = parseFloat(price);
+  return isNaN(n) ? price : `$${n % 1 === 0 ? n.toString() : n.toFixed(2)}`;
+}
+
 const stepIcons = [ShoppingBag, MessageCircle, Package, Truck];
 
 export default function StorePage() {
@@ -445,7 +452,7 @@ function ProductCard({
         )}
         <div className="mt-2 flex items-center justify-between border-t border-ink/10 pt-2 sm:mt-3 sm:pt-3">
           <p className="font-display text-lg leading-none text-teal sm:text-2xl">
-            {product.price}
+            {formatPrice(product.price)}
           </p>
           <span className="inline-flex items-center gap-0.5 font-condensed text-[0.6rem] uppercase tracking-editorial text-ink/40 transition group-hover:text-teal sm:gap-1 sm:text-[0.65rem]">
             {product.inStock ? (

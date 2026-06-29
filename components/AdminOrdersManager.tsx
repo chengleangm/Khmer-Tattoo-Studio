@@ -45,6 +45,33 @@ const STATUS_FILTERS: Array<{ id: "all" | OrderStatus; label: string }> = [
   { id: "cancelled", label: "Cancelled" },
 ];
 
+// Revenue helpers
+function parsePrice(price: string): number {
+  const n = parseFloat(price.replace(/[^0-9.]/g, ""));
+  return isNaN(n) ? 0 : n;
+}
+
+function orderTotal(order: Order): number {
+  return parsePrice(order.productPrice) * order.quantity + order.deliveryFee;
+}
+
+function isToday(dateStr: string): boolean {
+  const d = new Date(dateStr);
+  const now = new Date();
+  return d.toDateString() === now.toDateString();
+}
+
+function isThisWeek(dateStr: string): boolean {
+  const d = new Date(dateStr);
+  const now = new Date();
+  const dayOfWeek = now.getDay();
+  const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+  const monday = new Date(now);
+  monday.setDate(now.getDate() + mondayOffset);
+  monday.setHours(0, 0, 0, 0);
+  return d >= monday;
+}
+
 export default function AdminOrdersManager() {
   const router = useRouter();
   const [token] = useState(() => {
@@ -141,12 +168,20 @@ export default function AdminOrdersManager() {
   const confirmed = orders.filter((o) => o.status === "confirmed").length;
   const ready     = orders.filter((o) => o.status === "ready").length;
 
+  const nonCancelled = orders.filter((o) => o.status !== "cancelled");
+  const todayIncome  = nonCancelled.filter((o) => isToday(o.createdAt)).reduce((s, o) => s + orderTotal(o), 0);
+  const weekIncome   = nonCancelled.filter((o) => isThisWeek(o.createdAt)).reduce((s, o) => s + orderTotal(o), 0);
+  const totalReceived = orders.filter((o) => o.status === "delivered").reduce((s, o) => s + orderTotal(o), 0);
+  const pendingRevenue = orders
+    .filter((o) => o.status === "confirmed" || o.status === "ready")
+    .reduce((s, o) => s + orderTotal(o), 0);
+
   const filtered = filter === "all" ? orders : orders.filter((o) => o.status === filter);
 
   return (
     <div className="mx-auto max-w-7xl">
-      {/* Stats */}
-      <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      {/* Order count stats */}
+      <div className="mb-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {[
           { label: "Total Orders", value: orders.length, color: "text-ink" },
           { label: "Pending",      value: pending,        color: "text-amber-600" },
@@ -156,6 +191,24 @@ export default function AdminOrdersManager() {
           <div key={stat.label} className="border border-ink/10 bg-white p-4">
             <p className={`font-display text-4xl leading-none ${stat.color}`}>{stat.value}</p>
             <p className="mt-2 font-condensed text-[0.65rem] uppercase tracking-editorial text-ink/50">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Income stats */}
+      <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {[
+          { label: "Today's Income",   value: todayIncome,    color: "text-teal",        note: "non-cancelled" },
+          { label: "This Week",        value: weekIncome,     color: "text-teal",        note: "non-cancelled" },
+          { label: "Total Received",   value: totalReceived,  color: "text-emerald-600", note: "delivered only" },
+          { label: "Pending Revenue",  value: pendingRevenue, color: "text-amber-600",   note: "confirmed + ready" },
+        ].map((stat) => (
+          <div key={stat.label} className="border border-ink/10 bg-white p-4">
+            <p className={`font-display text-3xl leading-none ${stat.color}`}>
+              ${stat.value.toFixed(2)}
+            </p>
+            <p className="mt-2 font-condensed text-[0.65rem] uppercase tracking-editorial text-ink/50">{stat.label}</p>
+            <p className="mt-0.5 font-condensed text-[0.55rem] uppercase tracking-editorial text-ink/30">{stat.note}</p>
           </div>
         ))}
       </div>
@@ -266,7 +319,7 @@ function OrderCard({
               <p className="font-condensed text-[0.6rem] uppercase tracking-editorial text-ink/40">Product</p>
               <p className="mt-0.5 font-display text-lg leading-none">{order.productName}</p>
               <p className="mt-1 font-condensed text-sm text-teal">
-                {order.productPrice} × {order.quantity}
+                {order.productPrice.startsWith("$") ? order.productPrice : `$${order.productPrice}`} × {order.quantity}
               </p>
             </div>
 
