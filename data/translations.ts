@@ -3,7 +3,7 @@ export const t = {
     kicker: "Sacred Lines",
     nav: {
       home: "Home", artists: "Artists", gallery: "Gallery", services: "Services",
-      booking: "Booking", reviews: "Reviews", about: "About", contact: "Contact", aftercare: "Aftercare",
+      booking: "Booking", reviews: "Reviews", about: "About", contact: "Contact", aftercare: "Aftercare", store: "Store",
     },
     common: {
       bookAppointment: "Book an Appointment",
@@ -142,6 +142,24 @@ export const t = {
       dos: ["Wash with clean hands", "Use fragrance-free products", "Wear loose clothing", "Message us with healing questions"],
       donts: ["Do not swim", "Do not expose to direct sun", "Do not over-moisturize", "Do not pick scabs"],
     },
+    store: {
+      pageTitle: "STUDIO STORE",
+      pageDesc: "Khmer-designed merchandise, apparel, art prints, and studio essentials. Order by message — we ship within Cambodia and internationally.",
+      orderVia: "Order via WhatsApp",
+      outOfStock: "Out of Stock",
+      filterAll: "All",
+      comingSoonTitle: "COMING SOON",
+      comingSoonDesc: "We are preparing our store. New products — Cambodian t-shirts, hoodies, art prints, and more — will be available soon. Message us to ask about anything early.",
+      howTitle: "HOW TO ORDER",
+      howSteps: [
+        { step: "01", text: "Choose your items and note the names and sizes." },
+        { step: "02", text: "Message the studio on WhatsApp or Telegram with your order." },
+        { step: "03", text: "We confirm stock, agree on delivery, and send payment details." },
+        { step: "04", text: "Your order ships within 1–3 business days inside Cambodia. International: 5–14 days." },
+      ],
+      ctaTitle: "QUESTIONS ABOUT THE STORE?",
+      ctaDesc: "Message us directly — we are happy to help with sizing, availability, or bundling a store order with a tattoo booking.",
+    },
     footer: {
       tagline: "Sacred Khmer lines. Meaning carried on skin.",
       brandName: "Khmer Bamboo Sakyant",
@@ -160,7 +178,7 @@ export const t = {
     kicker: "បន្ទាត់ពិសិដ្ឋ",
     nav: {
       home: "ទំព័រដើម", artists: "សិល្បករសាក់", gallery: "ស្នាដៃ", services: "សេវាកម្ម",
-      booking: "កក់ពេល", reviews: "មតិអតិថិជន", about: "អំពីយើង", contact: "ទំនាក់ទំនង", aftercare: "ការថែទាំក្រោយសាក់",
+      booking: "កក់ពេល", reviews: "មតិអតិថិជន", about: "អំពីយើង", contact: "ទំនាក់ទំនង", aftercare: "ការថែទាំក្រោយសាក់", store: "ហាង",
     },
     common: {
       bookAppointment: "កក់ពេលសាក់",
@@ -298,6 +316,24 @@ export const t = {
       ],
       dos: ["លាងសម្អាតជាមួយដៃស្អាត", "ប្រើផលិតផលគ្មានក្លិន", "ស្លៀកសម្លៀកបំពាក់រលុង និងទន់", "ទាក់ទងមកយើង ប្រសិនបើមានសំណួរអំពីការជាសះស្បើយ"],
       donts: ["កុំហែលទឹក", "កុំឱ្យស្នាមសាក់ត្រូវពន្លឺថ្ងៃដោយផ្ទាល់", "កុំលាបផលិតផលផ្តល់សំណើមច្រើនពេក", "កុំកេះ ឬកោសស្បែកដែលកំពុងជាសះស្បើយ"],
+    },
+    store: {
+      pageTitle: "ហាងស្ទូឌីយោ",
+      pageDesc: "ទំនិញបែបខ្មែរ សម្លៀកបំពាក់ ព្រីនសិល្បៈ និងផ្សេងទៀត។ កម្មង់តាមសារ — យើងបញ្ជូននៅក្នុងព្រះរាជាណាចក្រ និងអន្តរជាតិ។",
+      orderVia: "កម្មង់តាម WhatsApp",
+      outOfStock: "អស់ស្តុក",
+      filterAll: "ទាំងអស់",
+      comingSoonTitle: "នឹងមកដល់ឆាប់ៗ",
+      comingSoonDesc: "យើងកំពុងរៀបចំហាង។ ផលិតផលថ្មី — អាវយឺតខ្មែរ ហូឌី ព្រីន និងច្រើនទៀត — នឹងមានឆាប់ៗ។ ផ្ញើសារមកសួរអំពីផលិតផលដែលអ្នកចង់បានជាមុន។",
+      howTitle: "របៀបកម្មង់",
+      howSteps: [
+        { step: "01", text: "ជ្រើសរើសទំនិញ និងកត់ត្រាឈ្មោះ ទំហំ។" },
+        { step: "02", text: "ផ្ញើសារមកស្ទូឌីយោតាម WhatsApp ឬ Telegram ជាមួយការកម្មង់របស់អ្នក។" },
+        { step: "03", text: "យើងបញ្ជាក់ស្តុក ព្រមលើការដឹកជញ្ជូន និងផ្ញើព័ត៌មានបង់ប្រាក់។" },
+        { step: "04", text: "ការកម្មង់របស់អ្នកបញ្ជូនក្នុងរយៈពេល ១–៣ ថ្ងៃ (ក្នុងស្រុក)។ អន្តរជាតិ: ៥–១៤ ថ្ងៃ។" },
+      ],
+      ctaTitle: "មានសំណួរអំពីហាង?",
+      ctaDesc: "ផ្ញើសារដោយផ្ទាល់ — យើងរីករាយជួយដោះស្រាយបញ្ហាអំពីទំហំ ការស្ថិតស្ថេរ ឬការរួមបញ្ចូលការកម្មង់ជាមួយការកក់ពេលសាក់។",
     },
     footer: {
       tagline: "បន្ទាត់ខ្មែរពិសិដ្ឋ។ អត្ថន័យនៅលើស្បែក។",

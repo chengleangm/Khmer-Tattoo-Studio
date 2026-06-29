@@ -3,11 +3,18 @@
 import { useState } from "react";
 import AdminReviewMomentsManager from "@/components/AdminReviewMomentsManager";
 import AdminReviewsManager from "@/components/AdminReviewsManager";
+import AdminStoreManager from "@/components/AdminStoreManager";
 
-type Tab = "moments" | "reviews";
+type Tab = "moments" | "reviews" | "store";
 
 export default function AdminDashboardPage() {
   const [activeTab, setActiveTab] = useState<Tab>("moments");
+
+  const tabs: { id: Tab; label: string }[] = [
+    { id: "moments", label: "Customer Moments" },
+    { id: "reviews", label: "Reviews" },
+    { id: "store", label: "Store Products" },
+  ];
 
   return (
     <main className="min-h-screen bg-bone">
@@ -24,29 +31,21 @@ export default function AdminDashboardPage() {
 
       <div className="border-b border-ink/10 bg-white px-4 sm:px-5 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <nav className="flex gap-0">
-            <button
-              type="button"
-              onClick={() => setActiveTab("moments")}
-              className={`border-b-2 px-5 py-4 font-condensed text-xs uppercase tracking-editorial transition ${
-                activeTab === "moments"
-                  ? "border-teal text-ink"
-                  : "border-transparent text-ink/40 hover:text-ink"
-              }`}
-            >
-              Customer Moments
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab("reviews")}
-              className={`border-b-2 px-5 py-4 font-condensed text-xs uppercase tracking-editorial transition ${
-                activeTab === "reviews"
-                  ? "border-teal text-ink"
-                  : "border-transparent text-ink/40 hover:text-ink"
-              }`}
-            >
-              Reviews
-            </button>
+          <nav className="flex gap-0 overflow-x-auto">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setActiveTab(tab.id)}
+                className={`shrink-0 border-b-2 px-5 py-4 font-condensed text-xs uppercase tracking-editorial transition ${
+                  activeTab === tab.id
+                    ? "border-teal text-ink"
+                    : "border-transparent text-ink/40 hover:text-ink"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
           </nav>
         </div>
       </div>
@@ -58,6 +57,7 @@ export default function AdminDashboardPage() {
             <AdminReviewsManager />
           </div>
         )}
+        {activeTab === "store" && <AdminStoreManager />}
       </section>
     </main>
   );

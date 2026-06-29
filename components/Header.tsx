@@ -24,6 +24,7 @@ export default function Header() {
     { label: text.about, href: "/about" },
     { label: text.contact, href: "/contact" },
     { label: text.aftercare, href: "/aftercare" },
+    { label: text.store, href: "/store" },
   ];
 
   return (
