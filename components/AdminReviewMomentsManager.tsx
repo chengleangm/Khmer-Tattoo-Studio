@@ -278,8 +278,8 @@ export default function AdminReviewMomentsManager() {
 
         <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {moments.map((moment) => (
-            <article key={moment.url} className="border border-ink/10 bg-bone">
-              <div className="relative h-56 overflow-hidden bg-charcoal">
+            <article key={moment.url} className="flex h-[340px] flex-col border border-ink/10 bg-bone">
+              <div className="relative h-56 shrink-0 overflow-hidden bg-charcoal">
                 <Image
                   src={moment.src}
                   alt={moment.label}
@@ -288,68 +288,70 @@ export default function AdminReviewMomentsManager() {
                   className="object-cover"
                 />
               </div>
-              <div className="p-3">
-                {editingLabel?.url === moment.url ? (
-                  <div className="flex gap-1.5">
-                    <input
-                      value={editingLabel.value}
-                      onChange={(e) =>
-                        setEditingLabel((s) => s ? { ...s, value: e.target.value } : s)
-                      }
-                      className="min-w-0 flex-1 border border-ink/15 bg-white px-2 py-1.5 font-condensed text-xs uppercase tracking-editorial outline-none focus:border-teal"
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") saveLabel(moment.url, editingLabel.value);
-                        if (e.key === "Escape") setEditingLabel(null);
-                      }}
-                      autoFocus
-                    />
+              <div className="flex min-h-0 flex-1 flex-col p-3">
+                <div className="min-h-8 min-w-0">
+                  {editingLabel?.url === moment.url ? (
+                    <div className="flex gap-1.5">
+                      <input
+                        value={editingLabel.value}
+                        onChange={(e) =>
+                          setEditingLabel((s) => s ? { ...s, value: e.target.value } : s)
+                        }
+                        className="min-w-0 flex-1 border border-ink/15 bg-white px-2 py-1.5 font-condensed text-xs uppercase tracking-editorial outline-none focus:border-teal"
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") saveLabel(moment.url, editingLabel.value);
+                          if (e.key === "Escape") setEditingLabel(null);
+                        }}
+                        autoFocus
+                      />
+                      <button
+                        type="button"
+                        disabled={loading}
+                        onClick={() => saveLabel(moment.url, editingLabel.value)}
+                        className="inline-flex h-8 w-8 shrink-0 items-center justify-center bg-ink text-white transition hover:bg-teal disabled:opacity-60"
+                      >
+                        <Check className="h-3.5 w-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEditingLabel(null)}
+                        className="inline-flex h-8 w-8 shrink-0 items-center justify-center border border-ink/20 text-ink transition hover:bg-ink hover:text-white"
+                      >
+                        <X className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  ) : (
                     <button
                       type="button"
-                      disabled={loading}
-                      onClick={() => saveLabel(moment.url, editingLabel.value)}
-                      className="inline-flex h-8 w-8 shrink-0 items-center justify-center bg-ink text-white transition hover:bg-teal disabled:opacity-60"
+                      className="group flex w-full min-w-0 items-center gap-1.5 text-left"
+                      onClick={() => setEditingLabel({ url: moment.url, value: moment.label })}
+                      title="Click to edit label"
                     >
-                      <Check className="h-3.5 w-3.5" />
+                      <p className="truncate font-condensed text-sm uppercase tracking-editorial text-ink group-hover:text-teal">
+                        {moment.label}
+                      </p>
+                      <Pencil className="h-3 w-3 shrink-0 text-ink/30 group-hover:text-teal" />
                     </button>
-                    <button
-                      type="button"
-                      onClick={() => setEditingLabel(null)}
-                      className="inline-flex h-8 w-8 shrink-0 items-center justify-center border border-ink/20 text-ink transition hover:bg-ink hover:text-white"
-                    >
-                      <X className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    type="button"
-                    className="group flex w-full items-center gap-1.5 text-left"
-                    onClick={() => setEditingLabel({ url: moment.url, value: moment.label })}
-                    title="Click to edit label"
-                  >
-                    <p className="font-condensed text-sm uppercase tracking-editorial text-ink group-hover:text-teal">
-                      {moment.label}
-                    </p>
-                    <Pencil className="h-3 w-3 shrink-0 text-ink/30 group-hover:text-teal" />
-                  </button>
-                )}
-                <div className="mt-3 flex gap-2">
+                  )}
+                </div>
+                <div className="mt-auto grid grid-cols-2 gap-2 pt-3">
                   <button
                     type="button"
                     disabled={loading}
                     onClick={() => setEditingLabel({ url: moment.url, value: moment.label })}
-                    className="inline-flex flex-1 items-center justify-center gap-1.5 border border-ink/20 px-2 py-2 font-condensed text-xs uppercase tracking-editorial text-ink transition hover:bg-ink hover:text-white disabled:opacity-60"
+                    className="inline-flex h-10 min-w-0 items-center justify-center gap-1.5 border border-ink/20 px-2 font-condensed text-xs uppercase tracking-editorial text-ink transition hover:bg-ink hover:text-white disabled:opacity-60"
                   >
-                    <Pencil className="h-3.5 w-3.5" />
-                    Edit
+                    <Pencil className="h-3.5 w-3.5 shrink-0" />
+                    <span className="truncate">Edit</span>
                   </button>
                   <button
                     type="button"
                     disabled={loading}
                     onClick={() => deleteMoment(moment)}
-                    className="inline-flex flex-1 items-center justify-center gap-1.5 bg-ink px-2 py-2 font-condensed text-xs uppercase tracking-editorial text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="inline-flex h-10 min-w-0 items-center justify-center gap-1.5 bg-ink px-2 font-condensed text-xs uppercase tracking-editorial text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
                   >
-                    <Trash2 className="h-3.5 w-3.5" />
-                    Delete
+                    <Trash2 className="h-3.5 w-3.5 shrink-0" />
+                    <span className="truncate">Delete</span>
                   </button>
                 </div>
               </div>
