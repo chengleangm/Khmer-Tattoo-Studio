@@ -23,10 +23,8 @@ function notifyReviewMomentsChanged() {
 
 export default function AdminReviewMomentsManager() {
   const router = useRouter();
-  const [token, setToken] = useState(() => {
-    if (typeof window === "undefined") return "";
-    return window.sessionStorage.getItem(TOKEN_STORAGE_KEY) ?? "";
-  });
+  const [token, setToken] = useState("");
+  const [hydrated, setHydrated] = useState(false);
   const [label, setLabel] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [moments, setMoments] = useState<AdminMoment[]>([]);
@@ -57,6 +55,14 @@ export default function AdminReviewMomentsManager() {
   }
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setToken(window.sessionStorage.getItem(TOKEN_STORAGE_KEY) ?? "");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (token) loadMoments(token);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
@@ -150,6 +156,22 @@ export default function AdminReviewMomentsManager() {
     } finally {
       setLoading(false);
     }
+  }
+
+  if (!hydrated) {
+    return (
+      <div className="mx-auto max-w-xl border border-ink/10 bg-white p-5 sm:p-6">
+        <p className="mt-5 font-condensed text-xs uppercase tracking-editorial text-teal">
+          Admin
+        </p>
+        <h2 className="mt-2 font-display text-[clamp(2.5rem,12vw,4.5rem)] leading-[0.78] text-ink">
+          Loading
+        </h2>
+        <p className="mt-4 text-sm leading-6 text-ink/55">
+          Checking your admin session.
+        </p>
+      </div>
+    );
   }
 
   if (!token) {
