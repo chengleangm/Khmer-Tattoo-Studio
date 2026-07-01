@@ -57,7 +57,6 @@ export default function AdminReviewMomentsManager() {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setToken(window.sessionStorage.getItem(TOKEN_STORAGE_KEY) ?? "");
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHydrated(true);
   }, []);
 
