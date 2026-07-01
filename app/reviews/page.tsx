@@ -21,11 +21,12 @@ type Review = {
   approved: boolean;
 };
 
-function StarRow({ rating, size = "sm" }: { rating: number; size?: "sm" | "lg" }) {
-  const cls = size === "lg" ? "h-5 w-5" : "h-4 w-4";
+function StarRow({ rating, size = "sm" }: { rating: number; size?: "xs" | "sm" | "lg" }) {
+  const cls = size === "lg" ? "h-5 w-5" : size === "xs" ? "h-3 w-3 sm:h-3.5 sm:w-3.5" : "h-4 w-4";
+  const gap = size === "xs" ? "gap-0.5 sm:gap-1" : "gap-1";
   const rounded = Math.round(rating);
   return (
-    <div className="flex gap-1 text-teal" aria-label={`${rating} out of 5 stars`}>
+    <div className={`flex ${gap} text-teal`} aria-label={`${rating} out of 5 stars`}>
       {Array.from({ length: 5 }).map((_, i) => (
         <Star key={i} className={`${cls} ${i < rounded ? "fill-current" : "fill-none opacity-25"}`} />
       ))}
@@ -33,7 +34,48 @@ function StarRow({ rating, size = "sm" }: { rating: number; size?: "sm" | "lg" }
   );
 }
 
-const PER_PAGE = 5;
+const PER_PAGE = 3;
+const REVIEW_PREVIEW_LENGTH = 130;
+
+function ReviewCard({ review }: { review: Review }) {
+  const [expanded, setExpanded] = useState(false);
+  const hasLongText = review.text.length > REVIEW_PREVIEW_LENGTH;
+  const previewText = hasLongText
+    ? `${review.text.slice(0, REVIEW_PREVIEW_LENGTH).trim()}...`
+    : review.text;
+  const visibleText = expanded ? review.text : previewText;
+
+  return (
+    <article className="flex h-full min-h-[150px] flex-col border border-ink/10 bg-white p-2.5 sm:min-h-[175px] sm:p-3.5 lg:p-4">
+      <div className="flex items-center justify-between gap-2">
+        <Quote className="h-4 w-4 shrink-0 text-teal sm:h-5 sm:w-5" />
+        <StarRow rating={review.rating} size="xs" />
+      </div>
+
+      <p className="mt-2 text-xs leading-5 text-ink/70 sm:mt-3 sm:text-sm sm:leading-6">{visibleText}</p>
+
+      {hasLongText && (
+        <button
+          type="button"
+          onClick={() => setExpanded((value) => !value)}
+          className="mt-2 w-fit font-condensed text-[10px] uppercase tracking-[0.16em] text-teal transition hover:text-ink sm:mt-3 sm:text-[11px] sm:tracking-editorial"
+          aria-expanded={expanded}
+        >
+          {expanded ? "See less" : "See more"}
+        </button>
+      )}
+
+      <div className="mt-auto border-t border-ink/10 pt-2 sm:pt-3">
+        <p className="font-condensed text-sm uppercase tracking-[0.18em] text-ink sm:text-base sm:tracking-editorial">{review.name}</p>
+        {(review.origin || review.service) && (
+          <p className="mt-0.5 text-[10px] uppercase leading-4 tracking-[0.14em] text-ink/45 sm:mt-1 sm:text-[11px] sm:tracking-[0.16em]">
+            {[review.origin, review.service].filter(Boolean).join(" / ")}
+          </p>
+        )}
+      </div>
+    </article>
+  );
+}
 
 function DynamicReviews({
   reviews,
@@ -48,18 +90,19 @@ function DynamicReviews({
   const topRef = useRef<HTMLDivElement>(null);
 
   const totalPages = Math.max(1, Math.ceil(reviews.length / PER_PAGE));
-  const pageReviews = reviews.slice(page * PER_PAGE, (page + 1) * PER_PAGE);
+  const currentPage = Math.min(page, totalPages - 1);
+  const pageReviews = reviews.slice(currentPage * PER_PAGE, (currentPage + 1) * PER_PAGE);
 
   function goTo(next: number) {
-    setPage(next);
+    setPage(Math.max(0, Math.min(next, totalPages - 1)));
     topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   if (!loaded) {
     return (
-      <div className="grid gap-3 sm:grid-cols-2 lg:gap-4">
+      <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3 xl:grid-cols-3">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className={`h-48 animate-pulse bg-ink/5 ${i === 0 ? "sm:col-span-2" : ""}`} />
+          <div key={i} className="h-[150px] animate-pulse bg-ink/5 sm:h-[175px]" />
         ))}
       </div>
     );
@@ -88,58 +131,35 @@ function DynamicReviews({
 
   return (
     <div ref={topRef}>
-      <div className="grid gap-3 sm:grid-cols-2 lg:gap-4">
-        {pageReviews.map((review, index) => (
-          <article
-            key={review.id}
-            className={`border border-ink/10 bg-white p-4 sm:p-5 ${
-              index === 0 ? "sm:col-span-2 lg:grid lg:grid-cols-[0.58fr_1fr] lg:gap-6 lg:p-6" : ""
-            }`}
-          >
-            <div>
-              <Quote className="h-7 w-7 text-teal" />
-              <div className="mt-4">
-                <StarRow rating={review.rating} />
-              </div>
-            </div>
-            <div className={index === 0 ? "mt-4 lg:mt-0" : "mt-4"}>
-              <p className="text-sm leading-6 text-ink/70 sm:text-base sm:leading-7">{review.text}</p>
-              <div className="mt-5 border-t border-ink/10 pt-4">
-                <p className="font-condensed text-lg uppercase tracking-editorial text-ink">{review.name}</p>
-                {(review.origin || review.service) && (
-                  <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink/45">
-                    {[review.origin, review.service].filter(Boolean).join(" / ")}
-                  </p>
-                )}
-              </div>
-            </div>
-          </article>
+      <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3 xl:grid-cols-3">
+        {pageReviews.map((review) => (
+          <ReviewCard key={review.id} review={review} />
         ))}
       </div>
 
       {totalPages > 1 && (
-        <div className="mt-5 flex items-center justify-between border-t border-ink/10 pt-5">
-          <p className="font-condensed text-xs uppercase tracking-editorial text-ink/40">
-            {page + 1} / {totalPages}
+        <div className="mt-4 flex items-center justify-between border-t border-ink/10 pt-4 sm:mt-5 sm:pt-5">
+          <p className="font-condensed text-[11px] uppercase tracking-editorial text-ink/40 sm:text-xs">
+            {currentPage + 1} / {totalPages}
           </p>
           <div className="flex gap-2">
             <button
               type="button"
-              onClick={() => goTo(page - 1)}
-              disabled={page === 0}
-              className="inline-flex h-9 w-9 items-center justify-center border border-ink/20 text-ink transition hover:bg-ink hover:text-white disabled:cursor-not-allowed disabled:opacity-25"
+              onClick={() => goTo(currentPage - 1)}
+              disabled={currentPage === 0}
+              className="inline-flex h-8 w-8 items-center justify-center border border-ink/20 text-ink transition hover:bg-ink hover:text-white disabled:cursor-not-allowed disabled:opacity-25 sm:h-9 sm:w-9"
               aria-label="Previous page"
             >
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </button>
             <button
               type="button"
-              onClick={() => goTo(page + 1)}
-              disabled={page === totalPages - 1}
-              className="inline-flex h-9 w-9 items-center justify-center border border-ink/20 text-ink transition hover:bg-ink hover:text-white disabled:cursor-not-allowed disabled:opacity-25"
+              onClick={() => goTo(currentPage + 1)}
+              disabled={currentPage === totalPages - 1}
+              className="inline-flex h-8 w-8 items-center justify-center border border-ink/20 text-ink transition hover:bg-ink hover:text-white disabled:cursor-not-allowed disabled:opacity-25 sm:h-9 sm:w-9"
               aria-label="Next page"
             >
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </button>
           </div>
         </div>
@@ -364,17 +384,17 @@ export default function ReviewsPage() {
         </div>
       </section>
 
-      <section className="editorial-section px-4 py-12 sm:px-5 sm:py-16 lg:px-8 lg:py-24" data-bg-word="REVIEWS">
+      <section className="editorial-section px-3 py-10 sm:px-5 sm:py-16 lg:px-8 lg:py-24" data-bg-word="REVIEWS">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:gap-8">
+          <div className="grid gap-4 sm:gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:gap-8">
             <div className="lg:sticky lg:top-28 lg:self-start">
-              <p className="font-condensed text-xs uppercase tracking-editorial text-teal sm:text-sm">
+              <p className="font-condensed text-[11px] uppercase tracking-editorial text-teal sm:text-sm">
                 {page.featuredTitle}
               </p>
-              <h2 className="mt-3 max-w-md font-display text-[clamp(3rem,13vw,6.5rem)] leading-[0.78] text-ink">
+              <h2 className="mt-2 max-w-md font-display text-[clamp(2.25rem,11vw,6.5rem)] leading-[0.78] text-ink sm:mt-3">
                 {page.featuredTitle}
               </h2>
-              <p className="mt-4 max-w-md text-sm leading-6 text-ink/65 sm:text-base sm:leading-7">
+              <p className="mt-3 max-w-md text-xs leading-5 text-ink/65 sm:mt-4 sm:text-base sm:leading-7">
                 {page.pageDesc}
               </p>
               <div className="mt-5 flex flex-wrap gap-2 sm:gap-3">
