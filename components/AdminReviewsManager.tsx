@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { Check, Pencil, Plus, RefreshCcw, Star, Trash2, X } from "lucide-react";
 
 type Review = {
@@ -38,6 +38,8 @@ type EditState = {
   rating: number;
 };
 
+type SortOrder = "latest" | "oldest";
+
 export default function AdminReviewsManager() {
   const [token] = useState(() => {
     if (typeof window === "undefined") return "";
@@ -49,6 +51,7 @@ export default function AdminReviewsManager() {
   const [loading, setLoading] = useState(false);
   const [editState, setEditState] = useState<EditState | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [sortOrder, setSortOrder] = useState<SortOrder>("latest");
   const [newReview, setNewReview] = useState({ name: "", origin: "", service: "", text: "", rating: 5 });
 
   async function loadReviews(currentToken = token) {
@@ -70,6 +73,7 @@ export default function AdminReviewsManager() {
   }
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (token) loadReviews(token);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
@@ -209,12 +213,20 @@ export default function AdminReviewsManager() {
     }
   }
 
-  const pending = reviews.filter((r) => !r.approved);
-  const approved = reviews.filter((r) => r.approved);
+  const sortedReviews = useMemo(() => {
+    return [...reviews].sort((a, b) => {
+      const aTime = new Date(a.createdAt).getTime();
+      const bTime = new Date(b.createdAt).getTime();
+      return sortOrder === "latest" ? bTime - aTime : aTime - bTime;
+    });
+  }, [reviews, sortOrder]);
+
+  const pending = sortedReviews.filter((r) => !r.approved);
+  const approved = sortedReviews.filter((r) => r.approved);
 
   return (
     <div className="grid gap-5">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="flex flex-col gap-3 border border-ink/10 bg-white p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
         <div>
           <p className="font-condensed text-xs uppercase tracking-editorial text-teal">
             All Reviews
@@ -223,12 +235,25 @@ export default function AdminReviewsManager() {
             {approved.length} approved · {pending.length} pending
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="grid gap-2 sm:flex sm:items-end">
+          <label className="grid gap-1 sm:w-44">
+            <span className="font-condensed text-[10px] uppercase tracking-editorial text-ink/45">
+              Sort by
+            </span>
+            <select
+              value={sortOrder}
+              onChange={(event) => setSortOrder(event.target.value as SortOrder)}
+              className="h-10 border border-ink/20 bg-bone px-3 font-condensed text-xs uppercase tracking-editorial text-ink outline-none transition focus:border-teal"
+            >
+              <option value="latest">Latest first</option>
+              <option value="oldest">Oldest first</option>
+            </select>
+          </label>
           <button
             type="button"
             disabled={loading}
             onClick={() => loadReviews()}
-            className="inline-flex items-center justify-center gap-2 border border-ink px-3 py-2 font-condensed text-xs uppercase tracking-editorial text-ink transition hover:bg-ink hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex h-10 items-center justify-center gap-2 border border-ink px-3 font-condensed text-xs uppercase tracking-editorial text-ink transition hover:bg-ink hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
           >
             <RefreshCcw className="h-4 w-4" />
             Refresh
@@ -236,7 +261,7 @@ export default function AdminReviewsManager() {
           <button
             type="button"
             onClick={() => setShowAddForm((v) => !v)}
-            className="inline-flex items-center justify-center gap-2 bg-teal px-3 py-2 font-condensed text-xs uppercase tracking-editorial text-ink transition hover:opacity-90"
+            className="inline-flex h-10 items-center justify-center gap-2 bg-teal px-3 font-condensed text-xs uppercase tracking-editorial text-ink transition hover:opacity-90"
           >
             <Plus className="h-4 w-4" />
             Add Review
@@ -327,7 +352,7 @@ export default function AdminReviewsManager() {
           <p className="mb-3 font-condensed text-xs uppercase tracking-editorial text-ink/60">
             Pending approval ({pending.length})
           </p>
-          <div className="grid gap-3">
+          <div className="grid gap-3 sm:grid-cols-2">
             {pending.map((review) => (
               <ReviewCard
                 key={review.id}
@@ -351,7 +376,7 @@ export default function AdminReviewsManager() {
           <p className="mb-3 font-condensed text-xs uppercase tracking-editorial text-ink/60">
             Approved ({approved.length})
           </p>
-          <div className="grid gap-3">
+          <div className="grid gap-3 sm:grid-cols-2">
             {approved.map((review) => (
               <ReviewCard
                 key={review.id}
@@ -397,9 +422,13 @@ function ReviewCard({
   onToggleApprove, onDelete,
 }: ReviewCardProps) {
   const isEditing = editState?.id === review.id;
+  const cardTone = review.approved ? "border-ink/10 bg-white" : "border-amber-200 bg-amber-50";
+  const cardClass = isEditing
+    ? `border p-4 sm:col-span-2 sm:p-5 ${cardTone}`
+    : `flex h-[320px] flex-col border p-4 sm:h-[340px] sm:p-5 ${cardTone}`;
 
   return (
-    <article className={`border p-4 sm:p-5 ${review.approved ? "border-ink/10 bg-white" : "border-amber-200 bg-amber-50"}`}>
+    <article className={cardClass}>
       {isEditing && editState ? (
         <div className="grid gap-3">
           <div className="grid gap-3 sm:grid-cols-2">
@@ -459,53 +488,55 @@ function ReviewCard({
         </div>
       ) : (
         <>
-          <div className="flex items-start justify-between gap-3">
+          <div className="flex shrink-0 items-start justify-between gap-3">
             <div className="min-w-0">
               <Stars rating={review.rating} />
-              <p className="mt-2 text-sm leading-6 text-ink/80">{review.text}</p>
-              <div className="mt-3 border-t border-ink/10 pt-3">
-                <p className="font-condensed text-sm uppercase tracking-editorial text-ink">{review.name}</p>
-                {(review.origin || review.service) && (
-                  <p className="mt-0.5 text-xs uppercase tracking-[0.14em] text-ink/45">
-                    {[review.origin, review.service].filter(Boolean).join(" / ")}
-                  </p>
-                )}
-                <p className="mt-1 text-xs text-ink/30">
-                  {new Date(review.createdAt).toLocaleDateString()}
-                </p>
-              </div>
             </div>
             <span className={`shrink-0 px-2 py-1 font-condensed text-[10px] uppercase tracking-editorial ${review.approved ? "bg-teal/15 text-teal" : "bg-amber-100 text-amber-700"}`}>
               {review.approved ? "Live" : "Pending"}
             </span>
           </div>
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1">
+            <p className="text-sm leading-6 text-ink/80">{review.text}</p>
+          </div>
+          <div className="mt-3 min-w-0 shrink-0 border-t border-ink/10 pt-3">
+            <p className="truncate font-condensed text-sm uppercase tracking-editorial text-ink">{review.name}</p>
+            {(review.origin || review.service) && (
+              <p className="mt-0.5 truncate text-xs uppercase tracking-[0.14em] text-ink/45">
+                {[review.origin, review.service].filter(Boolean).join(" / ")}
+              </p>
+            )}
+            <p className="mt-1 text-xs text-ink/30">
+              {new Date(review.createdAt).toLocaleDateString()}
+            </p>
+          </div>
+          <div className="mt-4 grid shrink-0 grid-cols-3 gap-2">
             <button
               type="button"
               disabled={loading}
               onClick={onToggleApprove}
-              className="inline-flex items-center gap-1.5 border border-ink/20 px-3 py-2 font-condensed text-xs uppercase tracking-editorial text-ink transition hover:bg-ink hover:text-white disabled:opacity-60"
+              className="inline-flex h-10 min-w-0 items-center justify-center gap-1.5 border border-ink/20 px-2 font-condensed text-[10px] uppercase tracking-[0.14em] text-ink transition hover:bg-ink hover:text-white disabled:opacity-60 sm:text-xs sm:tracking-editorial"
             >
               <Check className="h-3.5 w-3.5" />
-              {review.approved ? "Unpublish" : "Approve"}
+              <span className="truncate">{review.approved ? "Unpublish" : "Approve"}</span>
             </button>
             <button
               type="button"
               disabled={loading}
               onClick={onEdit}
-              className="inline-flex items-center gap-1.5 border border-ink/20 px-3 py-2 font-condensed text-xs uppercase tracking-editorial text-ink transition hover:bg-ink hover:text-white disabled:opacity-60"
+              className="inline-flex h-10 min-w-0 items-center justify-center gap-1.5 border border-ink/20 px-2 font-condensed text-[10px] uppercase tracking-[0.14em] text-ink transition hover:bg-ink hover:text-white disabled:opacity-60 sm:text-xs sm:tracking-editorial"
             >
               <Pencil className="h-3.5 w-3.5" />
-              Edit
+              <span className="truncate">Edit</span>
             </button>
             <button
               type="button"
               disabled={loading}
               onClick={onDelete}
-              className="inline-flex items-center gap-1.5 border border-red-200 px-3 py-2 font-condensed text-xs uppercase tracking-editorial text-red-600 transition hover:bg-red-600 hover:text-white disabled:opacity-60"
+              className="inline-flex h-10 min-w-0 items-center justify-center gap-1.5 border border-red-200 px-2 font-condensed text-[10px] uppercase tracking-[0.14em] text-red-600 transition hover:bg-red-600 hover:text-white disabled:opacity-60 sm:text-xs sm:tracking-editorial"
             >
               <Trash2 className="h-3.5 w-3.5" />
-              Delete
+              <span className="truncate">Delete</span>
             </button>
           </div>
         </>

@@ -55,7 +55,7 @@ export default function AdminDashboardPage() {
       <section className="px-4 py-8 sm:px-5 sm:py-10 lg:px-8">
         {activeTab === "moments" && <AdminReviewMomentsManager />}
         {activeTab === "reviews" && (
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-7xl">
             <AdminReviewsManager />
           </div>
         )}

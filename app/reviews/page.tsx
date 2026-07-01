@@ -46,29 +46,31 @@ function ReviewCard({ review }: { review: Review }) {
   const visibleText = expanded ? review.text : previewText;
 
   return (
-    <article className="flex h-full min-h-[150px] flex-col border border-ink/10 bg-white p-2.5 sm:min-h-[170px] sm:p-3 md:p-3.5">
-      <div className="flex items-center justify-between gap-2">
+    <article className="flex h-[178px] flex-col border border-ink/10 bg-white p-2.5 sm:h-[190px] sm:p-3 md:h-[205px] md:p-3.5">
+      <div className="flex shrink-0 items-center justify-between gap-2">
         <Quote className="h-4 w-4 shrink-0 text-teal sm:h-5 sm:w-5" />
         <StarRow rating={review.rating} size="xs" />
       </div>
 
-      <p className="mt-2 text-xs leading-5 text-ink/70 sm:mt-3 md:text-[13px] md:leading-6 lg:text-sm">{visibleText}</p>
+      <div className={`mt-2 min-h-0 flex-1 ${expanded ? "overflow-y-auto pr-1" : "overflow-hidden"} sm:mt-3`}>
+        <p className="text-xs leading-5 text-ink/70 md:text-[13px] md:leading-6 lg:text-sm">{visibleText}</p>
+      </div>
 
       {hasLongText && (
         <button
           type="button"
           onClick={() => setExpanded((value) => !value)}
-          className="mt-2 w-fit font-condensed text-[10px] uppercase tracking-[0.16em] text-teal transition hover:text-ink sm:mt-3 sm:text-[11px] sm:tracking-editorial"
+          className="mt-2 w-fit shrink-0 font-condensed text-[10px] uppercase tracking-[0.16em] text-teal transition hover:text-ink sm:text-[11px] sm:tracking-editorial"
           aria-expanded={expanded}
         >
           {expanded ? "See less" : "See more"}
         </button>
       )}
 
-      <div className="mt-auto border-t border-ink/10 pt-2 sm:pt-3">
-        <p className="font-condensed text-sm uppercase tracking-[0.18em] text-ink sm:text-base sm:tracking-editorial">{review.name}</p>
+      <div className="mt-2 min-w-0 shrink-0 border-t border-ink/10 pt-2 sm:pt-3">
+        <p className="truncate font-condensed text-sm uppercase tracking-[0.18em] text-ink sm:text-base sm:tracking-editorial">{review.name}</p>
         {(review.origin || review.service) && (
-          <p className="mt-0.5 text-[10px] uppercase leading-4 tracking-[0.14em] text-ink/45 sm:mt-1 sm:text-[11px] sm:tracking-[0.16em]">
+          <p className="mt-0.5 truncate text-[10px] uppercase leading-4 tracking-[0.14em] text-ink/45 sm:mt-1 sm:text-[11px] sm:tracking-[0.16em]">
             {[review.origin, review.service].filter(Boolean).join(" / ")}
           </p>
         )}
@@ -102,7 +104,7 @@ function DynamicReviews({
     return (
       <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3 md:grid-cols-3">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="h-[150px] animate-pulse bg-ink/5 sm:h-[175px]" />
+          <div key={i} className="h-[178px] animate-pulse bg-ink/5 sm:h-[190px] md:h-[205px]" />
         ))}
       </div>
     );
