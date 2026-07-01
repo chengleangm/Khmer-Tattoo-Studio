@@ -35,7 +35,7 @@ function StarRow({ rating, size = "sm" }: { rating: number; size?: "xs" | "sm" |
 }
 
 const PER_PAGE = 3;
-const REVIEW_PREVIEW_LENGTH = 130;
+const REVIEW_PREVIEW_LENGTH = 105;
 
 function ReviewCard({ review }: { review: Review }) {
   const [expanded, setExpanded] = useState(false);
@@ -46,13 +46,13 @@ function ReviewCard({ review }: { review: Review }) {
   const visibleText = expanded ? review.text : previewText;
 
   return (
-    <article className="flex h-full min-h-[150px] flex-col border border-ink/10 bg-white p-2.5 sm:min-h-[175px] sm:p-3.5 lg:p-4">
+    <article className="flex h-full min-h-[150px] flex-col border border-ink/10 bg-white p-2.5 sm:min-h-[170px] sm:p-3 md:p-3.5">
       <div className="flex items-center justify-between gap-2">
         <Quote className="h-4 w-4 shrink-0 text-teal sm:h-5 sm:w-5" />
         <StarRow rating={review.rating} size="xs" />
       </div>
 
-      <p className="mt-2 text-xs leading-5 text-ink/70 sm:mt-3 sm:text-sm sm:leading-6">{visibleText}</p>
+      <p className="mt-2 text-xs leading-5 text-ink/70 sm:mt-3 md:text-[13px] md:leading-6 lg:text-sm">{visibleText}</p>
 
       {hasLongText && (
         <button
@@ -100,7 +100,7 @@ function DynamicReviews({
 
   if (!loaded) {
     return (
-      <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3 xl:grid-cols-3">
+      <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3 md:grid-cols-3">
         {Array.from({ length: 3 }).map((_, i) => (
           <div key={i} className="h-[150px] animate-pulse bg-ink/5 sm:h-[175px]" />
         ))}
@@ -131,7 +131,7 @@ function DynamicReviews({
 
   return (
     <div ref={topRef}>
-      <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3 xl:grid-cols-3">
+      <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3 md:grid-cols-3">
         {pageReviews.map((review) => (
           <ReviewCard key={review.id} review={review} />
         ))}
