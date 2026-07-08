@@ -1,4 +1,4 @@
-import { list, put, del } from "@vercel/blob";
+import { list, put } from "@vercel/blob";
 import { NextRequest } from "next/server";
 
 async function sendTelegramNotification(order: Order): Promise<void> {
@@ -90,13 +90,11 @@ export async function readOrders(): Promise<Order[]> {
 }
 
 export async function saveOrders(orders: Order[]): Promise<void> {
-  const { blobs } = await list({ prefix: "orders/", limit: 10 });
-  const existing = blobs.find((b) => b.pathname === ORDERS_PATH);
-  if (existing) await del(existing.url);
   await put(ORDERS_PATH, JSON.stringify(orders), {
     access: "public",
     contentType: "application/json",
     addRandomSuffix: false,
+    allowOverwrite: true,
   });
 }
 

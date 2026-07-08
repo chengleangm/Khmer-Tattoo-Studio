@@ -51,13 +51,11 @@ async function readStoreData(): Promise<StoreData> {
 }
 
 async function saveStoreData(data: StoreData): Promise<void> {
-  const { blobs } = await list({ prefix: "store/", limit: 500 });
-  const existing = blobs.find((b) => b.pathname === STORE_DATA_PATH);
-  if (existing) await del(existing.url);
   await put(STORE_DATA_PATH, JSON.stringify(data), {
     access: "public",
     contentType: "application/json",
     addRandomSuffix: false,
+    allowOverwrite: true,
   });
 }
 

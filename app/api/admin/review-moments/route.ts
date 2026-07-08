@@ -52,13 +52,11 @@ async function readLabels(): Promise<Record<string, string>> {
 }
 
 async function saveLabels(labels: Record<string, string>): Promise<void> {
-  const { blobs } = await list({ prefix: REVIEW_MOMENTS_PREFIX, limit: 200 });
-  const existing = blobs.find((b) => b.pathname === LABELS_PATH);
-  if (existing) await del(existing.url);
   await put(LABELS_PATH, JSON.stringify(labels), {
     access: "public",
     contentType: "application/json",
     addRandomSuffix: false,
+    allowOverwrite: true,
   });
 }
 

@@ -1,4 +1,4 @@
-import { del, list, put } from "@vercel/blob";
+import { list, put } from "@vercel/blob";
 import { NextRequest } from "next/server";
 
 const REVIEWS_PATH = "reviews/reviews.json";
@@ -37,13 +37,11 @@ async function readReviews(): Promise<Review[]> {
 }
 
 async function saveReviews(reviews: Review[]): Promise<void> {
-  const { blobs } = await list({ prefix: "reviews/", limit: 10 });
-  const existing = blobs.find((b) => b.pathname === REVIEWS_PATH);
-  if (existing) await del(existing.url);
   await put(REVIEWS_PATH, JSON.stringify(reviews), {
     access: "public",
     contentType: "application/json",
     addRandomSuffix: false,
+    allowOverwrite: true,
   });
 }
 
