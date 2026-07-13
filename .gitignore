@@ -32,4 +32,5 @@ design-qa.md
 .wrangler
 .dev.vars
 cloudflare-env.d.ts
+.vercel-migration/
 .env*
