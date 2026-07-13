@@ -16,13 +16,14 @@ function storage() {
 }
 
 function publicObjectUrl(key: string, publicUrl?: string) {
-  if (!publicUrl) {
-    throw new Error("R2_PUBLIC_URL is not configured. Connect a public R2 domain first.");
-  }
-  return `${publicUrl}/${key.split("/").map(encodeURIComponent).join("/")}`;
+  void publicUrl;
+  return `/api/media/${key.split("/").map(encodeURIComponent).join("/")}`;
 }
 
 function keyFromUrl(value: string, publicUrl?: string) {
+  if (value.startsWith("/api/media/")) {
+    return value.slice("/api/media/".length).split("/").map(decodeURIComponent).join("/");
+  }
   if (!value.startsWith("http")) return value;
   if (!publicUrl || !value.startsWith(`${publicUrl}/`)) {
     throw new Error("This object does not belong to the configured R2 bucket.");
@@ -79,6 +80,11 @@ export async function readJson<T>(pathname: string): Promise<T | null> {
   } catch {
     return null;
   }
+}
+
+export async function getObject(pathname: string) {
+  const { bucket } = storage();
+  return bucket.get(pathname);
 }
 
 export function hasR2Storage() {
