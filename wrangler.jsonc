@@ -7,6 +7,13 @@
 		"nodejs_compat",
 		"global_fetch_strictly_public"
 	],
+	"observability": {
+		"enabled": true,
+		"logs": {
+			"enabled": true,
+			"invocation_logs": true
+		}
+	},
 	"assets": {
 		"directory": ".open-next/assets",
 		"binding": "ASSETS"
@@ -21,11 +28,6 @@
 		{
 			"binding": "STUDIO_STORAGE",
 			"bucket_name": "khmer-tattoo-studio"
-		},
-		{
-			"bucket_name": "khmer-tattoo-studio",
-			"binding": "khmer_tattoo_studio",
-			"remote": true
 		}
 	]
 }
