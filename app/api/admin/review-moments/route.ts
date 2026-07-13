@@ -1,4 +1,4 @@
-import { del, hasR2Storage, list, put } from "@/lib/r2-blob";
+import { del, hasR2Storage, list, put, readJson } from "@/lib/r2-blob";
 import { NextRequest } from "next/server";
 
 const REVIEW_MOMENTS_PREFIX = "review-moments/";
@@ -36,16 +36,7 @@ function titleFromPathname(pathname: string) {
 }
 
 async function readLabels(): Promise<Record<string, string>> {
-  const { blobs } = await list({ prefix: REVIEW_MOMENTS_PREFIX, limit: 200 });
-  const labelBlob = blobs.find((b) => b.pathname === LABELS_PATH);
-  if (!labelBlob) return {};
-  try {
-    const response = await fetch(labelBlob.url, { cache: "no-store" });
-    if (!response.ok) return {};
-    return response.json() as Promise<Record<string, string>>;
-  } catch {
-    return {};
-  }
+  return (await readJson<Record<string, string>>(LABELS_PATH)) ?? {};
 }
 
 async function saveLabels(labels: Record<string, string>): Promise<void> {

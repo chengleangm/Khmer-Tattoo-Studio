@@ -1,4 +1,4 @@
-import { hasR2Storage, list } from "@/lib/r2-blob";
+import { hasR2Storage, readJson } from "@/lib/r2-blob";
 
 const STORE_DATA_PATH = "store/store-data.json";
 
@@ -12,14 +12,8 @@ export async function GET() {
   }
 
   try {
-    const { blobs } = await list({ prefix: "store/", limit: 500 });
-    const blob = blobs.find((b) => b.pathname === STORE_DATA_PATH);
-    if (!blob) return Response.json({ products: [], categories: [] });
-
-    const res = await fetch(blob.url, { cache: "no-store" });
-    if (!res.ok) return Response.json({ products: [], categories: [] });
-
-    const data = await res.json() as { categories: string[]; products: Array<{ visible: boolean; inStock: boolean }> };
+    const data = await readJson<{ categories: string[]; products: Array<{ visible: boolean; inStock: boolean }> }>(STORE_DATA_PATH);
+    if (!data) return Response.json({ products: [], categories: [] });
     const visible = data.products.filter((p) => p.visible);
     return Response.json({ products: visible, categories: data.categories });
   } catch {

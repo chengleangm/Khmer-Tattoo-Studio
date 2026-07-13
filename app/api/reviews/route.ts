@@ -1,4 +1,4 @@
-import { hasR2Storage, list, put } from "@/lib/r2-blob";
+import { hasR2Storage, put, readJson } from "@/lib/r2-blob";
 import { NextRequest } from "next/server";
 
 const REVIEWS_PATH = "reviews/reviews.json";
@@ -19,12 +19,7 @@ function hasBlobCredentials() {
 }
 
 async function readReviews(): Promise<Review[]> {
-  const { blobs } = await list({ prefix: "reviews/", limit: 10 });
-  const blob = blobs.find((b) => b.pathname === REVIEWS_PATH);
-  if (!blob) return [];
-  const response = await fetch(blob.url, { cache: "no-store" });
-  if (!response.ok) return [];
-  return response.json() as Promise<Review[]>;
+  return (await readJson<Review[]>(REVIEWS_PATH)) ?? [];
 }
 
 async function saveReviews(reviews: Review[]): Promise<void> {

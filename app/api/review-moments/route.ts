@@ -1,4 +1,4 @@
-import { hasR2Storage, list } from "@/lib/r2-blob";
+import { hasR2Storage, list, readJson } from "@/lib/r2-blob";
 
 const REVIEW_MOMENTS_PREFIX = "review-moments/";
 const LABELS_PATH = "review-moments/labels.json";
@@ -17,16 +17,7 @@ function titleFromPathname(pathname: string) {
 }
 
 async function readLabels(): Promise<Record<string, string>> {
-  const { blobs } = await list({ prefix: REVIEW_MOMENTS_PREFIX, limit: 200 });
-  const labelBlob = blobs.find((b) => b.pathname === LABELS_PATH);
-  if (!labelBlob) return {};
-  try {
-    const response = await fetch(labelBlob.url, { cache: "no-store" });
-    if (!response.ok) return {};
-    return response.json() as Promise<Record<string, string>>;
-  } catch {
-    return {};
-  }
+  return (await readJson<Record<string, string>>(LABELS_PATH)) ?? {};
 }
 
 export async function GET() {

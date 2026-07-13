@@ -70,6 +70,17 @@ export async function del(value: string) {
   await bucket.delete(keyFromUrl(value, publicUrl));
 }
 
+export async function readJson<T>(pathname: string): Promise<T | null> {
+  const { bucket } = storage();
+  const object = await bucket.get(pathname);
+  if (!object) return null;
+  try {
+    return JSON.parse(await object.text()) as T;
+  } catch {
+    return null;
+  }
+}
+
 export function hasR2Storage() {
   try {
     return Boolean((getCloudflareContext().env as CloudflareEnv).STUDIO_STORAGE);

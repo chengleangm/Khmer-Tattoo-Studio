@@ -1,4 +1,4 @@
-import { del, hasR2Storage, list, put } from "@/lib/r2-blob";
+import { del, hasR2Storage, put, readJson } from "@/lib/r2-blob";
 import { NextRequest } from "next/server";
 
 const STORE_DATA_PATH = "store/store-data.json";
@@ -38,16 +38,7 @@ function slugify(value: string) {
 }
 
 async function readStoreData(): Promise<StoreData> {
-  const { blobs } = await list({ prefix: "store/", limit: 500 });
-  const blob = blobs.find((b) => b.pathname === STORE_DATA_PATH);
-  if (!blob) return { categories: [], products: [] };
-  try {
-    const res = await fetch(blob.url, { cache: "no-store" });
-    if (!res.ok) return { categories: [], products: [] };
-    return res.json() as Promise<StoreData>;
-  } catch {
-    return { categories: [], products: [] };
-  }
+  return (await readJson<StoreData>(STORE_DATA_PATH)) ?? { categories: [], products: [] };
 }
 
 async function saveStoreData(data: StoreData): Promise<void> {

@@ -1,4 +1,4 @@
-import { list, put } from "@/lib/r2-blob";
+import { put, readJson } from "@/lib/r2-blob";
 
 const ORDERS_PATH = "orders/orders.json";
 
@@ -21,16 +21,7 @@ export type Order = {
 };
 
 export async function readOrders(): Promise<Order[]> {
-  const { blobs } = await list({ prefix: "orders/", limit: 10 });
-  const blob = blobs.find((item) => item.pathname === ORDERS_PATH);
-  if (!blob) return [];
-  try {
-    const response = await fetch(blob.url, { cache: "no-store" });
-    if (!response.ok) return [];
-    return response.json() as Promise<Order[]>;
-  } catch {
-    return [];
-  }
+  return (await readJson<Order[]>(ORDERS_PATH)) ?? [];
 }
 
 export async function saveOrders(orders: Order[]): Promise<void> {
