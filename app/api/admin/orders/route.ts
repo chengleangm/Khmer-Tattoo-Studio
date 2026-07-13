@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { readOrders, saveOrders } from "@/app/api/orders/route";
+import { readOrders, saveOrders } from "@/lib/orders";
 
 function verifyAdminToken(request: NextRequest) {
   const configured = process.env.ADMIN_UPLOAD_TOKEN;

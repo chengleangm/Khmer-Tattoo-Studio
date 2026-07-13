@@ -1,4 +1,5 @@
-import { hasR2Storage, list, put } from "@/lib/r2-blob";
+import { hasR2Storage } from "@/lib/r2-blob";
+import { Order, readOrders, saveOrders } from "@/lib/orders";
 import { NextRequest } from "next/server";
 
 async function sendTelegramNotification(order: Order): Promise<void> {
@@ -46,26 +47,6 @@ async function sendTelegramNotification(order: Order): Promise<void> {
   }
 }
 
-const ORDERS_PATH = "orders/orders.json";
-
-export type Order = {
-  id: string;
-  createdAt: string;
-  status: "pending" | "confirmed" | "ready" | "delivered" | "cancelled";
-  productId: string;
-  productName: string;
-  productPrice: string;
-  quantity: number;
-  customerName: string;
-  customerPhone: string;
-  fulfillment: "pickup" | "delivery";
-  deliveryZoneId: string;
-  deliveryZoneLabel: string;
-  deliveryFee: number;
-  deliveryAddress: string;
-  note: string;
-};
-
 function hasBlobCredentials() {
   return hasR2Storage();
 }
@@ -74,28 +55,6 @@ function verifyAdminToken(request: NextRequest) {
   const configured = process.env.ADMIN_UPLOAD_TOKEN;
   const provided = request.headers.get("x-admin-token");
   return Boolean(configured && provided && configured === provided);
-}
-
-export async function readOrders(): Promise<Order[]> {
-  const { blobs } = await list({ prefix: "orders/", limit: 10 });
-  const blob = blobs.find((b) => b.pathname === ORDERS_PATH);
-  if (!blob) return [];
-  try {
-    const res = await fetch(blob.url, { cache: "no-store" });
-    if (!res.ok) return [];
-    return res.json() as Promise<Order[]>;
-  } catch {
-    return [];
-  }
-}
-
-export async function saveOrders(orders: Order[]): Promise<void> {
-  await put(ORDERS_PATH, JSON.stringify(orders), {
-    access: "public",
-    contentType: "application/json",
-    addRandomSuffix: false,
-    allowOverwrite: true,
-  });
 }
 
 // Public POST — customer places an order

@@ -5,7 +5,7 @@ const STORE_DATA_PATH = "store/store-data.json";
 const PRODUCT_IMAGE_PREFIX = "store/images/";
 const MAX_IMAGE_SIZE = 4 * 1024 * 1024;
 
-export type StoreProduct = {
+type StoreProduct = {
   id: string;
   name: string;
   category: string;

@@ -35,7 +35,7 @@ function formatPrice(price: string): string {
 
 // ── Delivery zones for Siem Reap ──────────────────────────────────────────────
 
-export const DELIVERY_ZONES = [
+const DELIVERY_ZONES = [
   {
     id: "zone1",
     label: "Pub Street / Old Market / Near studio (0 – 3 km)",
