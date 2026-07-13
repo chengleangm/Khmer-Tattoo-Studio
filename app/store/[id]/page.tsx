@@ -162,6 +162,7 @@ export default function ProductDetailPage() {
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
                   priority
+                  unoptimized
                 />
               ) : (
                 <div className="flex h-full items-center justify-center">
@@ -376,7 +377,7 @@ function OrderForm({
       <div className="flex items-center gap-4 border border-ink/10 bg-bone p-4">
         {product.imageUrl && (
           <div className="relative h-16 w-16 shrink-0 overflow-hidden border border-ink/10">
-            <Image src={product.imageUrl} alt={product.name} fill sizes="64px" className="object-cover" />
+            <Image src={product.imageUrl} alt={product.name} fill sizes="64px" className="object-cover" unoptimized />
           </div>
         )}
         <div className="min-w-0 flex-1">

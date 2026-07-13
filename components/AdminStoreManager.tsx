@@ -653,7 +653,7 @@ function ProductCard({ product, categories, editing, loading, onEdit, onCancelEd
         <div className="flex gap-4">
           {product.imageUrl && (
             <div className="relative h-20 w-20 shrink-0 overflow-hidden border border-ink/10 bg-bone">
-              <Image src={product.imageUrl} alt={product.name} fill sizes="80px" className="object-cover" />
+              <Image src={product.imageUrl} alt={product.name} fill sizes="80px" className="object-cover" unoptimized />
             </div>
           )}
           <div className="min-w-0 flex-1">
