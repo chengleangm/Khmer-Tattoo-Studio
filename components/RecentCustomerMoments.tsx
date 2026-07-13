@@ -86,6 +86,7 @@ export default function RecentCustomerMoments() {
             fill
             sizes="(max-width: 640px) 50vw, 33vw"
             className="h-full w-full object-cover grayscale transition duration-700 group-hover:scale-105 group-hover:grayscale-0"
+            unoptimized
           />
           <figcaption className="absolute inset-x-0 bottom-0 bg-ink/78 px-3 py-2 font-condensed text-[0.68rem] uppercase tracking-editorial text-white sm:text-xs">
             {moment.label}

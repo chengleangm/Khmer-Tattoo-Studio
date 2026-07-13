@@ -286,6 +286,7 @@ export default function AdminReviewMomentsManager() {
                   fill
                   sizes="(max-width: 640px) 100vw, 33vw"
                   className="object-cover"
+                  unoptimized
                 />
               </div>
               <div className="flex min-h-0 flex-1 flex-col p-3">
