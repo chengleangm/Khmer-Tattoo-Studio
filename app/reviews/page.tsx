@@ -89,7 +89,6 @@ function DynamicReviews({
   formRef: React.RefObject<HTMLElement | null>;
 }) {
   const [page, setPage] = useState(0);
-  const topRef = useRef<HTMLDivElement>(null);
 
   const totalPages = Math.max(1, Math.ceil(reviews.length / PER_PAGE));
   const currentPage = Math.min(page, totalPages - 1);
@@ -97,7 +96,6 @@ function DynamicReviews({
 
   function goTo(next: number) {
     setPage(Math.max(0, Math.min(next, totalPages - 1)));
-    topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   if (!loaded) {
@@ -132,7 +130,7 @@ function DynamicReviews({
   }
 
   return (
-    <div ref={topRef}>
+    <div>
       <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3 md:grid-cols-3">
         {pageReviews.map((review) => (
           <ReviewCard key={review.id} review={review} />
