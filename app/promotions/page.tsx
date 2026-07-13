@@ -50,14 +50,14 @@ export default function PromotionsPage() {
           )}
 
           {!loading && promotions.length > 0 && (
-            <div className="grid gap-5 md:grid-cols-2 lg:gap-7">
-              {promotions.map((promotion, index) => (
-                <article key={promotion.id} className={`group overflow-hidden border bg-white ${promotion.featured && index === 0 ? "border-teal md:col-span-2 md:grid md:grid-cols-2" : "border-ink/10"}`}>
-                  <div className="relative aspect-[16/10] overflow-hidden bg-ink">
+            <div className="mx-auto grid max-w-5xl gap-5 lg:gap-7">
+              {promotions.map((promotion) => (
+                <article key={promotion.id} className={`group overflow-hidden border bg-white md:grid md:grid-cols-2 ${promotion.featured ? "border-teal" : "border-ink/10"}`}>
+                  <div className="relative aspect-square overflow-hidden bg-ink">
                     {promotion.imageUrl ? <Image src={promotion.imageUrl} alt={promotion.title} fill unoptimized sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition duration-700 group-hover:scale-105" /> : <div className="grain flex h-full items-center justify-center"><Sparkles className="h-16 w-16 text-teal/60" strokeWidth={1} /></div>}
                     <span className="absolute left-4 top-4 bg-teal px-3 py-2 font-condensed text-[10px] uppercase tracking-editorial text-white">{promotion.badge || "Special Offer"}</span>
                   </div>
-                  <div className="flex flex-col p-5 sm:p-7 lg:p-8">
+                  <div className="flex flex-col justify-center p-5 sm:p-7 lg:p-10">
                     {promotion.code && <p className="flex items-center gap-2 font-condensed text-xs uppercase tracking-editorial text-teal"><Tag size={14} /> Code: {promotion.code}</p>}
                     <h2 className="mt-3 font-display text-[clamp(2.5rem,7vw,4.5rem)] leading-[0.86]">{promotion.title}</h2>
                     <p className="mt-4 flex-1 text-sm leading-6 text-ink/60 sm:text-base sm:leading-7">{promotion.description}</p>
