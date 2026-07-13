@@ -60,6 +60,7 @@ export default function Footer() {
               <Link href="/gallery" className="hover:text-white">{nav.gallery}</Link>
               <Link href="/artists" className="hover:text-white">{nav.artists}</Link>
               <Link href="/reviews" className="hover:text-white">{nav.reviews}</Link>
+              <Link href="/promotions" className="hover:text-white">{nav.promotions}</Link>
               <Link href="/aftercare" className="hover:text-white">{nav.aftercare}</Link>
               <Link href="/booking" className="hover:text-white">{nav.booking}</Link>
             </div>

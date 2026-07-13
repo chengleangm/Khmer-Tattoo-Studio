@@ -11,6 +11,9 @@ const routes = [
   "/booking",
   "/contact",
   "/aftercare",
+  "/reviews",
+  "/promotions",
+  "/store",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

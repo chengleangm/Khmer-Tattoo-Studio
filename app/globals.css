@@ -234,6 +234,21 @@ html[lang="km"] .font-condensed [lang="en"] {
   font-weight: normal !important;
 }
 
+.field {
+  min-height: 2.75rem;
+  width: 100%;
+  border: 1px solid rgb(25 29 28 / 0.2);
+  background: white;
+  padding-inline: 0.75rem;
+  color: var(--ink);
+  outline: none;
+}
+
+.field:focus { border-color: var(--teal); }
+.label-xs { font-family: var(--font-oswald), sans-serif; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.16em; color: rgb(25 29 28 / 0.55); }
+.icon-admin { display: inline-flex; height: 2.25rem; width: 2.25rem; align-items: center; justify-content: center; border: 1px solid rgb(25 29 28 / 0.2); transition: 150ms; }
+.icon-admin:hover { background: var(--ink); color: white; }
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

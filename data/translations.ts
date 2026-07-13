@@ -3,7 +3,7 @@ export const t = {
     kicker: "Sacred Lines",
     nav: {
       home: "Home", artists: "Artists", gallery: "Gallery", services: "Services",
-      booking: "Booking", reviews: "Reviews", about: "About", contact: "Contact", aftercare: "Aftercare", store: "Store",
+      booking: "Booking", reviews: "Reviews", promotions: "Promotions", about: "About", contact: "Contact", aftercare: "Aftercare", store: "Store",
     },
     common: {
       bookAppointment: "Book an Appointment",
@@ -178,7 +178,7 @@ export const t = {
     kicker: "បន្ទាត់ពិសិដ្ឋ",
     nav: {
       home: "ទំព័រដើម", artists: "សិល្បករសាក់", gallery: "ស្នាដៃ", services: "សេវាកម្ម",
-      booking: "កក់ពេល", reviews: "មតិអតិថិជន", about: "អំពីយើង", contact: "ទំនាក់ទំនង", aftercare: "ការថែទាំក្រោយសាក់", store: "ហាង",
+      booking: "កក់ពេល", reviews: "មតិអតិថិជន", promotions: "ប្រូម៉ូសិន", about: "អំពីយើង", contact: "ទំនាក់ទំនង", aftercare: "ការថែទាំក្រោយសាក់", store: "ហាង",
     },
     common: {
       bookAppointment: "កក់ពេលសាក់",

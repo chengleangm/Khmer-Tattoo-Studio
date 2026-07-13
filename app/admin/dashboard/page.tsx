@@ -5,8 +5,9 @@ import AdminReviewMomentsManager from "@/components/AdminReviewMomentsManager";
 import AdminReviewsManager from "@/components/AdminReviewsManager";
 import AdminStoreManager from "@/components/AdminStoreManager";
 import AdminOrdersManager from "@/components/AdminOrdersManager";
+import AdminPromotionsManager from "@/components/AdminPromotionsManager";
 
-type Tab = "moments" | "reviews" | "store" | "orders";
+type Tab = "moments" | "reviews" | "promotions" | "store" | "orders";
 
 export default function AdminDashboardPage() {
   const [activeTab, setActiveTab] = useState<Tab>("moments");
@@ -14,6 +15,7 @@ export default function AdminDashboardPage() {
   const tabs: { id: Tab; label: string }[] = [
     { id: "moments", label: "Customer Moments" },
     { id: "reviews", label: "Reviews" },
+    { id: "promotions", label: "Promotions" },
     { id: "store", label: "Store Products" },
     { id: "orders", label: "Orders" },
   ];
@@ -60,6 +62,7 @@ export default function AdminDashboardPage() {
           </div>
         )}
         {activeTab === "store" && <AdminStoreManager />}
+        {activeTab === "promotions" && <AdminPromotionsManager />}
         {activeTab === "orders" && <AdminOrdersManager />}
       </section>
     </main>
