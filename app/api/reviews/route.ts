@@ -1,4 +1,4 @@
-import { list, put } from "@vercel/blob";
+import { hasR2Storage, list, put } from "@/lib/r2-blob";
 import { NextRequest } from "next/server";
 
 const REVIEWS_PATH = "reviews/reviews.json";
@@ -15,10 +15,7 @@ type Review = {
 };
 
 function hasBlobCredentials() {
-  return Boolean(
-    process.env.BLOB_READ_WRITE_TOKEN ||
-      process.env.VERCEL_OIDC_TOKEN
-  );
+  return hasR2Storage();
 }
 
 async function readReviews(): Promise<Review[]> {

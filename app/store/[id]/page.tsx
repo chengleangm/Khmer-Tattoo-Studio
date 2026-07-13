@@ -79,9 +79,9 @@ export default function ProductDetailPage() {
 
   useEffect(() => {
     fetch("/api/products", { cache: "no-store" })
-      .then((r) => r.json())
+      .then((r) => r.json() as Promise<{ products?: StoreProduct[] }>)
       .then((data) => {
-        const found = (data.products as StoreProduct[])?.find((p) => p.id === params.id);
+        const found = data.products?.find((p) => p.id === params.id);
         if (found) {
           setProduct(found);
           setLoadState("found");
@@ -360,7 +360,7 @@ function OrderForm({
           note: note.trim(),
         }),
       });
-      const data = await res.json();
+      const data = await res.json() as { error?: string; orderId: string };
       if (!res.ok) throw new Error(data.error || "Order failed.");
       onSuccess(data.orderId);
     } catch (err) {

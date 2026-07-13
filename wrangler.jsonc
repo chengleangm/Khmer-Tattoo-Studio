@@ -1,0 +1,31 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "khmer-tattoo-studio",
+	"main": ".open-next/worker.js",
+	"compatibility_date": "2026-07-13",
+	"compatibility_flags": [
+		"nodejs_compat",
+		"global_fetch_strictly_public"
+	],
+	"assets": {
+		"directory": ".open-next/assets",
+		"binding": "ASSETS"
+	},
+	"services": [
+		{
+			"binding": "WORKER_SELF_REFERENCE",
+			"service": "khmer-tattoo-studio"
+		}
+	],
+	"r2_buckets": [
+		{
+			"binding": "STUDIO_STORAGE",
+			"bucket_name": "khmer-tattoo-studio"
+		},
+		{
+			"bucket_name": "khmer-tattoo-studio",
+			"binding": "khmer_tattoo_studio",
+			"remote": true
+		}
+	]
+}

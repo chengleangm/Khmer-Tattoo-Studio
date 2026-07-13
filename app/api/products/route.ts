@@ -1,9 +1,9 @@
-import { list } from "@vercel/blob";
+import { hasR2Storage, list } from "@/lib/r2-blob";
 
 const STORE_DATA_PATH = "store/store-data.json";
 
 function hasBlobCredentials() {
-  return Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.env.VERCEL_OIDC_TOKEN);
+  return hasR2Storage();
 }
 
 export async function GET() {

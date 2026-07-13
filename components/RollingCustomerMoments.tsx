@@ -13,7 +13,7 @@ export default function RollingCustomerMoments() {
 
   useEffect(() => {
     fetch("/api/review-moments", { cache: "no-store" })
-      .then((r) => r.json())
+      .then((r) => r.json() as Promise<{ moments?: Moment[] }>)
       .then((data) => {
         if (Array.isArray(data.moments) && data.moments.length > 0) {
           // Shuffle once on load

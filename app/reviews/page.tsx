@@ -191,7 +191,7 @@ function ReviewForm({ formRef }: { formRef: React.RefObject<HTMLElement | null> 
         headers: { "content-type": "application/json" },
         body: JSON.stringify(form),
       });
-      const result = await response.json();
+      const result = await response.json() as { error?: string };
       if (!response.ok) throw new Error(result.error || "Submission failed.");
       setForm({ name: "", origin: "", service: "", text: "", rating: 5 });
       setStatus("success");
@@ -346,7 +346,7 @@ export default function ReviewsPage() {
 
   useEffect(() => {
     fetch("/api/reviews", { cache: "no-store" })
-      .then((r) => r.json())
+      .then((r) => r.json() as Promise<{ reviews?: Review[] }>)
       .then((data) => {
         setReviews(Array.isArray(data.reviews) ? data.reviews : []);
         setReviewsLoaded(true);

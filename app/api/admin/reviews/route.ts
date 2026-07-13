@@ -1,4 +1,4 @@
-import { list, put } from "@vercel/blob";
+import { hasR2Storage, list, put } from "@/lib/r2-blob";
 import { NextRequest } from "next/server";
 
 const REVIEWS_PATH = "reviews/reviews.json";
@@ -15,10 +15,7 @@ type Review = {
 };
 
 function hasBlobCredentials() {
-  return Boolean(
-    process.env.BLOB_READ_WRITE_TOKEN ||
-      process.env.VERCEL_OIDC_TOKEN
-  );
+  return hasR2Storage();
 }
 
 function verifyAdminToken(request: NextRequest) {
@@ -52,7 +49,7 @@ export async function GET(request: NextRequest) {
 
   if (!hasBlobCredentials()) {
     return Response.json(
-      { error: "Vercel Blob is not connected.", reviews: [] },
+      { error: "Cloudflare R2 is not connected.", reviews: [] },
       { status: 503 }
     );
   }
@@ -73,7 +70,7 @@ export async function PATCH(request: NextRequest) {
   }
 
   if (!hasBlobCredentials()) {
-    return Response.json({ error: "Vercel Blob is not connected." }, { status: 503 });
+    return Response.json({ error: "Cloudflare R2 is not connected." }, { status: 503 });
   }
 
   const body = await request.json().catch(() => null) as {
@@ -121,7 +118,7 @@ export async function DELETE(request: NextRequest) {
   }
 
   if (!hasBlobCredentials()) {
-    return Response.json({ error: "Vercel Blob is not connected." }, { status: 503 });
+    return Response.json({ error: "Cloudflare R2 is not connected." }, { status: 503 });
   }
 
   const body = await request.json().catch(() => null) as { id?: string } | null;

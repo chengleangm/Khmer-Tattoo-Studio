@@ -48,7 +48,7 @@ export default function StorePage() {
 
   useEffect(() => {
     fetch("/api/products", { cache: "no-store" })
-      .then((r) => r.json())
+      .then((r) => r.json() as Promise<{ products?: StoreProduct[]; categories?: string[] }>)
       .then((data) => {
         setProducts(data.products ?? []);
         setCategories(data.categories ?? []);
